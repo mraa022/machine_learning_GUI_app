@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+
+<form method="POST">
+
+	<div class='jubmotron'>
+		<h1>Sign Up</h1>
+	</div>
+
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	<input type="submit" name="" value='Sign Up' class='btn btn-primary btn-success'>
+
+</form>
+	
+{% endblock content %}
+

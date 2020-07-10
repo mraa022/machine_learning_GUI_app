@@ -1,10 +1,10 @@
 from django import  forms
 
-from .models import DatasSets
+from .models import DataSets
 
 class DatasetsForm(forms.ModelForm):
 
-	model = DatasSets
+	model = DataSets
 
 	fields = ('__all__')
 

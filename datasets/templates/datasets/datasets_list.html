@@ -1,6 +1,6 @@
-{% extends "datasets/base_datasets.html" %}
+{% extends "datasets/base_dataset.html" %}
 
-{% block body_block %}
+{% block content %}
 	
 	<h1>Data Sets List</h1>
 
@@ -8,12 +8,11 @@
 
 		{% for dataset in datasets  %}
 
-			<li><a href="#">Data set number: {{dataset.pk}}</a></li><br>
-
-			
+			<li><a href="{% url 'datasets:detail' pk=dataset.pk %}">{{dataset.title}}</a></li><br>			
+	
 		{% endfor %}
 
 	</div>
 
 
-{% endblock body_block %}
+{% endblock content %} 

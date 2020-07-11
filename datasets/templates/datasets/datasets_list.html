@@ -1,6 +1,8 @@
 {% extends "datasets/base_dataset.html" %}
+{% load static %}
 
 {% block content %}
+<link rel="stylesheet"  href="{% static 'css/master.css'%}">
 	
 	<h1>Data Sets List</h1>
 
@@ -8,8 +10,8 @@
 
 		{% for dataset in datasets  %}
 
-			<li><a href="{% url 'datasets:detail' pk=dataset.pk %}">{{dataset.title}}</a></li><br>			
-	
+			<li><a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a></li><br>			
+			
 		{% endfor %}
 
 	</div>

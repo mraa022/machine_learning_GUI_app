@@ -1,17 +1,30 @@
 {% extends "datasets/base_dataset.html" %}
-
+{% load static %}
 {% block content %}
-
+	
+	<link rel="stylesheet"  href="{% static 'css/master.css'%}">
 
 	<div class='jumbotron'>
 
 		<h1>DataSet Detail View</h1>
+			
 
-		<h2>{{dataset.title}}</h2>
+		{% if dataset.file %}
 
+		<h2><a href='{{dataset.file.url}}'>{{dataset.title|safe}}</a></h2>
+		{% else %}
+
+		<h2><a href='{{dataset.link}}'>{{dataset.title|safe}}</a></h2>
+			
+		{% endif %}
 		
+		
+	
+
 
 	</div>
+
+	{{DataFrame.to_html | safe}}
 
 
 

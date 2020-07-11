@@ -19,6 +19,7 @@ static_dir = os.path.join(BASE_DIR,'static')
 media_dir = os.path.join(BASE_DIR,'media')
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 

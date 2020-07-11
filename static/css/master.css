@@ -2,5 +2,16 @@ body{
 
 	/*margin-left: 2%;*/
 	margin-left: 2%;
-	background-color: yellow;
+	background-color: gray;
+}
+
+
+
+.dataframe{
+
+
+	display: inline;
+	max-height: 100px;
+	max-width: 100px%
+	overflow: scroll;
 }

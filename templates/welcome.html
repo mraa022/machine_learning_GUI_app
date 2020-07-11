@@ -1,20 +1,11 @@
 {% extends "base.html" %}
 
-{% load static %}
 
-
-{% block css %}
-
-	 <link rel="stylesheet"  href="{% static 'css/master.css'%}">
-	
-{% endblock %}
-
-
-{% block body_block %}
+{% block content %}
 
 <div class='jumbotron'>
 	
-	<h1> Welcome {{user.username}} :) </h1>
+	<h1>Welcome {{user.username}} </h1>
 </div>
 	
 {% endblock  %}

@@ -33,4 +33,8 @@ class DataSets(models.Model):
 
 
 	def title(self):
-		return "File Name: " + os.path.basename(self.file.name) if not self.link else " URL: " +self.link
+		return "<strong> <i> File Name: </i></strong> " + os.path.basename(self.file.name) if not self.link else " <strong> <i>URL: </i></strong> " +self.link
+
+	def get_file_or_url_path(self):
+
+		return self.file.path if self.file else self.link

@@ -1,0 +1,14 @@
+body{
+
+	background-color: gray;
+
+}
+
+table{
+
+
+	display: inline;
+	max-height: 50%;
+	max-width: 50%
+	overflow: hidden;
+}

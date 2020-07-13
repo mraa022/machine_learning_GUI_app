@@ -133,6 +133,7 @@ class UpdateDatasetView(generic.UpdateView,LoginRequiredMixin):
 			kwargs.update({
 
 				'username': self.request.user.username,
+				'update_view_running': True
 
 				})
 			

@@ -14,6 +14,7 @@ class DataSetsForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		self.username = kwargs.pop('username',None)
+		self.update_view_running = kwargs.pop('update_view_running',None)
 		super().__init__(*args, **kwargs)
 
 	class Meta():
@@ -44,8 +45,8 @@ class DataSetsForm(forms.ModelForm):
 		url = self.cleaned_data.get('link')
 		file = self.cleaned_data.get('file')
 		file_with_media_dir = os.path.join('DataSets',str(file))  # this is needed when checking if a file exists in the database.the variable 'file' returns the file name while the file field in the model returns the media dir name / filename
-		print('mmmmmmmmmmmm',DataSets.objects.filter(user__username__iexact=self.username).count())
-		if DataSets.objects.filter(user__username__iexact=self.username).count() == 10:
+
+		if DataSets.objects.filter(user__username__iexact=self.username).count() == 10 and not self.update_view_running:
 
 			raise forms.ValidationError(u"You run out of space. go to the 'DataSets' page and replace one ")
 

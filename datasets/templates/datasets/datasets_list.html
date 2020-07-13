@@ -3,19 +3,44 @@
 
 {% block content %}
 <link rel="stylesheet"  href="{% static 'css/master.css'%}">
-
+<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/create_form.css' %}">
 	
 	<h1>Data Sets List</h1>
 
-</div class='grid'>
 
-		{% for dataset in datasets  %}
+		
 
-			<li><a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a></li><br>			
+		<div class="grid-container">
+		  {% for dataset in datasets  %}
+
 			
-		{% endfor %}
+		 	<div class="grid-item">
 
-	</div>
+		 		<a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a><br>
+
+		 		<button><a href="{% url 'datasets:update' pk=dataset.pk %}">Update</a></button><br>
+		 		<button class='btn btn-info'><a href="{% url 'datasets:detail' pk=dataset.pk %}">View</a></button>
+
+		 		
+
+		 	</div>
+
+
+		 		
+		 	{% endfor %}
+
+		 	{% if not datasets.count == 10 %}
+
+
+		 		
+
+		 	<a id='create_box' class='grid-item' href="{% url 'datasets:create'%}">Create</a>
+
+		 		{% endif %}
+		  
+		</div>			
+			
+		
 
 
 {% endblock content %} 

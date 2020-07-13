@@ -39,6 +39,11 @@ class DataSets(models.Model):
 
 
 
+	def full(self):
+
+		print('ffffffffff',self.objects.filter(user__username=self.user.username))
+		return self.objects.filter(user__username__iexact=self.user.username) < 10
+
 	def title(self):
 		return "<strong> <i> File Name: </i></strong> " + os.path.basename(self.file.name) if not self.link else " <strong> <i>URL: </i></strong> " +self.link
 

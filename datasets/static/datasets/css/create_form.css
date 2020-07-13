@@ -1,0 +1,25 @@
+.grid-container {
+	text-align: center;
+  display: grid;
+   grid-template-columns: repeat(5,25%);
+ 	
+   height: 30rem;
+  overflow: scroll;
+  column-gap: 25px;
+  grid-row-gap: 25px;
+}
+
+
+.grid-item{
+	/*padding-top: 25px;*/
+	transition: border .1s;
+	border: 2px solid black;
+	overflow:scroll;
+}
+
+
+
+.grid-item:hover{
+
+	border: 5px solid black;
+}

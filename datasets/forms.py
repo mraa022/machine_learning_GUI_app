@@ -8,18 +8,7 @@ from machine_learning_gui import settings
 import os
 
 
-
-
-
-
-
-
 User = get_user_model()
-
-
-
-
-
 
 class DataSetsForm(forms.ModelForm):
 
@@ -54,9 +43,9 @@ class DataSetsForm(forms.ModelForm):
 		
 		url = self.cleaned_data.get('link')
 		file = self.cleaned_data.get('file')
-		print(' mmmmmmmmmmmmmmmm',self.username)
 		file_with_media_dir = os.path.join('DataSets',str(file))  # this is needed when checking if a file exists in the database.the variable 'file' returns the file name while the file field in the model returns the media dir name / filename
-		if DataSets.objects.filter(user__username__iexact=self.username).count() >10:
+		print('mmmmmmmmmmmm',DataSets.objects.filter(user__username__iexact=self.username).count())
+		if DataSets.objects.filter(user__username__iexact=self.username).count() == 10:
 
 			raise forms.ValidationError(u"You run out of space. go to the 'DataSets' page and replace one ")
 

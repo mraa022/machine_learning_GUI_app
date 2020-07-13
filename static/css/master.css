@@ -1,17 +1,21 @@
 body{
 
-	/*margin-left: 2%;*/
 	margin-left: 2%;
-	background-color: gray;
+	/*margin-left: 2%;*/
 }
 
 
 
-.dataframe{
 
+.jumbotron{
 
-	display: inline;
-	max-height: 100px;
-	max-width: 100px%
 	overflow: scroll;
+}
+table{
+
+	background-color: yellow;
+}
+
+.df{
+	overflow:scroll;
 }

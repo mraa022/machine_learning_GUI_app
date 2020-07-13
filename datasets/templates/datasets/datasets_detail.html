@@ -1,8 +1,8 @@
 {% extends "datasets/base_dataset.html" %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet"  href="{% static 'datasets/css/scroll.css'%}">
 	
-	<link rel="stylesheet"  href="{% static 'css/master.css'%}">
 
 	<div class='jumbotron'>
 
@@ -11,12 +11,13 @@
 
 		{% if dataset.file %}
 
-		<h2><a href='{{dataset.file.url}}'>{{dataset.title|safe}}</a></h2>
+		<h2>FILE PATH: {{dataset.get_file_or_url_path|safe}}</h2>
 		{% else %}
 
 		<h2><a href='{{dataset.link}}'>{{dataset.title|safe}}</a></h2>
 			
 		{% endif %}
+
 		
 		
 	
@@ -24,7 +25,12 @@
 
 	</div>
 
+	<div class='df'>
 	{{DataFrame.to_html | safe}}
+
+	<button class='btn btn-primary btn-large'><a href="{% url 'datasets:update' pk=dataset.pk %}"  class='btn btn-primary btn-large'>Update</a></button>
+
+	</div>
 
 
 

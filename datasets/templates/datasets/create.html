@@ -1,0 +1,33 @@
+{% extends "datasets/base_dataset.html" %}
+
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block content %}
+
+	<link rel="stylesheet" type="text/css" href="{% static "datasets/css/create_form.css" %}">
+	<div class='jumbotron'>
+
+	<h1>Add a new DataSet</h1>
+
+	<form method='post' enctype="multipart/form-data">
+	{% csrf_token %}
+	{% bootstrap_form form%}
+
+
+
+	
+	<input id='SUBMIT' class='btn btn-primary btn-large btn-success' type="submit" name="" value='Add'>
+
+	</form>
+
+</div>
+<script type="text/javascript" src="{% static 'datasets/js/clear_inputs_on_outfocus.js' %}"></script>
+	
+{% endblock  %}
+
+	
+
+
+

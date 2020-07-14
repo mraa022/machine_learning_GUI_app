@@ -12,9 +12,9 @@
 	<h1>Update</h1>
 
 	<form method='post' enctype="multipart/form-data">
-	{% csrf_token %}
+	
 	{% bootstrap_form form%}
-
+	{% csrf_token %}
 
 	<input id='SUBMIT' class='btn btn-primary btn-large btn-success' type="submit" name="" value='Add'>
 

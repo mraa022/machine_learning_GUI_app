@@ -3,10 +3,11 @@
   display: grid;
    grid-template-columns: repeat(5,25%);
  	
-   height: 30rem;
+   
   overflow: scroll;
   column-gap: 25px;
-  grid-row-gap: 25px;
+  grid-row-gap: 2%;
+  height: calc(100vh);
 }
 
 

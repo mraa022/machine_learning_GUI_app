@@ -13,7 +13,6 @@
 		<div class="grid-container">
 		  {% for dataset in datasets  %}
 
-			
 		 	<div class="grid-item">
 
 		 		<a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a><br>

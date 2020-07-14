@@ -1,12 +1,13 @@
 from django import  forms
 import os
+from pandas import read_html
 from django.core.files.storage import default_storage
 
 from .models import DataSets
 from django.contrib.auth import get_user_model
 from machine_learning_gui import settings
 import os
-
+import requests
 
 User = get_user_model()
 
@@ -46,9 +47,10 @@ class DataSetsForm(forms.ModelForm):
 		file = self.cleaned_data.get('file')
 		file_with_media_dir = os.path.join('DataSets',str(file))  # this is needed when checking if a file exists in the database.the variable 'file' returns the file name while the file field in the model returns the media dir name / filename
 
+		
 		if DataSets.objects.filter(user__username__iexact=self.username).count() == 10 and not self.update_view_running:
 
-			raise forms.ValidationError(u"You run out of space. go to the 'DataSets' page and replace one ")
+			raise forms.ValidationError("You run out of space. go to the 'DataSets' page and replace one ")
 
 		elif not url and not file:
 
@@ -58,14 +60,28 @@ class DataSetsForm(forms.ModelForm):
 
 			raise forms.ValidationError(u"Only one of the fields needs to be filled")
 
-		elif url and (DataSets.objects.filter(user__username__iexact=self.username,link=url).exists()):
-			
-			
-			raise forms.ValidationError('A DataSets with that link  already exists')
-
 		elif  file and self.file_exists(file):
 			
 			raise forms.ValidationError('A DataSets with that file path  already exists')
+
+		elif url and not (DataSets.objects.filter(user__username__iexact=self.username,link=url).exists()):
+
+			try:
+
+				data = read_html(requests.get(url).text)
+			except:
+
+				raise forms.ValidationError('The website you provided does not have any tables')
+				print('j')
+
+
+
+		elif url and (DataSets.objects.filter(user__username__iexact=self.username,link=url).exists()):
+	
+	
+			raise forms.ValidationError('A DataSets with that link  already exists')
+
+		
 
 
 		

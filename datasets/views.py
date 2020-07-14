@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # from django.template.response import TemplateResponse
 
-
+import requests
 import pandas as pd
 from . import models
 from django.views import  generic
@@ -65,7 +65,7 @@ class DatasetDetailView(generic.DetailView,LoginRequiredMixin):
 			data = get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
 			if data.link:
-				return remove_column(pd.read_html(data.link)[0]).head() 
+				return remove_column(pd.read_html(requests.get(data.link).text)[0]).head() 
 
 			
 			return pd.read_csv(data.file.path).head()

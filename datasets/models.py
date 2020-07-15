@@ -12,11 +12,12 @@ def validate_file_extension(value):
 
 
 def path_and_rename(instance, filename):
-    path = "datasets"
+    upload_to = "datasets"
     Format =  instance.user.username + str(instance.file) 
-    return os.path.join(path, Format)
+    return os.path.join(upload_to, Format)
 
 User = get_user_model()
+
 class DataSets(models.Model):
 
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -38,15 +39,6 @@ class DataSets(models.Model):
 		return  self.user.username+ ' ' + str(self.pk)
 
 
-
-	def full(self):
-
-		print('ffffffffff',self.objects.filter(user__username=self.user.username))
-		return self.objects.filter(user__username__iexact=self.user.username) < 10
-
 	def title(self):
-		return "<strong> <i> File Name: </i></strong> " + os.path.basename(self.file.name) if not self.link else " <strong> <i>URL: </i></strong> " +self.link
+		return "<strong> <i> File Name: </i></strong> " + os.path.basename(self.file.name) if  self.file else " <strong> <i>URL: </i></strong> " +self.link
 
-	def get_file_or_url_path(self):
-
-		return self.file.path if self.file else self.link

@@ -11,6 +11,51 @@ import requests
 
 User = get_user_model()
 
+class Base():
+
+	def raise_error(self):
+
+		pass
+
+class AllFieldsFilled(Base):
+
+	def raise_error(self):
+		raise forms.ValidationError(u"Only one of the fields needs to be filled")
+
+class AllFieldsEmpty(Base):
+
+	def raise_error(self):
+
+		raise forms.ValidationError(u"Only one of the fields needs to be filled")
+
+class FileNotUnique(Base):
+
+	def raise_error(self):
+
+		raise forms.ValidationError(u"A dataset with that file already exists")
+
+class UrlNotUnique(Base):
+
+	def raise_error(self):
+
+		raise forms.ValidationError(u"A data set with that link already exists")
+
+class RunOutOfSpace(Base):
+
+	def raise_error(self):
+
+		raise forms.ValidationError('You run out of space! go the the DataSets page and replace one')
+
+class NoTablesFound(Base):
+
+	def raise_error(self):
+
+		raise forms.ValidationError('The website you provided does not have any tables')
+
+def raise_error_message(obj):
+
+	obj.raise_error()
+
 class DataSetsForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
@@ -27,60 +72,58 @@ class DataSetsForm(forms.ModelForm):
 		widgets = {
 
 			'link':forms.URLInput(attrs={'class':'link-text-area'}),
-			# 'file':forms.FileInput(attrs = {'class':'file-field'})
 		}
 
 
+	def more_than_10_datasets_found(self):
+
+		 return DataSets.objects.filter(user__username__iexact=self.username).count() == 10 and not self.update_view_running
+
+		 
 	def file_exists(self,file):
 
-		user_and_file = self.username+str(file)
+		saved_file_name = ''.join(map(lambda x: '' if x in ['(',')'] else x,str(file))).replace(' ','_') # this is needed because django  removes () from file names when saving them
+		user_and_file = self.username+ ''.join(saved_file_name) 
 		base_dir = settings.media_dir
 		file_path = os.path.join('datasets',str(user_and_file))
 		full_path = os.path.join(base_dir,str(file_path))
+		return  os.path.isfile(full_path) 
 
-		return True if os.path.isfile(full_path) else False
+	def url_exists(self,url):
+
+		return (DataSets.objects.filter(user__username__iexact=self.username,link=url).exists())
+
+	def no_tables_found(self,url):
+
+		try:
+
+			pd.read_html(requests.get(url).text)
+		except:
+
+			return True
 
 	def clean(self):
 
 		
 		url = self.cleaned_data.get('link')
 		file = self.cleaned_data.get('file')
-		file_with_media_dir = os.path.join('DataSets',str(file))  # this is needed when checking if a file exists in the database.the variable 'file' returns the file name while the file field in the model returns the media dir name / filename
 
+		possible_errors = {'RunOutOfSpace()':self.more_than_10_datasets_found(),
+					'AllFieldsEmpty()': not url and not file,
+					'AllFieldsFilled()': url and file,
+					'FileNotUnique()': file and self.file_exists(file),
+					'UrlNotUnique()': url and self.url_exists(url),
+					'NoTablesFound()': url and self.no_tables_found(url)
+
+
+		}
 		
-		if DataSets.objects.filter(user__username__iexact=self.username).count() == 10 and not self.update_view_running:
+		for obj,error in possible_errors.items():
 
-			raise forms.ValidationError("You run out of space. go to the 'DataSets' page and replace one ")
+			if error:
 
-		elif not url and not file:
-
-			raise forms.ValidationError(u'One of the fileds MUST BE FILLED')
-
-		elif url and file:
-
-			raise forms.ValidationError(u"Only one of the fields needs to be filled")
-
-		elif  file and self.file_exists(file):
-			
-			raise forms.ValidationError('A DataSets with that file path  already exists')
-
-		elif url and not (DataSets.objects.filter(user__username__iexact=self.username,link=url).exists()):
-
-			try:
-
-				data = read_html(requests.get(url).text)
-			except:
-
-				raise forms.ValidationError('The website you provided does not have any tables')
-				print('j')
-
-
-
-		elif url and (DataSets.objects.filter(user__username__iexact=self.username,link=url).exists()):
-	
-	
-			raise forms.ValidationError('A DataSets with that link  already exists')
-
+				object = eval(obj)
+				raise_error_message(object)
 		
 
 

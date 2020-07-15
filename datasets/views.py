@@ -29,7 +29,10 @@ def remove_column(dataframe):
 	method removes that
 
 	'''
-	return dataframe.drop('Unnamed: 0',axis=1)
+	try:
+		return dataframe.drop('Unnamed: 0',axis=1)
+	except:
+		return dataframe
 	 
 
 class DataSetsList(generic.ListView,LoginRequiredMixin):
@@ -88,7 +91,6 @@ class CreateDatasetView(generic.CreateView,LoginRequiredMixin):
 		if 'file' in self.request.FILES:
 
 
-
 			self.object.file = self.request.FILES['file']
 			
 
@@ -99,7 +101,7 @@ class CreateDatasetView(generic.CreateView,LoginRequiredMixin):
 		return super().form_valid(form)
 
 
-	def get_form_kwargs(self):
+	def get_form_kwargs(self): ## used to pass in the 'username' argument to the forms.py file
 
 
 			kwargs = super(CreateDatasetView, self).get_form_kwargs()
@@ -126,14 +128,14 @@ class UpdateDatasetView(generic.UpdateView,LoginRequiredMixin):
 
 	success_url = reverse_lazy('home')
 
-	def get_form_kwargs(self):
+	def get_form_kwargs(self): # this is done to see if the update view is running or not
 
 
 			kwargs = super(UpdateDatasetView, self).get_form_kwargs()
 			kwargs.update({
 
-				'username': self.request.user.username,
-				'update_view_running': True
+				'update_view_running': True,
+				'username':self.request.user.username
 
 				})
 			

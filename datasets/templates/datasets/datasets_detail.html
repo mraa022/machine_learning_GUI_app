@@ -11,7 +11,7 @@
 
 		{% if dataset.file %}
 
-		<h2>FILE PATH: {{dataset.get_file_or_url_path|safe}}</h2>
+		<h2>FILE PATH: {{dataset.file.path|safe}}</h2>
 		{% else %}
 
 		<h2><a href='{{dataset.link}}'>{{dataset.title|safe}}</a></h2>

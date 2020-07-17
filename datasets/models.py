@@ -16,6 +16,7 @@ def path_and_rename(instance, filename):
     Format =  instance.user.username + str(instance.file) 
     return os.path.join(upload_to, Format)
 
+
 User = get_user_model()
 
 class DataSets(models.Model):
@@ -25,9 +26,7 @@ class DataSets(models.Model):
 	file = models.FileField(upload_to=path_and_rename,blank=True,validators=[validate_file_extension],null=True)
 	# slug = models.SlugField(blank=True)
 
-	def save(self, *args, **kwargs):
-
-		super().save(*args, **kwargs)
+	
 
 	def get_absolute_url(self):
 
@@ -40,5 +39,5 @@ class DataSets(models.Model):
 
 
 	def title(self):
-		return "<strong> <i> File Name: </i></strong> " + os.path.basename(self.file.name) if  self.file else " <strong> <i>URL: </i></strong> " +self.link
+		return "<strong> <i> File Name: </i></strong> " + str(os.path.basename(self.file.name)) if  self.file else " <strong> <i>URL: </i></strong> " + str(self.link)
 

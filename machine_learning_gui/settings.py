@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'accounts',
     'datasets',
     'debug_toolbar',
+    'bootstrap_modal_forms',
+    'widget_tweaks',
 
 ]
 

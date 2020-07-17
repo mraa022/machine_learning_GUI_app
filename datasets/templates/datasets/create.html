@@ -1,4 +1,4 @@
-{% extends "datasets/base_dataset.html" %}
+{# {% extends "datasets/base_dataset.html" %} #}
 
 {% load static %}
 
@@ -6,24 +6,78 @@
 
 {% block content %}
 
-	{# <link rel="stylesheet" type="text/css" href="{% static "datasets/css/create_form.css" %}"> #}
-	<div class='jumbotron'>
+	
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-	<h1>Add a new DataSet</h1>
+{# <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> #}
 
-	<form method='post' enctype="multipart/form-data">
-	{% csrf_token %}
-	{% bootstrap_form form%}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{% static "datasets/css/create_form.css" %}">
+<div class='jumbotron'>
 
 	
-	<input id='SUBMIT' class='btn btn-primary btn-large btn-success' type="submit" name="" value='Add'>
 
-	</form>
+<form method="POST" id='create-dataset' enctype="multipart/form-data">
+  {% csrf_token %}
+
+
+ <div class="modal-header">
+ 	<h1>Add a new DataSet</h1>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+  	
+	
+    {% bootstrap_form form%}
+   
+  
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    {# <button type="submit" class="btn btn-primary" form="modal-details">Search</button> #}
+    <button type="button" class="submit-btn btn btn-primary">Create</button>
+  </form>
+  </div> 
 
 </div>
-<script type="text/javascript" src="{% static 'datasets/js/clear_inputs_on_outfocus.js' %}"></script>
+
+<script type="text/javascript">
+  $('.submit-btn').click(function(){
+
+  		var url = $("input[type='url']").val()
+  		var fd = new FormData();
+  		var files = $('#id_file')[0].files[0]
+  		fd.append('file',files)
+  		fd.append('csrfmiddlewaretoken','{{ csrf_token }}');
+  		fd.append('link',url);
+  		$.ajax({
+
+  			type:'POST',
+  			url: "{% url 'datasets:create' %}",
+  			data: fd,
+  			contentType: false,
+  			processData:false,
+
+  			success: function(response){
+
+  				console.log(response);
+  			}
+
+  			
+  		});
+
+  		
+    
+  });
+</script>
 	
 {% endblock  %}
 

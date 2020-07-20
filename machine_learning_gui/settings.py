@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'bootstrap_modal_forms',
     'widget_tweaks',
+    'django_cleanup.apps.CleanupConfig'
 
 ]
 

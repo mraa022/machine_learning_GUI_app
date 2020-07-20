@@ -23,7 +23,7 @@ class DataSets(models.Model):
 
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	link = models.URLField(blank=True,null=True)
-	file = models.FileField(upload_to=path_and_rename,blank=True,validators=[validate_file_extension],null=True)
+	file = models.FileField(upload_to=path_and_rename,blank=True,validators=[validate_file_extension],null=True,default=None)
 	# slug = models.SlugField(blank=True)
 
 	

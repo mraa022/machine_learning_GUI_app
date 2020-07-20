@@ -1,13 +1,11 @@
 from django.shortcuts import render
 from django.urls import  reverse_lazy,reverse
 from django.shortcuts import redirect
-from django.http import JsonResponse
-
 from django.shortcuts import get_object_or_404
 from .forms import DataSetsForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from bootstrap_modal_forms.generic import BSModalCreateView
-
+from bootstrap_modal_forms.generic import BSModalCreateView,BSModalUpdateView
+from django.db.models.fields.files import FieldFile
 # from django.template.response import TemplateResponse
 
 import requests
@@ -16,13 +14,6 @@ from . import models
 from django.views import  generic
 
 from .forms import DataSetsForm
-# Create your views here.
-
-def file_already_exists(filename):
-
-	pass
-
-
 
 
 def remove_column(dataframe):
@@ -84,16 +75,12 @@ class CreateDatasetView(BSModalCreateView,LoginRequiredMixin):
 	template_name = 'datasets/create.html'
 
 	def form_valid(self, form):
-		
-
-
 		self.object = form.save(commit=False)
 		self.object.user = self.request.user
 		self.object.file = self.request.FILES.get('file')
-
-		self.object.save();
-		return redirect('home');
-
+		
+		self.object.save()
+		return redirect('datasets:detail', pk=self.object.pk)					
 	def get_form_kwargs(self): ## used to pass in the 'username' argument to the forms.py file
 
 
@@ -107,35 +94,41 @@ class CreateDatasetView(BSModalCreateView,LoginRequiredMixin):
 			return kwargs 
 			
 
-class UpdateDatasetView(generic.UpdateView,LoginRequiredMixin):
+class UpdateDatasetView(BSModalUpdateView,LoginRequiredMixin):
 
 
 
 	model = models.DataSets
 
 	form_class = DataSetsForm
-	# fields = ['link','file']
 	template_name = 'datasets/update.html'
 
 	context_object_name = 'form'
 
-	success_url = reverse_lazy('home')
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['id'] = self.kwargs.get('pk')
 
-	def get_form_kwargs(self): # this is done to see if the update view is running or not
-
-
+		return context
+	def get_form_kwargs(self):
 			kwargs = super(UpdateDatasetView, self).get_form_kwargs()
 			kwargs.update({
 
 				'update_view_running': True,
 				'username':self.request.user.username,
-
+				'pk':self.kwargs.get('pk'),
+				'clear_previous_file':self.request.POST.get('clear-previous-file')
 
 				})
 			
 			return kwargs 
 	
+	def form_valid(self, form):
+
+		
+		
+		return redirect('home')
 
 	
 

@@ -28,7 +28,7 @@
 	<div class='df'>
 	{{DataFrame.to_html | safe}}
 
-	<button class='btn btn-primary btn-large'><a href="{% url 'datasets:update' pk=dataset.pk %}"  class='btn btn-primary btn-large'>Update</a></button>
+	<button><a class='submit-btn btn btn-primary' href="{% url 'datasets:update' pk=dataset.pk %}" data-toggle="modal" data-target="#modal-update">Update</a></button><br>
 
 	</div>
 

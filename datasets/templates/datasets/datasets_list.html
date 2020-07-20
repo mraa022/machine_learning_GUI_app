@@ -17,7 +17,7 @@
 
 		 		<a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a><br>
 
-		 		<button><a href="{% url 'datasets:update' pk=dataset.pk %}">Update</a></button><br>
+		 		<button><a href="{% url 'datasets:update' pk=dataset.pk %}" data-toggle="modal" data-target="#modal-update">Update</a></button><br>
 		 		<button class='btn btn-info'><a href="{% url 'datasets:detail' pk=dataset.pk %}">View</a></button>
 
 		 		
@@ -28,12 +28,10 @@
 		 		
 		 	{% endfor %}
 
-		 	{% if not datasets.count == 10 %}
+		 	{% if  not datasets.count == 10 %}
 
 
-		 		
-
-		 	<a id='create_box' class='grid-item' href="{% url 'datasets:create'%}">Create</a>
+		 	<a id='create_box' class='grid-item' href="{% url 'datasets:create' %}" data-toggle="modal" data-target="#modal">Create</a>
 
 		 		{% endif %}
 		  

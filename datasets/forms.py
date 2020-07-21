@@ -16,6 +16,13 @@ class Base():
 	def raise_error(self):
 
 		pass
+
+class NotCsvFile(Base):
+
+	def raise_error(self):
+
+		raise forms.ValidationError('The file must be a csv file')
+
 class AllFieldsFilled(Base):
 
 	def raise_error(self):
@@ -83,11 +90,16 @@ class DataSetsForm(BSModalModelForm):
 
 	def file_exists(self,file):
 
+		'''
+		when updating, if the previous file is not updated, the input 'file' will return 'datasets/file-name', but if its updated it 
+		will return 'file-name'. so there is no need to check if the file is a new one or a saved one.
+
+		'''
+
 		saved_file_name = ''.join(map(lambda x: '' if x in ['(',')'] else x,str(file))).replace(' ','_') # this is needed because django  removes () from file names when saving them
 		file_path  = os.path.join('datasets',self.username+saved_file_name)
 		base_dir = settings.media_dir
 		full_path = os.path.join(base_dir,str(file_path))
-		
 		return  os.path.isfile(full_path) 
  
 	def url_exists(self,url):
@@ -114,6 +126,10 @@ class DataSetsForm(BSModalModelForm):
 
 		return cleaned_data
 
+	def file_is_csv(self,file):
+		if file:
+			return  file.name.endswith('.csv')
+		return True
 	def clear_file_field(self):
 		
 		self.current_dataset = DataSets.objects.get(pk=self.pk)
@@ -126,18 +142,20 @@ class DataSetsForm(BSModalModelForm):
 		self.cleaned_data = self.clear_file_checkbox(self.cleaned_data)  # remove the saved file if the checbox is checked off
 		url = self.cleaned_data.get('link')
 		file = self.cleaned_data.get('file')
+		print('kkk',file)
 		possible_errors = { 'RunOutOfSpace()':self.more_than_10_datasets_found(),
 							'AllFieldsEmpty()': not url and not file,
 							'AllFieldsFilled()': url and file,
 							'FileNotUnique()': self.file_exists(file),
 							'UrlNotUnique()':  self.url_exists(url),
-							'NoTablesFound()': url and self.no_tables_found(url)
+							'NoTablesFound()': url and self.no_tables_found(url),
+							'NotCsvFile()':   not self.file_is_csv(file)
 		}
 		for obj,error in possible_errors.items():
 
 			if error:
 				object = eval(obj)
-				return raise_error_message(object)
+				raise_error_message(object)
 
 		
 		if self.update_view_running:

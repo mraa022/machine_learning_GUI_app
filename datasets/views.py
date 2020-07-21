@@ -118,15 +118,13 @@ class UpdateDatasetView(BSModalUpdateView,LoginRequiredMixin):
 				'update_view_running': True,
 				'username':self.request.user.username,
 				'pk':self.kwargs.get('pk'),
-				'clear_previous_file':self.request.POST.get('clear-previous-file')
+				'clear_previous_file':self.request.POST.get('clear-previous-file') # value of the clear file checkbox
 
 				})
 			
 			return kwargs 
 	
 	def form_valid(self, form):
-
-		
 		
 		return redirect('home')
 

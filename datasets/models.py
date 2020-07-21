@@ -6,9 +6,6 @@ from django.utils.text import slugify
 import os
 # Create your models here.
 
-def validate_file_extension(value):
-    if not value.name.endswith('.csv'):
-        raise forms.ValidationError(u'Only files of type .csv')
 
 
 def path_and_rename(instance, filename):
@@ -23,7 +20,7 @@ class DataSets(models.Model):
 
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	link = models.URLField(blank=True,null=True)
-	file = models.FileField(upload_to=path_and_rename,blank=True,validators=[validate_file_extension],null=True,default=None)
+	file = models.FileField(upload_to=path_and_rename,blank=True,null=True,default=None)
 	# slug = models.SlugField(blank=True)
 
 	

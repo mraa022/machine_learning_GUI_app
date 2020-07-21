@@ -15,10 +15,14 @@
 
 		 	<div class="grid-item">
 
-		 		<a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a><br>
+		 		<a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a><br><br>
 
-		 		<button><a href="{% url 'datasets:update' pk=dataset.pk %}" data-toggle="modal" data-target="#modal-update">Update</a></button><br>
-		 		<button class='btn btn-info'><a href="{% url 'datasets:detail' pk=dataset.pk %}">View</a></button>
+		 		
+
+		 		<a href="{% url 'datasets:update' pk=dataset.pk %}" data-toggle="modal" data-target="#modal-update"><i title='Update' class="far fa-edit icon-2x fa-2x"></i></a>
+		 		<br>
+
+		 		<a title='View' href="{% url 'datasets:detail' pk=dataset.pk %}"><i class="fas fa-eye fa-4x"></i></a>
 
 		 		
 

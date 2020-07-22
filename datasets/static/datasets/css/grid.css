@@ -1,0 +1,41 @@
+body{
+background-color: black;
+
+}
+.grid-container {
+margin-top: 5%;
+text-align: center;
+display: grid;
+grid-template-columns: repeat(5,25%);
+overflow: scroll;
+grid-row-gap: 2%;
+scrollbar-color: red yellow;
+}
+.grid-item{
+/*padding-top: 25px;*/
+transition: box-shadow 0.3s ease-in-out;
+height: calc(50vh);
+border: 1px solid white;
+overflow:scroll;
+scrollbar-color: red yellow;
+}
+.grid-item:hover{
+box-shadow: 0 0 500px 30px white;
+}
+
+h1{
+
+	color:gray;
+
+}
+
+p{
+	color:yellow;
+}
+
+i:hover{
+
+	cursor: pointer;
+	border:2px solid white;
+
+}

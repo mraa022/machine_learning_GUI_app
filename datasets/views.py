@@ -69,7 +69,7 @@ class DatasetDetailView(generic.DetailView,LoginRequiredMixin):
 				return pd.read_csv(data.file.path).head()
 
 		
-class CreateDatasetView(BSModalCreateView,LoginRequiredMixin):
+class CreateDatasetView(generic.CreateView,LoginRequiredMixin):
 
 	form_class = DataSetsForm
 	template_name = 'datasets/create.html'
@@ -94,7 +94,7 @@ class CreateDatasetView(BSModalCreateView,LoginRequiredMixin):
 			return kwargs 
 			
 
-class UpdateDatasetView(BSModalUpdateView,LoginRequiredMixin):
+class UpdateDatasetView(generic.UpdateView,LoginRequiredMixin):
 
 
 

@@ -2,27 +2,19 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet"  href="{% static 'css/master.css'%}">
-<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/create_form.css' %}">
-	
-	<h1>Data Sets List</h1>
-
-
-		
-
+<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">		
 		<div class="grid-container">
 		  {% for dataset in datasets  %}
 
 		 	<div class="grid-item">
 
-		 		<a href="{% url 'datasets:detail' pk=dataset.pk  %}">{{dataset.title|safe}}</a><br><br>
-
+		 		<p>{{dataset.title|safe}}</p><br>
 		 		
 
 		 		<a href="{% url 'datasets:update' pk=dataset.pk %}" data-toggle="modal" data-target="#modal-update"><i title='Update' class="far fa-edit icon-2x fa-2x"></i></a>
 		 		<br>
 
-		 		<a title='View' href="{% url 'datasets:detail' pk=dataset.pk %}"><i class="fas fa-eye fa-4x"></i></a>
+		 		<a class='view' id='{{dataset.pk}}' title='View' data-toggle='modal' data-target='#dataframe'><i class="fas fa-eye fa-4x"></i></a>
 
 		 		
 
@@ -35,13 +27,31 @@
 		 	{% if  not datasets.count == 10 %}
 
 
-		 	<a id='create_box' class='grid-item' href="{% url 'datasets:create' %}" data-toggle="modal" data-target="#modal">Create</a>
+		 	<a style='' id='create' class='grid-item' title='add a new dataset' class='nav-link' href="{% url 'datasets:create' %}" data-toggle="modal" data-target="#modal"><i class="fas fa-plus-circle fa-5x"></i></a>
 
 		 		{% endif %}
 		  
 		</div>			
 			
-		
 
+<script type="text/javascript">
+
+$('.view').on('click',function(){
+			id_ = $(this).attr('id')
+			
+			$('#dataframe .modal-content').html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">')
+			$.ajax({
+				type:'GET',
+				dataType:'html',
+				url: 'http://127.0.0.1:8000/datasets/dataset/'+id_+'/',
+				success: function(e){
+					$('#dataframe .modal-content').html($(e)[9]);
+				}
+
+			});
+
+	});
+	
+</script>
 
 {% endblock content %} 

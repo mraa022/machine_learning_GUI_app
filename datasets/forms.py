@@ -62,7 +62,7 @@ def raise_error_message(obj):
 
 	obj.raise_error()
 
-class DataSetsForm(BSModalModelForm):
+class DataSetsForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		self.username = kwargs.pop('username',None)
@@ -142,7 +142,6 @@ class DataSetsForm(BSModalModelForm):
 		self.cleaned_data = self.clear_file_checkbox(self.cleaned_data)  # remove the saved file if the checbox is checked off
 		url = self.cleaned_data.get('link')
 		file = self.cleaned_data.get('file')
-		print('kkk',file)
 		possible_errors = { 'RunOutOfSpace()':self.more_than_10_datasets_found(),
 							'AllFieldsEmpty()': not url and not file,
 							'AllFieldsFilled()': url and file,

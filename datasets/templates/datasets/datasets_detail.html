@@ -1,38 +1,24 @@
-{% extends "datasets/base_dataset.html" %}
+<!DOCTYPE html>
 {% load static %}
-{% block content %}
-<link rel="stylesheet"  href="{% static 'datasets/css/scroll.css'%}">
-	
-
-	<div class='jumbotron'>
-
-		<h1>DataSet Detail View</h1>
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/scroll.css' %}">
+	</head>
+	<body>
+		<div class="modal-header">
+		
+		</div>
+		<div class="modal-body" style='background-color:yellow'>
 			
-
-		{% if dataset.file %}
-
-		<h2>FILE PATH: {{dataset.file.path|safe}}</h2>
-		{% else %}
-
-		<h2><a href='{{dataset.link}}'>{{dataset.title|safe}}</a></h2>
+			<div class='df' style='overflow:scroll;' align='center'>
+				{{DataFrame.to_html | safe}}
+				
+			</div>
 			
-		{% endif %}
+		</div>
 
 		
-		
-	
-
-
-	</div>
-
-	<div class='df'>
-	{{DataFrame.to_html | safe}}
-
-	<button><a class='submit-btn btn btn-primary' href="{% url 'datasets:update' pk=dataset.pk %}" data-toggle="modal" data-target="#modal-update">Update</a></button><br>
-
-	</div>
-
-
-
-	
-{% endblock content %}
+	</body>
+</html>

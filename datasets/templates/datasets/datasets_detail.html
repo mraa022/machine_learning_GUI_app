@@ -3,22 +3,20 @@
 <html>
 	<head>
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/scroll.css' %}">
 	</head>
 	<body>
 		<div class="modal-header">
 		
 		</div>
-		<div class="modal-body" style='background-color:yellow'>
+		<div class="modal-body">
 			
-			<div class='df' style='overflow:scroll;' align='center'>
+
+			<div class='jumbotron' style='overflow:scroll;' align='center'>
+	
 				{{DataFrame.to_html | safe}}
 				
 			</div>
 			
 		</div>
-
-		
 	</body>
 </html>

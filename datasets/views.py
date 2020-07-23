@@ -1,19 +1,12 @@
-from django.shortcuts import render
-from django.urls import  reverse_lazy,reverse
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from .forms import DataSetsForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from bootstrap_modal_forms.generic import BSModalCreateView,BSModalUpdateView
-from django.db.models.fields.files import FieldFile
-# from django.template.response import TemplateResponse
-
 import requests
 import pandas as pd
 from . import models
 from django.views import  generic
 
-from .forms import DataSetsForm
 
 
 def remove_column(dataframe):
@@ -55,7 +48,8 @@ class DatasetDetailView(generic.DetailView,LoginRequiredMixin):
 	def get_context_data(self, **kwargs):
 		return {
 			"DataFrame": self.get_object(),
-			'dataset':  get_object_or_404(self.model, pk=self.kwargs.get('pk'))
+			'dataset':  get_object_or_404(self.model, pk=self.kwargs.get('pk')),
+
 		}
 
 	def get_object(self):
@@ -83,7 +77,6 @@ class CreateDatasetView(generic.CreateView,LoginRequiredMixin):
 		return redirect('datasets:detail', pk=self.object.pk)					
 	def get_form_kwargs(self): ## used to pass in the 'username' argument to the forms.py file
 
-
 			kwargs = super(CreateDatasetView, self).get_form_kwargs()
 			kwargs.update({
 
@@ -105,8 +98,8 @@ class UpdateDatasetView(generic.UpdateView,LoginRequiredMixin):
 
 	context_object_name = 'form'
 
-
 	def get_context_data(self, **kwargs):
+
 		context = super().get_context_data(**kwargs)
 		context['id'] = self.kwargs.get('pk')
 

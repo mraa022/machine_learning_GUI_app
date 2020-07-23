@@ -10,7 +10,6 @@ from machine_learning_gui import settings
 import os
 import requests
 
-
 class Base():
 
 	def raise_error(self):
@@ -32,25 +31,25 @@ class AllFieldsEmpty(Base):
 
 	def raise_error(self):
 
-		raise forms.ValidationError(u"One of the fields  needs to be filled")
+		raise forms.ValidationError("One of the fields  needs to be filled")
 
 class FileNotUnique(Base):
 
 	def raise_error(self):
 
-		raise forms.ValidationError(u"A dataset with that file already exists")
+		raise forms.ValidationError("A dataset with that file already exists")
 
 class UrlNotUnique(Base):
 
 	def raise_error(self):
 
-		raise forms.ValidationError(u"A data set with that link already exists")
+		raise forms.ValidationError("A data set with that link already exists")
 
 class RunOutOfSpace(Base):
 
 	def raise_error(self):
 
-		raise forms.ValidationError('You run out of space! go the the DataSets page and replace one')
+		raise forms.ValidationError('You run out of space! go to the DataSets page and replace one')
 
 class NoTablesFound(Base):
 
@@ -79,7 +78,7 @@ class DataSetsForm(forms.ModelForm):
 
 	def more_than_10_datasets_found(self):
 
-		 return DataSets.objects.filter(user__username__iexact=self.username).count() == 10 and not self.update_view_running
+		 return DataSets.objects.filter(user__username__iexact=self.username).count() == 10 and not self.update_view_running # datasets can still be saved in update view
 
 	def saved_updated_data(self,file,url):
 
@@ -91,19 +90,18 @@ class DataSetsForm(forms.ModelForm):
 	def file_exists(self,file):
 
 		'''
-		when updating, if the previous file is not updated, the input 'file' will return 'datasets/file-name', but if its updated it 
+		when updating a dataset that had a file, if the previous file is not updated, the input 'file' will return 'datasets/file-name', but if its updated it 
 		will return 'file-name'. so there is no need to check if the file is a new one or a saved one.
 
 		'''
-
-		saved_file_name = ''.join(map(lambda x: '' if x in ['(',')'] else x,str(file))).replace(' ','_') # this is needed because django  removes () from file names when saving them
+		saved_file_name = ''.join(map(lambda x: '' if x in ['(',')'] else x,str(file))).replace(' ','_') # removes () and replaces spaces with _, this is how django saves files
 		file_path  = os.path.join('datasets',self.username+saved_file_name)
 		base_dir = settings.media_dir
 		full_path = os.path.join(base_dir,str(file_path))
 		return  os.path.isfile(full_path) 
  
 	def url_exists(self,url):
-		return url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists()
+		return url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists() # used when the previous dataset had a url and when editing the person didn't change the url.
 		
 	def no_tables_found(self,url):
 
@@ -115,28 +113,28 @@ class DataSetsForm(forms.ModelForm):
 			return True
 
 
-	def clear_file_checkbox(self,cleaned_data):
+	def clear_file_checkbox(self,cleaned_data): 
+
+		'''
+			implements django's clear file checkbox functionality. this functionality is implemented because when posting 
+			ajax is used, and also form.PreventDefault() is used.
+		'''
 		
 		if self.update_view_running:  
 
 			is_checkbox_checked = eval(self.previous_file_cleared.capitalize())# since its gotten from a javascript POST the first letter of the bool will not be capitalized and its also of type <str>
 			current_file = cleaned_data.get('file')
-			if is_checkbox_checked and  isinstance(current_file, FieldFile):  # if the current file is the  on saved in the model and the clear checkbox is clicked. clear it
+			if is_checkbox_checked and  isinstance(current_file, FieldFile):  # if the current file is the  one saved in the model and the clear checkbox is clicked. clear it
 				cleaned_data['file'] = None		
 
 		return cleaned_data
 
 	def file_is_csv(self,file):
+		
 		if file:
 			return  file.name.endswith('.csv')
 		return True
-	def clear_file_field(self):
-		
-		self.current_dataset = DataSets.objects.get(pk=self.pk)
 
-		self.current_dataset.file = None
-
-		return self.current_dataset.save()
 	def clean(self):
 
 		self.cleaned_data = self.clear_file_checkbox(self.cleaned_data)  # remove the saved file if the checbox is checked off
@@ -150,6 +148,7 @@ class DataSetsForm(forms.ModelForm):
 							'NoTablesFound()': url and self.no_tables_found(url),
 							'NotCsvFile()':   not self.file_is_csv(file)
 		}
+
 		for obj,error in possible_errors.items():
 
 			if error:
@@ -159,7 +158,4 @@ class DataSetsForm(forms.ModelForm):
 		
 		if self.update_view_running:
 			self.saved_updated_data(file,url)  # i did the saving here because if i did it in the update view it would override the functionality of the clear checkbox (save both file and url)
-
-
-
 

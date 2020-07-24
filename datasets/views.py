@@ -1,5 +1,7 @@
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from django.urls import reverse,resolve
+
 from .forms import DataSetsForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 import requests
@@ -22,29 +24,30 @@ def remove_column(dataframe):
 	except:
 		return dataframe
 	 
+class Not_logged_in(generic.TemplateView):
 
-class DataSetsList(generic.ListView,LoginRequiredMixin):
+	template_name = 'datasets/not_logged_in.html'
+
+class DataSetsList(LoginRequiredMixin,generic.ListView):
 
 
 
 	model = models.DataSets
 	context_object_name = 'datasets'
-
-	template_name = 'datasets/datasets_list.html'
-
+	login_url = 'datasets:login_first'
 	def get_queryset(self):
-
 
 		return self.model.objects.filter(user__username = self.request.user.username)
 
 
-class DatasetDetailView(generic.DetailView,LoginRequiredMixin):
+
+class DatasetDetailView(LoginRequiredMixin,generic.DetailView):
 
 
 	template_name = 'datasets/datasets_detail.html'
 	model = models.DataSets
 
-  
+	login_url = 'datasets:login_first'
 	def get_context_data(self, **kwargs):
 		return {
 			"DataFrame": self.get_object(),
@@ -63,11 +66,11 @@ class DatasetDetailView(generic.DetailView,LoginRequiredMixin):
 				return pd.read_csv(data.file.path).head()
 
 		
-class CreateDatasetView(generic.CreateView,LoginRequiredMixin):
+class CreateDatasetView(LoginRequiredMixin,generic.CreateView):
 
 	form_class = DataSetsForm
 	template_name = 'datasets/create.html'
-
+	login_url = 'datasets:login_first'
 	def form_valid(self, form):
 		self.object = form.save(commit=False)
 		self.object.user = self.request.user
@@ -87,7 +90,7 @@ class CreateDatasetView(generic.CreateView,LoginRequiredMixin):
 			return kwargs 
 			
 
-class UpdateDatasetView(generic.UpdateView,LoginRequiredMixin):
+class UpdateDatasetView(LoginRequiredMixin,generic.UpdateView):
 
 
 
@@ -97,7 +100,7 @@ class UpdateDatasetView(generic.UpdateView,LoginRequiredMixin):
 	template_name = 'datasets/update.html'
 
 	context_object_name = 'form'
-
+	login_url = 'datasets:login_first'
 	def get_context_data(self, **kwargs):
 
 		context = super().get_context_data(**kwargs)

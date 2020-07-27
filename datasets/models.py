@@ -14,9 +14,10 @@ User = get_user_model()
 
 class DataSets(models.Model):
 
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='datasets')
 	link = models.URLField(blank=True,null=True)
 	file = models.FileField(upload_to=path_and_rename,blank=True,null=True,default=None)
+
 
 	def get_absolute_url(self):
 
@@ -29,6 +30,9 @@ class DataSets(models.Model):
 		return  self.user.username+ ' ' + str(self.pk)
 
 	def title(self):
-		return "<strong> <i> File Name: </i></strong> " + str(os.path.basename(self.file.name)) if  self.file else " <strong> <i>URL: </i></strong> " + str(self.link)
+		
+		return "<strong> <i> File Name: </i></strong> " + str(os.path.basename(self.file.name)).lstrip(self.user.username) if  self.file else " <strong> <i>URL: </i></strong> " + str(self.link)
 
 
+
+	

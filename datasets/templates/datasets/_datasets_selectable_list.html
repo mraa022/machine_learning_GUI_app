@@ -1,0 +1,14 @@
+{% load static %}
+
+<div class="grid-item">
+	<p>{{dataset.title|safe}}</p><br>
+	
+	<a class='view' id='{{dataset.pk}}' title='View' data-toggle='modal' data-target='#dataframe'><i class="fas fa-eye fa-4x"></i></a>
+	{% if dataset.file %}
+		<p id='dataset_location' style='display:none'>{{dataset.file.path}}</p>
+	{% else %}
+		<p id='dataset_location' style='display:none'>{{dataset.link}}</p>
+		
+	{% endif %}
+	
+</div>

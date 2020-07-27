@@ -19,7 +19,11 @@ $(function() {
 				success: function(response){
 						modal_body.prepend($(response).find('.alert'));
 					if ($(response).find('.alert').text().length ==0) {
-						window.location = '/datasets/list/';
+
+						
+						location.reload();
+						
+
 					}
 				},
 			

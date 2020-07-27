@@ -1,16 +1,15 @@
-
-{% load static %}
+<!DOCTYPE html>
 
 {% load bootstrap4 %}
 
-
-
 	
-{% block content %}
+<html>
+<head>
+	<title></title>
+</head>
+<body>
 
-
-<link rel="stylesheet" type="text/css" href="{% static "css/master.css" %}">
-<div class='jumbotron'>
+	<div class='jumbotron'>
 		
 		<form method="POST" id='login-form' enctype="multipart/form-data">
 			{% csrf_token %}
@@ -28,13 +27,11 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				{# <button type="submit" class="btn btn-primary" form="modal-details">Search</button> #}
 				<button type="submit" class="submit-btn btn btn-primary">Login</button>
 			</form>
 		</div>
 	</div>
   
-	
 <script type="text/javascript">
 	
 	var modal_body = $('form');
@@ -56,7 +53,7 @@
 				success: function(response){
 						modal_body.prepend($(response).find('.alert')[0]);
 					if ($(response).find('.alert').text().length ==0) {
-						window.location = '{% url "datasets:list" %}'
+						window.location = '{% url "home" %}'
 					}
 				},
 			
@@ -65,4 +62,6 @@
 	
 	});
 </script>
-{% endblock content %}
+</body>
+</html>
+

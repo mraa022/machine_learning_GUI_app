@@ -1,0 +1,59 @@
+{% extends "datasets/base_dataset.html" %}
+{% load static %}
+{% block content %}
+	<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
+	<div class='jumbotron' align=center>
+		<h1>Build Your ANN</h1>
+		<button id='can_continue' type="submit" class="submit-btn btn btn-primary" style='display:none;'><h1>Continue</h1></button>
+	</div><br><br>
+	<div class='ajax_part_of_page'>
+
+		{% if user.is_authenticated and user.datasets.count > 0 %}
+			<h1>Choose an existing DataSet or a new one</h1>
+			<div class="grid-container" align=center>
+				{% for dataset in user.datasets.all  %}
+					{% include "datasets/_datasets_selectable_list.html" %}
+					
+					
+				{% endfor %}
+				{% else %}
+
+				<h1>Choose New Dataset</h1>
+			{% endif %}
+		</div>
+
+		<div class='grid-container'>
+			<a style='background-color:green; color:white' id='create' class='grid-item' title='add a new dataset' class='nav-link' href="{% url 'datasets:choose_new_dataset' %}" data-toggle="modal" data-target="#modal"><h1>New DataSet</h1><br>
+				<i class="fas fa-plus-circle fa-5x"></i>
+			</a>
+			
+		</div>
+
+		</div>
+		<script type="text/javascript" src='{% static "datasets/js/populate_popup_detail_view.js" %}'></script>
+		<script type="text/javascript">
+			
+			$('.grid-item').not('#create').click(function(){
+				console.log('clicked');
+				$('#can_continue').css('display','block');
+				$('.grid-item').removeClass('higlight_selected');
+				$(this).addClass("higlight_selected");
+			});
+			$('#can_continue').click(function(){
+					var ajax_part_of_page = $('.ajax_part_of_page');
+					var selected_dataset = $('.higlight_selected');
+					var current_dataset_location = $(selected_dataset).find('#dataset_location').text();
+					var current_dataset_pk = $(selected_dataset).find('.view').attr('id');
+					Cookies.set('primary_key',current_dataset_pk,{path:'/'});
+					Cookies.set('dataset_location', current_dataset_location, {path: '/' });
+					$('#can_continue').remove();
+					$(ajax_part_of_page).html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">')
+					$.get('{% url "datasets:classification_or_regression" %}',function(response){ 
+    					$(ajax_part_of_page).html(response); 
+   					
+   					});
+
+
+			});
+		</script>
+	{% endblock content %}

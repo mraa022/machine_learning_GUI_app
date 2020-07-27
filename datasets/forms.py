@@ -68,6 +68,7 @@ class DataSetsForm(forms.ModelForm):
 		self.update_view_running = kwargs.pop('update_view_running',None)
 		self.pk = kwargs.pop('pk',None)
 		self.previous_file_cleared = kwargs.pop('clear_previous_file',None)  # get value of the clear file checkbox in update view
+		self.saved_to_session_instead = kwargs.pop('saved_to_session_instead',None)
 		super().__init__(*args, **kwargs)
 
 	class Meta():
@@ -94,14 +95,17 @@ class DataSetsForm(forms.ModelForm):
 		will return 'file-name'. so there is no need to check if the file is a new one or a saved one.
 
 		'''
-		saved_file_name = ''.join(map(lambda x: '' if x in ['(',')'] else x,str(file))).replace(' ','_') # removes () and replaces spaces with _, this is how django saves files
-		file_path  = os.path.join('datasets',self.username+saved_file_name)
-		base_dir = settings.media_dir
-		full_path = os.path.join(base_dir,str(file_path))
-		return  os.path.isfile(full_path) 
- 
+		if not self.saved_to_session_instead:
+			saved_file_name = ''.join(map(lambda x: '' if x in ['(',')'] else x,str(file))).replace(' ','_') # removes () and replaces spaces with _, this is how django saves files
+			file_path  = os.path.join('datasets',self.username+saved_file_name)
+			base_dir = settings.media_dir
+			full_path = os.path.join(base_dir,str(file_path))
+			return  os.path.isfile(full_path) 
+
+
 	def url_exists(self,url):
-		return url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists() # used when the previous dataset had a url and when editing the person didn't change the url.
+
+		return  not self.saved_to_session_instead and url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists() # used when the previous dataset had a url and when editing the person didn't change the url.
 		
 	def no_tables_found(self,url):
 
@@ -142,7 +146,7 @@ class DataSetsForm(forms.ModelForm):
 		file = self.cleaned_data.get('file')
 		possible_errors = { 'RunOutOfSpace()':self.more_than_10_datasets_found(),
 							'AllFieldsEmpty()': not url and not file,
-							'AllFieldsFilled()': url and file,
+							'AllFieldsFilled()': url and file ,
 							'FileNotUnique()': self.file_exists(file),
 							'UrlNotUnique()':  self.url_exists(url),
 							'NoTablesFound()': url and self.no_tables_found(url),
@@ -152,7 +156,9 @@ class DataSetsForm(forms.ModelForm):
 		for obj,error in possible_errors.items():
 
 			if error:
+				
 				object = eval(obj)
+
 				raise_error_message(object)
 
 		

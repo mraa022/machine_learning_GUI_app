@@ -37,7 +37,12 @@ $(function() {
 				success: function(response){
 					if (form_valid(response)){
 							clear_cookies();
-							location.reload();
+							$.get("/datasets/regression_or_classification/",function(response){ 
+								$("#modal .close").click()
+    							$('.ajax_part_of_page').html(response); 
+
+   					
+   							});
 						}
 						else{
 							add_errors_to_form(modal_body,response);

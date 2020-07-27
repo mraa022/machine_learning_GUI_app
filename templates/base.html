@@ -11,7 +11,6 @@
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
-      {# <link rel="stylesheet"  href="{% static 'css/style.css'%}"> #}
       <script src="https://kit.fontawesome.com/dac342a98d.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -30,7 +29,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'datasets:list' %}">DataSets</a>
               </li>
-    `         
+             
                <li  class="nav-item">
                 <a title='add a new dataset' class='nav-link' href="{% url 'datasets:create' %}" data-toggle="modal" data-target="#modal">New Dataset</i></a>
               </li>
@@ -58,7 +57,6 @@
           <div class="modal-content"></div>
         </div>
       </div>
-
 
       <div class="modal fade" tabindex="-1" role="dialog" id="modal-update">
         <div class="modal-dialog" role="document">

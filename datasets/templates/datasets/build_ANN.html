@@ -6,6 +6,7 @@
 		<h1>Build Your ANN</h1>
 		<button id='can_continue' type="submit" class="submit-btn btn btn-primary" style='display:none;'><h1>Continue</h1></button>
 	</div><br><br>
+	
 	<div class='ajax_part_of_page'>
 
 		{% if user.is_authenticated and user.datasets.count > 0 %}
@@ -38,6 +39,9 @@
 				$('#can_continue').css('display','block');
 				$('.grid-item').removeClass('higlight_selected');
 				$(this).addClass("higlight_selected");
+				$("*").animate({
+ 				scrollTop: 0
+				}, 200);
 			});
 			$('#can_continue').click(function(){
 					var ajax_part_of_page = $('.ajax_part_of_page');
@@ -50,6 +54,7 @@
 					$(ajax_part_of_page).html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">')
 					$.get('{% url "datasets:classification_or_regression" %}',function(response){ 
     					$(ajax_part_of_page).html(response); 
+
    					
    					});
 

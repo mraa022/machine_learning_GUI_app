@@ -1,12 +1,25 @@
+
+function show_loading_screen(){
+
+	$('#dataframe .modal-content').html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">')
+
+}
+
+function dump_table_in_popup(){
+
+	$('#dataframe .modal-content').html($(e).find('.jumbotron'));  
+}
+
 $('.view').on('click',function(){
-			id_ = $(this).attr('id') // the id of the submit button is the primary key	
-			$('#dataframe .modal-content').html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">')
+			pk = $(this).attr('id') // the id of the submit button is the primary key	
+			
+			show_loading_screen();
 			$.ajax({
 				type:'GET',
 				dataType:'html',
-				url: '/datasets/dataset/'+id_+'/',
+				url: '/datasets/dataset/'+pk+'/',
 				success: function(e){
-					$('#dataframe .modal-content').html($(e).find('.jumbotron'));  
+					dump_table_in_popup();
 				}
 
 			});

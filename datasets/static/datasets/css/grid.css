@@ -14,11 +14,12 @@ scrollbar-color: red yellow;
 }
 .grid-item{
 /*padding-top: 25px;*/
-transition: box-shadow 0.3s ease-in-out;
+transition-property: box-shadow, background-color;
+transition-duration: .5s;
+transition-timing-function: ease-in-out;
 height: calc(50vh);
 border: 1px solid white;
 overflow:scroll;
-transition : background-color 1s;
 }
 .grid-item:hover{
 box-shadow: 0 0 500px 30px white;

@@ -21,6 +21,7 @@ $(function() {
 	$('#choose-new-dataset').submit(function(e){
 
 			e.preventDefault();
+			console.log($('.ajax_part_of_page').html()); 
 			$('.alert').remove();
 			var url = $("input[type='url']").val();
 			var fd = new FormData();
@@ -41,7 +42,6 @@ $(function() {
 								$("#modal .close").click()
     							$('.ajax_part_of_page').html(response); 
 
-   					
    							});
 						}
 						else{

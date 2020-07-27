@@ -5,9 +5,9 @@ function show_loading_screen(){
 
 }
 
-function dump_table_in_popup(){
+function dump_table_in_popup(response){
 
-	$('#dataframe .modal-content').html($(e).find('.jumbotron'));  
+	$('#dataframe .modal-content').html($(response).find('.jumbotron'));  
 }
 
 $('.view').on('click',function(){
@@ -18,8 +18,8 @@ $('.view').on('click',function(){
 				type:'GET',
 				dataType:'html',
 				url: '/datasets/dataset/'+pk+'/',
-				success: function(e){
-					dump_table_in_popup();
+				success: function(response){
+					dump_table_in_popup(response);
 				}
 
 			});

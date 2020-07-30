@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
 	<div class='jumbotron' align=center>
 		<h1>Build Your ANN</h1>
-		<button id='can_continue' type="submit" class="submit-btn btn btn-primary" style='display:none;'><h1 style='color:yellow'>Continue</h1></button>
+		<button id='can_continue' type="button" class="submit-btn btn btn-primary" style='display:none;'><h1 style='color:yellow'>Continue</h1></button>
 	</div><br><br>
 	<div class='ajax_part_of_page'>
 		{% if user.is_authenticated and user.datasets.count > 0 %}
@@ -23,7 +23,7 @@
 		{% endif %}
 		
 		<div class='grid-container'>
-			<a style='background-color:green; color:white' id='create' class='grid-item' title='add a new dataset' class='nav-link' href="{% url 'datasets:choose_new_dataset' %}" data-toggle="modal" data-target="#modal"><h1>New DataSet</h1><br>
+			<a style='background-color:green;' id='create' class='grid-item' title='add a new dataset' class='nav-link' href="{% url 'datasets:choose_new_dataset' %}" data-toggle="modal" data-target="#modal"><h1>New DataSet</h1><br>
 				<i class="fas fa-plus-circle fa-5x"></i>
 			</a>
 			
@@ -42,6 +42,7 @@
 			}, 200);
 		});
 		$('#can_continue').click(function(){
+				$('#can_continue').css('display','none');
 				var ajax_part_of_page = $('.ajax_part_of_page');
 				var selected_dataset = $('.higlight_selected');
 				var current_dataset_location = $(selected_dataset).find('#dataset_location').text();
@@ -57,10 +58,19 @@
 				});
 		});
 		$('.ajax_part_of_page').on('click','#regression',function(){
-			$('.ajax_part_of_page').html('<img style="width: 20%; margin-left:30%" src="https://learningstatisticswithr.com/book/lsr_files/figure-html/regression1a-1.png">');
+			Cookies.set('label_is','continuous',{path:'/'})
+			$('.ajax_part_of_page').html('<div align="center"><img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif"></div>')
+			$.get('{% url "datasets:label_column" %}',function(response){
+				$('.ajax_part_of_page').html(response);
+		});
 		});
 		$('.ajax_part_of_page').on('click','#classification',function(){
-			$('.ajax_part_of_page').html('<img style="width: 20%; margin-left:30%" src="https://i.ytimg.com/vi/yIYKR4sgzI8/maxresdefault.jpg">');
+			Cookies.set('label_is','discrete',{path:'/'})
+			$('.ajax_part_of_page').html('<div align="center"><img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif"></div>')
+			$.get('{% url "datasets:label_column" %}',function(response){
+				$('.ajax_part_of_page').html(response);
+		});
+			
 		});
 	</script>
 {% endblock content %}

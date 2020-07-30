@@ -5,11 +5,41 @@ from django.contrib.auth.models import AnonymousUser
 from .forms import DataSetsForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 import requests
+from machine_learning_gui import settings
+from urllib.parse import unquote
 import pandas as pd
 from . import models
 from django.views import  generic
 import os
 from django.core.validators import URLValidator
+
+
+def dataset_saved_in_session(request):
+
+	return request.COOKIES['dataset_location'] == '' and request.COOKIES['primary_key'] == ''
+
+
+
+def get_dataframe(request):
+      
+		is_dataset_url = URLValidator()
+		if dataset_saved_in_session(request):
+			dataset = request.session['dataset_location']
+			try:
+				dataframe = remove_column(pd.read_html(requests.get(dataset).text)[0]) 
+			except:
+				dataframe = pd.read_csv(dataset)
+		else:  
+
+			dataset = unquote(request.COOKIES['dataset_location'])
+			try:
+				dataframe = remove_column(pd.read_html(requests.get(dataset).text)[0]) 
+			except:
+				dataframe = pd.read_csv(dataset)
+	
+
+		return dataframe.columns,dataframe
+
 
 def remove_column(dataframe):
 
@@ -141,13 +171,17 @@ class ChooseNewDataset(generic.CreateView):# saved in session instead of databas
 	def form_valid(self, form):
 
 		self.object = form.save(commit=False)
-		
+
 		if not self.request.session or not self.request.session.session_key:
 			self.request.session.save()
 
 
 		if self.object.file:
-			self.request.session['dataset_location'] = os.path.abspath(self.request.FILES['file'].name)
+			temparory_location = os.path.join(settings.MEDIA_ROOT,'datasets/temp_file.csv')
+			with open(temparory_location ,'wb+') as f:
+				for chunk in self.request.FILES['file'].chunks():
+					f.write(chunk)
+			self.request.session['dataset_location'] = temparory_location
 		else:
 			self.request.session['dataset_location'] = self.object.link
 
@@ -165,27 +199,43 @@ class ChooseNewDataset(generic.CreateView):# saved in session instead of databas
 
 
 
-class ShowDatasetInSession(generic.TemplateView):
+class DataSetCategoricalColumns(generic.TemplateView):
 
-	template_name = 'datasets/show_dataset_in_session.html'
+	template_name = 'datasets/categorical_columns.html'
 
-	def get_object(self):
-      
-			validate_url = URLValidator(verify_exists=False)
-
-			if validate_url(self.request.session['dataset_location']):  
-				return remove_column(pd.read_html(requests.get(data.link).text)[0]).head()
-
-			else:
-
-				return pd.read_csv(data.file.path).head()
+	
 
 	def get_context_data(self, **kwargs):
 
 		context = super().get_context_data(**kwargs)
-		context['dataframe'] = self.get_object()
+		context['dataframe_columns'] = get_dataframe(self.request)[0]
+		context['dataframe'] = get_dataframe(self.request)[1]
 
 		return context
+
+class DataSetNumericalColumns(generic.TemplateView):
+
+	template_name = 'datasets/numerical_columns.html'
+
+	def get_context_data(self, **kwargs):
+
+		context = super().get_context_data(**kwargs)
+		context['dataframe_columns'] = get_dataframe(self.request)[0]
+		context['dataframe'] = get_dataframe(self.request)[1]
+
+		return context
+
+class DataSetLabelColumn(generic.TemplateView):
+	template_name = 'datasets/label_column.html'
+	def get_context_data(self, **kwargs):
+
+		context = super().get_context_data(**kwargs)
+		context['dataframe_columns'] = get_dataframe(self.request)[0]
+		context['dataframe'] = get_dataframe(self.request)[1]
+
+		return context
+class NeuralNetworkDiagram(generic.TemplateView):
+	template_name = 'datasets/neural_network_graph.html'
 
 class BuildNeuralNetwork(generic.TemplateView):
 

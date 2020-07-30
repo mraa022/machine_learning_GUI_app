@@ -1,0 +1,31 @@
+{% load filter %}
+<div class='jumbotron' style='display:none' align='center'>
+	<button id='can_continue' type="button" class="submit-btn btn btn-primary"><h1 style='color:yellow'>Continue</h1></button>
+</div>
+<h1>Select The Categorical Columns</h1>
+
+<div class = 'grid-container'>
+	
+	{% for column in dataframe_columns %}
+		<div class='grid-item' align='center'>
+			<h3 id='{{column}}'>{{column}}</h3>
+			<h4>{{dataframe|get_data_in_column:column|safe}} </h4>
+		</div>
+		
+		
+	{% endfor %}
+</div>
+<script type="text/javascript">
+	var first_time_clicked = true;
+	$('.grid-item').not('button').click(function(){
+		if (first_time_clicked ){
+			$("*").animate({
+			scrollTop: 0
+			}, 200);
+		}
+		$(this).addClass("higlight_selected");
+		$('.jumbotron').css('display','block');
+		first_time_clicked = false;
+	});
+	
+</script>

@@ -13,3 +13,4 @@ class Welcome(TemplateView):
 
 class HomePage(TemplateView):
 	template_name = 'home.html'
+	

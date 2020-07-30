@@ -13,30 +13,41 @@ from django.views import  generic
 import os
 from django.core.validators import URLValidator
 
-
 def dataset_saved_in_session(request):
 
 	return request.COOKIES['dataset_location'] == '' and request.COOKIES['primary_key'] == ''
 
+def dataset_location_is_url(dataset_location):
+	
+	url_validator = URLValidator()
 
+	try:
+		return url_validator(dataset_location) == None # it returns none if its a valid url
+	except:
+		return False
+
+def get_dataframe_given_url_or_file(dataframe_location):
+
+	
+	if dataset_location_is_url(dataframe_location):
+
+			dataframe = remove_column(pd.read_html(requests.get(dataframe_location).text)[0]) 
+	else:
+			dataframe = pd.read_csv(dataframe_location)
+
+	return dataframe
 
 def get_dataframe(request):
       
-		is_dataset_url = URLValidator()
+
 		if dataset_saved_in_session(request):
-			dataset = request.session['dataset_location']
-			try:
-				dataframe = remove_column(pd.read_html(requests.get(dataset).text)[0]) 
-			except:
-				dataframe = pd.read_csv(dataset)
+
+			dataset_location = request.session['dataset_location']
+			dataframe  = get_dataframe_given_url_or_file(dataset_location)
 		else:  
 
-			dataset = unquote(request.COOKIES['dataset_location'])
-			try:
-				dataframe = remove_column(pd.read_html(requests.get(dataset).text)[0]) 
-			except:
-				dataframe = pd.read_csv(dataset)
-	
+			dataset_location = unquote(request.COOKIES['dataset_location'])  # its encoded in percents		
+			dataframe  = get_dataframe_given_url_or_file(dataset_location)
 
 		return dataframe.columns,dataframe
 
@@ -205,11 +216,13 @@ class DataSetCategoricalColumns(generic.TemplateView):
 
 	
 
-	def get_context_data(self, **kwargs):
+	def get_context_data(self, **kwargs):  
 
 		context = super().get_context_data(**kwargs)
-		context['dataframe_columns'] = get_dataframe(self.request)[0]
+		numerical_columns = unquote(self.request.COOKIES['numerical_columns'])
+		context['dataframe_columns'] = get_dataframe(self.request)[0] 
 		context['dataframe'] = get_dataframe(self.request)[1]
+		context['numerical_columns'] = numerical_columns  # used to higlight them in the grid
 
 		return context
 
@@ -219,8 +232,8 @@ class DataSetNumericalColumns(generic.TemplateView):
 
 	def get_context_data(self, **kwargs):
 
-		context = super().get_context_data(**kwargs)
-		context['dataframe_columns'] = get_dataframe(self.request)[0]
+		context = super().get_context_data(**kwargs) 
+		context['dataframe_columns'] = get_dataframe(self.request)[0]  # it get_dataframe() returns the dataframe columns and the dataframe
 		context['dataframe'] = get_dataframe(self.request)[1]
 
 		return context
@@ -237,9 +250,9 @@ class DataSetLabelColumn(generic.TemplateView):
 class NeuralNetworkDiagram(generic.TemplateView):
 	template_name = 'datasets/neural_network_graph.html'
 
-class BuildNeuralNetwork(generic.TemplateView):
+class Main(generic.TemplateView):
 
-	template_name = 'datasets/build_ANN.html'
+	template_name = 'datasets/Main.html'
 	
 	def get_context_data(self, **kwargs):
 

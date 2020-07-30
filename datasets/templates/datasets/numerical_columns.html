@@ -9,13 +9,13 @@
 		{% if  request.COOKIES.label_column  == column %}
 			<div class='grid-item label_column' style='background-color:yellow' align='center'>
 				<h4>Label Column</h4>
-				<h3 id='{{column}}'>{{column}}</h3>
+				<h3>{{column}}</h3>
 				<h4>{{dataframe|get_data_in_column:column|safe}} </h4>
 				
 			</div>
 		{% else %}
-			<div class='grid-item' align='center'>
-				<h3 id='{{column}}'>{{column}}</h3>
+			<div id='{{column}}' class='grid-item' align='center'>
+				<h3>{{column}}</h3>
 				{% if dataframe|is_numerical:column %}
 					<div>
 						<p>Contains Only Numbers</p>
@@ -35,6 +35,8 @@
 			scrollTop: 0
 			}, 200);
 		}
+
+		console.log($(this).attr('id'));
 		if($(this).find('div').length==1){
 			$(this).addClass("higlight_selected");
 			$('.jumbotron').css('display','block');
@@ -42,14 +44,22 @@
 		}
 		else{
 			alert('this column contains strings');
-		}
+		}});
+
 		$('.submit-btn').click(function(){
+			var numerical_columns = $('.higlight_selected');
+			var numerical_column_names = [];
 			$('.ajax_part_of_page').html('<div align="center"><img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif"></div>')
+			for(var i = 0; i < numerical_columns.length;i++){
+				numerical_column_names.push($(numerical_columns[i]).attr('id'))
+			}
+
+			Cookies.set('numerical_columns',numerical_column_names,{path:'/'})
 			$.get('{% url "datasets:categorical_columns" %}',function(response){
 				$('.ajax_part_of_page').html(response);
 		});
 		});
 		
-	});
+	
 	
 </script>

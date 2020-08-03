@@ -1,7 +1,6 @@
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.urls import reverse,resolve
-from django.contrib.auth.models import AnonymousUser
+from django.urls import reverse
 from .forms import DataSetsForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 import requests
@@ -12,6 +11,7 @@ from . import models
 from django.views import  generic
 import os
 from django.core.validators import URLValidator
+
 
 def dataset_saved_in_session(request):
 
@@ -38,7 +38,6 @@ def get_dataframe_given_url_or_file(dataframe_location):
 	return dataframe
 
 def get_dataframe(request):
-      
 
 		if dataset_saved_in_session(request):
 
@@ -174,7 +173,7 @@ class UpdateDatasetView(LoginRequiredMixin,generic.UpdateView):
 
 
 
-class ChooseNewDataset(generic.CreateView):# saved in session instead of database
+class ChooseNewDataset(generic.CreateView):
 
 	form_class = DataSetsForm
 	template_name = 'datasets/choose_new_dataset.html'

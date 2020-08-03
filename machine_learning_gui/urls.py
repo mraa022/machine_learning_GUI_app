@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from . import views
+from . import live_graph
+
 
 from . import settings
 
@@ -26,6 +28,7 @@ urlpatterns = [
     path('thanks/',views.ThankYou.as_view(),name='thanks'),
     path('accounts/',include('accounts.urls')),
     path('datasets/',include('datasets.urls')),
+    path('django_plotly_dash/', include('django_plotly_dash.urls'))
 
 ]
 from . import settings
@@ -37,11 +40,3 @@ urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-if settings.DEBUG:
-
-    import  debug_toolbar
-
-    urlpatterns = [
-
-        path('__debug__/', include(debug_toolbar.urls))
-    ]+ urlpatterns

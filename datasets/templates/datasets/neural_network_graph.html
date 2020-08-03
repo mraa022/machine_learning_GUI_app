@@ -1,8 +1,13 @@
 {% load static %}
-<script src="jquery.circle.js"></script>
-<canvas id='neural_network_canvas' height="600px" width="600p">
+{% load plotly_dash %}
+{# <link rel="stylesheet"  href="{% static 'css/master.css'%}"> #}
+{% block content %}
+		
+		<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/neural_network_diagram.css' %}">
+		<h1>Build Neural Network</h1>
+		
 	
-
-</canvas>
-
-<script type="text/javascript" src="{% static 'datasets/js/neural_network_diagram.js' %}"></script>
+	{% plotly_app name="hello_world" ratio=0.65%}
+	
+	{%plotly_message_pipe%}
+{% endblock  %}

@@ -1,44 +1,43 @@
-import dash
+from django_plotly_dash import DjangoDash
+from dash.dependencies import Output, Input
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
-import plotly.express as px
+import plotly
+import random
+import plotly.graph_objs as go
+from collections import deque
 
-import pandas as pd
-
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv')
-
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
-app.layout = html.Div([
-    dcc.Graph(id='graph-with-slider'),
-    dcc.Slider(
-        id='year-slider',
-        min=df['year'].min(),
-        max=df['year'].max(),
-        value=df['year'].min(),
-        marks={str(year): str(year) for year in df['year'].unique()},
-        step=None
-    )
-])
+X = deque()
+X.append(1)
+Y = deque()
+Y.append(1)
 
 
-@app.callback(
-    Output('graph-with-slider', 'figure'),
-    [Input('year-slider', 'value')])
-def update_figure(selected_year):
-    filtered_df = df[df.year == selected_year]
+app = DjangoDash('hello_world')
+app.layout = html.Div(
+    [
+        dcc.Graph(id='live-graph', animate=True),
+        dcc.Interval(
+            id='graph-update',
+            interval=1000
+        ),
+    ]
+)
 
-    fig = px.scatter(filtered_df, x="gdpPercap", y="lifeExp", 
-                     size="pop", color="continent", hover_name="country", 
-                     log_x=True, size_max=55)
+@app.callback(Output('live-graph', 'figure'),
+              [Input('graph-update', 'n_intervals')])
+def update_graph_scatter(input_data):
+    X.append(X[-1]+1)
+    Y.append(Y[-1]+Y[-1]*random.uniform(-0.1,0.1))
 
-    fig.update_layout(transition_duration=1000)
+    data = plotly.graph_objs.Scatter(
+            x=list(X),
+            y=list(Y),
+            name='Scatter',
+            mode= 'lines+markers'
+            )
 
-    return fig
+    return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]),
+                                                yaxis=dict(range=[min(Y),max(Y)]),)}
 
 
-if __name__ == '__main__':
-    app.run_server(debug=True)

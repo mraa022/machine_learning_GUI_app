@@ -28,19 +28,20 @@
 	{% endfor %}
 </div>
 <script type="text/javascript">
-	var first_time_clicked = true;
 	$('.grid-item').not('.label_column').click(function(){
-		if (first_time_clicked){
-			$("*").animate({
-			scrollTop: 0
-			}, 200);
-		}
+		
 
 		console.log($(this).attr('id'));
 		if($(this).find('div').length==1){
-			$(this).addClass("higlight_selected");
-			$('.jumbotron').css('display','block');
-			first_time_clicked = false;
+
+			$(this).toggleClass("higlight_selected");
+			if( $('.higlight_selected').length > 0){
+
+				$('.jumbotron').css('display','block');
+			}
+			else{
+				$('.jumbotron').css('display','none');
+			}
 		}
 		else{
 			alert('this column contains strings');

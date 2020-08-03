@@ -34,17 +34,20 @@
 		{% endfor %}
 	</div>
 	<script type="text/javascript">
-		var first_time_clicked = true;
 		$('.grid-item').not('.numerical_columns').not('.label_column').click(function(){
-			if (first_time_clicked ){
-				$("*").animate({
-				scrollTop: 0
-				}, 200);
+			
+			$(this).toggleClass("higlight_selected");
+			if( $('.higlight_selected').length > 0){
+
+				$('.jumbotron').css('display','block');
 			}
-			$(this).addClass("higlight_selected");
-			$('.jumbotron').css('display','block');
-			first_time_clicked = false;
+			else{
+				$('.jumbotron').css('display','none');
+			}
+			
 		});
+
+
 		$('.submit-btn').click(function(){
 
 			var categorical_columns = $('.higlight_selected');
@@ -55,6 +58,10 @@
 			}
 
 			Cookies.set('categorical_columns',categorical_column_names,{path:'/'})
+			$.get('{% url "datasets:neural_network_graph" %}',function(response){
+				$('.ajax_part_of_page').html(response);
+		});
+			
 
 
 		});

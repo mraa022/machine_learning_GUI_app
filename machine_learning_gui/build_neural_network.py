@@ -19,7 +19,7 @@ app.layout = html.Div([
     children=[],
  
 ),
-    html.Button("Add Hidden Layer",id='load-new-content',n_clicks=0),
+    html.Button("Add Layer",id='load-new-content',n_clicks=0),
     html.Br(),
      html.Button("Build Neural Network",id='c'),
     dcc.Graph(
@@ -104,14 +104,14 @@ def not_first_layer(layer_number):
 
 def get_result(n_clicks,children):
  
-    hidden_layers  = [x['props'].get('value') for x in children if type(x['props'].get('value')) == int and x['props'].get('value')!=0]  
+    layers  = [x['props'].get('value') for x in children if type(x['props'].get('value')) == int and x['props'].get('value')!=0]  
     fig['layout']['shapes'] = []  # clear shapes (circles)
     fig['data'] = []  # clear connections
     horizontal_distance_between_layers = 0
     if children:
 
-        for layer_number,layer in enumerate(hidden_layers):
-            center_layer_vertically =  (max(hidden_layers) - layer) / 2
+        for layer_number,layer in enumerate(layers):
+            center_layer_vertically =  (max(layers) - layer) / 2
             connect_to_previous_layer = True if not_first_layer(layer_number) else False   
             draw_layer(layer,center_layer_vertically,horizontal_distance_between_layers,connect_to_previous_layer)
             horizontal_distance_between_layers +=5

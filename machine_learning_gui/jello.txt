@@ -1,0 +1,378 @@
+         6576 function calls (6569 primitive calls) in 30.392 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000   30.392   30.392 build_and_train_neural_network.py:336(run_app)
+        1    0.000    0.000   30.392   30.392 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/dash.py:1448(run_server)
+        1    0.000    0.000   30.390   30.390 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:889(run)
+        1    0.000    0.000   30.388   30.388 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:876(run_simple)
+        1    0.000    0.000   30.388   30.388 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:991(inner)
+        1    0.000    0.000   30.386   30.386 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:774(serve_forever)
+        1    0.001    0.001   30.386   30.386 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:215(serve_forever)
+       82    0.002    0.000   30.318    0.370 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:402(select)
+       82   30.316    0.370   30.316    0.370 {method 'poll' of 'select.poll' objects}
+       46    0.000    0.000    0.067    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:303(_handle_request_noblock)
+       46    0.001    0.000    0.062    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:656(process_request)
+       46    0.001    0.000    0.058    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:834(start)
+       46    0.000    0.000    0.055    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:540(wait)
+       46    0.001    0.000    0.054    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:270(wait)
+      185    0.053    0.000    0.053    0.000 {method 'acquire' of '_thread.lock' objects}
+       46    0.000    0.000    0.004    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:792(get_request)
+       46    0.001    0.000    0.004    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:285(accept)
+       46    0.003    0.000    0.003    0.000 {built-in method _thread.start_new_thread}
+       46    0.001    0.000    0.003    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:761(__init__)
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:884(debug)
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/helpers.py:951(__get__)
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:681(jinja_env)
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:761(create_jinja_environment)
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/templating.py:42(__init__)
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/environment.py:288(__init__)
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/environment.py:101(load_extensions)
+        2    0.000    0.000    0.002    0.001 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/utils.py:125(import_string)
+        3    0.000    0.000    0.002    0.001 {built-in method builtins.__import__}
+        1    0.000    0.000    0.002    0.002 <frozen importlib._bootstrap>:986(_find_and_load)
+        1    0.000    0.000    0.002    0.002 <frozen importlib._bootstrap>:956(_find_and_load_unlocked)
+        1    0.000    0.000    0.002    0.002 <frozen importlib._bootstrap>:650(_load_unlocked)
+        1    0.000    0.000    0.002    0.002 <frozen importlib._bootstrap_external>:777(exec_module)
+       46    0.002    0.000    0.002    0.000 {method '_accept' of '_socket.socket' objects}
+        1    0.000    0.000    0.002    0.002 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/dash.py:1232(enable_dev_tools)
+        1    0.000    0.000    0.001    0.001 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/dash.py:1205(_setup_dev_tools)
+        9    0.000    0.000    0.001    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/_configs.py:43(get_combined_config)
+        9    0.000    0.000    0.001    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/_configs.py:8(load_dash_env_vars)
+        9    0.000    0.000    0.001    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/_configs.py:10(<dictcomp>)
+        1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap_external>:849(get_code)
+        1    0.000    0.000    0.001    0.001 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:830(make_server)
+        1    0.000    0.000    0.001    0.001 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:716(__init__)
+      397    0.000    0.000    0.001    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/os.py:764(getenv)
+        1    0.000    0.000    0.001    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:445(__init__)
+       47    0.000    0.000    0.001    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:505(__init__)
+      400    0.000    0.000    0.001    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/_collections_abc.py:657(get)
+        1    0.000    0.000    0.001    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/http/server.py:135(server_bind)
+        1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap_external>:969(get_data)
+        1    0.000    0.000    0.001    0.001 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:743(getfqdn)
+        1    0.001    0.001    0.001    0.001 {built-in method _socket.gethostbyaddr}
+       47    0.000    0.000    0.001    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:512(family)
+        1    0.001    0.001    0.001    0.001 {method 'read' of '_io.BufferedReader' objects}
+       95    0.000    0.000    0.001    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:97(_intenum_converter)
+        1    0.000    0.000    0.001    0.001 <frozen importlib._bootstrap>:211(_call_with_frames_removed)
+        1    0.000    0.000    0.001    0.001 {built-in method builtins.exec}
+        1    0.000    0.000    0.001    0.001 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:2(<module>)
+      403    0.000    0.000    0.001    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/os.py:668(__getitem__)
+       47    0.001    0.000    0.001    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:222(__init__)
+       47    0.001    0.000    0.001    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:219(__init__)
+       97    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/enum.py:278(__call__)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1424(info)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1553(_log)
+       82    0.000    0.000    0.000    0.000 {built-in method math.ceil}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:578(_compile_bytecode)
+        1    0.000    0.000    0.000    0.000 {built-in method marshal.loads}
+      403    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/os.py:746(encode)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:973(log_startup)
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:1110(daemon)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/re.py:248(compile)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/re.py:287(_compile)
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:518(type)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/_internal.py:94(_log)
+       47    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/_weakrefset.py:81(add)
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:734(_newname)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/cli.py:657(show_server_banner)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:759(compile)
+       10    0.000    0.000    0.000    0.000 {built-in method builtins.__build_class__}
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:275(_key_from_fd)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/utils.py:179(echo)
+       97    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/enum.py:557(__new__)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1579(handle)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1633(callHandlers)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1538(makeRecord)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:284(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:694(get_sockaddr)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:937(handle)
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:258(_acquire_restore)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:901(getaddrinfo)
+       96    0.000    0.000    0.000    0.000 {built-in method _thread.allocate_lock}
+       10    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x10caaab50}
+        1    0.000    0.000    0.000    0.000 {built-in method _socket.getaddrinfo}
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1069(emit)
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:1177(_make_invoke_excepthook)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:890(_find_spec)
+        7    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:44(__new__)
+       50    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:1306(current_thread)
+       48    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:246(__enter__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1334(find_spec)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:937(parse)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1302(_get_spec)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:598(_code)
+       47    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:261(_is_owned)
+        5    0.000    0.000    0.000    0.000 {built-in method posix.stat}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1431(find_spec)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:435(_parse_sub)
+       11    0.000    0.000    0.000    0.000 {method 'write' of '_io.TextIOWrapper' objects}
+       92    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:1095(daemon)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/encodings/__init__.py:70(search_function)
+       48    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:249(__exit__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:493(_parse)
+        2    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1405(setLevel)
+      405    0.000    0.000    0.000    0.000 {method 'encode' of 'str' objects}
+      3/1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:71(_compile)
+      514    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        2    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1360(_clear_cache)
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:255(_release_save)
+       47    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method io.open_code}
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:80(_path_stat)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/termui.py:534(secho)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/cli.py:596(load_dotenv)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:752(func)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:914(format)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/genericpath.py:27(isfile)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/_compat.py:92(with_metaclass)
+       48    0.000    0.000    0.000    0.000 {method '__enter__' of '_thread.lock' objects}
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:651(format)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:458(server_bind)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/encodings/idna.py:300(getregentry)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:549(module_from_spec)
+       81    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:254(service_actions)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:667(server_close)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:477(_init_module_attrs)
+      198    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:477(server_close)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1502(findCaller)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:496(close)
+       92    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:513(is_set)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:2003(getLogger)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:536(_compile_info)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:652(should_strip_ansi)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:454(get_text_stdout)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socket.py:492(_real_close)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1047(__init__)
+       93    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:351(register)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/_compat.py:98(__new__)
+       56    0.000    0.000    0.000    0.000 {built-in method _thread.get_ident}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1272(getLogger)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:858(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:414(_force_correct_text_writer)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:519(set)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:742(isatty)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:200(__init__)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1058(flush)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:362(_force_correct_text_stream)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/encodings/idna.py:147(encode)
+       46    0.000    0.000    0.000    0.000 {built-in method _socket.getdefaulttimeout}
+        4    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/posixpath.py:117(splitext)
+       46    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:333(verify_request)
+       46    0.000    0.000    0.000    0.000 {method 'append' of 'collections.deque' objects}
+       24    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:389(parent)
+        1    0.000    0.000    0.000    0.000 {function socket.close at 0x7febbbe561f0}
+        4    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/posixpath.py:140(basename)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:493(_classify_pyc)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:147(__enter__)
+        5    0.000    0.000    0.000    0.000 {method 'isatty' of '_io.TextIOWrapper' objects}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:294(cache_from_source)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:376(cached)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:62(_path_join)
+        9    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/_utils.py:141(__setitem__)
+        1    0.000    0.000    0.000    0.000 {method 'bind' of '_socket.socket' objects}
+       46    0.000    0.000    0.000    0.000 {method 'release' of '_thread.lock' objects}
+       17    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:164(__getitem__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:424(_get_cached)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/globals.py:38(resolve_color_default)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/environment.py:83(create_cache)
+       62    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+       48    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.lock' objects}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:347(__init__)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:234(register)
+      3/1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:174(getwidth)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:887(createLock)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1677(isEnabledFor)
+       15    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/enum.py:828(__and__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:99(_path_isfile)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:276(_optimize_charset)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:364(notify_all)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:629(usesTime)
+    50/47    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        8    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:214(_acquireLock)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:157(_get_module_lock)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:90(_path_is_mode_type)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:51(_unpack_uint32)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/_internal.py:75(_has_level_handler)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/globals.py:6(get_current_context)
+        4    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/genericpath.py:121(_splitext)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:635(formatMessage)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/termui.py:433(style)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1010(path_stats)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/codecs.py:94(__new__)
+        3    0.000    0.000    0.000    0.000 {method 'getsockname' of '_socket.socket' objects}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:530(clear)
+       33    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/utils.py:343(__init__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1426(_get_spec)
+       12    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+       46    0.000    0.000    0.000    0.000 {method 'gettimeout' of '_socket.socket' objects}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:469(server_activate)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:202(__exit__)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:244(_register_at_fork_reinit_lock)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/_collections_abc.py:664(__contains__)
+        6    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:233(__next)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:254(get)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:338(_stream_is_misconfigured)
+       10    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:285(is_bytes)
+        8    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:894(acquire)
+        6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:64(<listcomp>)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/_weakrefset.py:38(_remove)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:151(__exit__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/encodings/__init__.py:43(normalize_encoding)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:341(notify)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/weakref.py:419(get)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:434(format)
+       13    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:423(usesTime)
+       16    0.000    0.000    0.000    0.000 {method 'acquire' of '_thread.RLock' objects}
+       17    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:360(getMessage)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:224(__init__)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:209(__init__)
+        8    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:223(_releaseLock)
+        1    0.000    0.000    0.000    0.000 {method 'setsockopt' of '_socket.socket' objects}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:103(release)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:215(_fileobj_lookup)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1392(__init__)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:222(_verbose_message)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:156(<lambda>)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:423(_simple)
+        1    0.000    0.000    0.000    0.000 {method 'listen' of '_socket.socket' objects}
+        8    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:901(release)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:296(_is_binary_writer)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:268(close)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/utils.py:349(_postinit)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:629(spec_from_file_location)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:21(_fileobj_to_fd)
+        2    0.000    0.000    0.000    0.000 {method 'split' of 'bytes' objects}
+       38    0.000    0.000    0.000    0.000 {method 'clear' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:526(_validate_timestamp_pyc)
+        3    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:355(_escape)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:44(is_ascii_encoding)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:431(_format)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:839(_addHandlerRef)
+        4    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/posixpath.py:52(normcase)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/serving.py:672(select_address_family)
+        9    0.000    0.000    0.000    0.000 {method 'flush' of '_io.TextIOWrapper' objects}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:354(_is_compatible_text_stream)
+        4    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1017(_handle_fromlist)
+        3    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:172(append)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:50(Extension)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:174(InternationalizationExtension)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:249(_compile_charset)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:176(cb)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:119(getLevelName)
+        7    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:160(__len__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/environment.py:123(_environment_sanity_check)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:78(acquire)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1323(_fixupParents)
+        3    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:286(tell)
+        4    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/bin/../lib/python3.8/posixpath.py:41(_get_sep)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:58(__init__)
+       11    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+        7    0.000    0.000    0.000    0.000 {built-in method builtins.min}
+       16    0.000    0.000    0.000    0.000 {method 'release' of '_thread.RLock' objects}
+        8    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:792(filter)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:189(_checkLevel)
+        1    0.000    0.000    0.000    0.000 {built-in method _imp._fix_co_filename}
+        1    0.000    0.000    0.000    0.000 {method 'register' of 'select.poll' objects}
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:742(templates_auto_reload)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:1031(name)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:346(_is_compat_stream_attr)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/helpers.py:78(get_load_dotenv)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1589(addHandler)
+       15    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+       15    0.000    0.000    0.000    0.000 {built-in method posix.fspath}
+        4    0.000    0.000    0.000    0.000 {method 'find' of 'str' objects}
+        3    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:111(__init__)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:68(_path_split)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:461(_get_literal_prefix)
+        4    0.000    0.000    0.000    0.000 {built-in method time.time}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:796(create_global_jinja_loader)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:63(__init__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:800(find_spec)
+        1    0.000    0.000    0.000    0.000 {built-in method _sre.compile}
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.any}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:76(__init__)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/socketserver.py:485(fileno)
+        1    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        6    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:772(<lambda>)
+        5    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:867(debug)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:492(_get_charset_prefix)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:437(ExprStmtExtension)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:595(isstring)
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:867(__exit__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:921(fix_flags)
+        2    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:772(__init__)
+        2    0.000    0.000    0.000    0.000 {method 'find' of 'bytearray' objects}
+        3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:863(__enter__)
+        5    0.000    0.000    0.000    0.000 {built-in method _imp.acquire_lock}
+        4    0.000    0.000    0.000    0.000 {built-in method sys._getframe}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/weakref.py:395(__setitem__)
+        3    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/logging/__init__.py:1663(getEffectiveLevel)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:79(__init__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:342(__init__)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/multiprocessing/process.py:189(name)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:456(_check_name_wrapper)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/config.py:29(__get__)
+        9    0.000    0.000    0.000    0.000 {method 'upper' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1265(_path_importer_cache)
+        4    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/multiprocessing/process.py:37(current_process)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.next}
+        1    0.000    0.000    0.000    0.000 <string>:1(__new__)
+        4    0.000    0.000    0.000    0.000 {built-in method posix.getpid}
+        3    0.000    0.000    0.000    0.000 {built-in method from_bytes}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:35(_new_module)
+        1    0.000    0.000    0.000    0.000 {built-in method _codecs.lookup}
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/threading.py:81(RLock)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:470(DebugExtension)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:41(ExtensionRegistry)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:81(groups)
+        1    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:581(_CommentFinder)
+        3    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:249(match)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:939(__init__)
+        5    0.000    0.000    0.000    0.000 {built-in method _imp.release_lock}
+        4    0.000    0.000    0.000    0.000 {method 'isalnum' of 'str' objects}
+        3    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/dash/_utils.py:124(__getattr__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:450(LoopControlExtension)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/_compat.py:97(metaclass)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/templating.py:54(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/utils.py:44(contextfunction)
+        3    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/flask/app.py:979(<genexpr>)
+        1    0.000    0.000    0.000    0.000 {built-in method _imp.is_frozen}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:36(_relax_case)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:143(__init__)
+        1    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_compile.py:453(_get_iscased)
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/sre_parse.py:168(__setitem__)
+        1    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'insert' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method select.poll}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'strip' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/werkzeug/_internal.py:83(<genexpr>)
+        2    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'discard' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/click/_compat.py:734(<lambda>)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:725(find_spec)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.issubclass}
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:466(AutoEscapeExtension)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:397(has_location)
+        1    0.000    0.000    0.000    0.000 /Users/adnanbadri/Enviroments/DJANGO/lib/python3.8/site-packages/jinja2/ext.py:462(WithExtension)
+        1    0.000    0.000    0.000    0.000 /Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/selectors.py:199(__enter__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:964(get_filename)
+        1    0.000    0.000    0.000    0.000 {method 'fileno' of '_socket.socket' objects}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:774(create_module)
+
+

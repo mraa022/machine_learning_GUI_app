@@ -12,7 +12,6 @@ from django.views import  generic
 import os
 from django.core.validators import URLValidator
 
-
 def dataset_saved_in_session(request):
 
 	return request.COOKIES['dataset_location'] == '' and request.COOKIES['primary_key'] == ''
@@ -26,6 +25,10 @@ def dataset_location_is_url(dataset_location):
 	except:
 		return False
 
+def filtered_data_frame(request,dataframe):
+	selected_columns  = unquote(request.COOKIES['categorical_columns']).split(',') + unquote(request.COOKIES['numerical_columns']).split(',') + [unquote(request.COOKIES['label_column'])]
+	dataframe = dataframe[selected_columns]
+	return dataframe
 def get_dataframe_given_url_or_file(dataframe_location):
 
 	
@@ -36,12 +39,16 @@ def get_dataframe_given_url_or_file(dataframe_location):
 			dataframe = pd.read_csv(dataframe_location)
 
 	return dataframe
+def save_final_dataset(dataframe,label_column,categorical_columns):
+	pass
+
+
 
 def get_dataframe(request):
 
 		if dataset_saved_in_session(request):
 
-			dataset_location = request.session['dataset_location']
+			dataset_location = unquote(request.session['dataset_location'])
 			dataframe  = get_dataframe_given_url_or_file(dataset_location)
 		else:  
 
@@ -247,7 +254,28 @@ class DataSetLabelColumn(generic.TemplateView):
 
 		return context
 class NeuralNetworkDiagram(generic.TemplateView):
+
 	template_name = 'datasets/neural_network_graph.html'
+	def get_context_data(self, **kwargs):
+
+		context = super().get_context_data(**kwargs)
+		media_path = os.path.join(settings.MEDIA_ROOT,'datasets/')
+		dataframe  = get_dataframe_given_url_or_file(unquote(self.request.COOKIES['dataset_location'])) if not dataset_saved_in_session(self.request) else get_dataframe_given_url_or_file(unquote(self.request.session['dataset_location']))
+		dataframe = filtered_data_frame(self.request,dataframe)  # only return the selected columns
+		categorical_columns = unquote(self.request.COOKIES['categorical_columns']).split(',')
+		dataframe = dataframe.dropna()
+		dataframe = pd.get_dummies(data = dataframe, columns =categorical_columns,drop_first=True)
+		dataframe.to_csv(os.path.join(media_path,'formated_dataset.csv'))
+
+
+		## i could not figure out how to use requests outside of the views 
+		with open(os.path.join(media_path,'contain_some_cookies_data'),'w') as f:
+			label_column_name = unquote(self.request.COOKIES['label_column'])
+			model_type = self.request.COOKIES['label_is']
+			data = {'label_column_name':label_column_name,'model_type':model_type}
+			f.write(str(data))
+
+		return context
 
 class Main(generic.TemplateView):
 

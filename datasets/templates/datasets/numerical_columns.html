@@ -2,6 +2,11 @@
 <div class='jumbotron' style='display:none' align='center'>
 	<button id='can_continue' type="button" class="submit-btn btn btn-primary"><h1 style='color:yellow'>Continue</h1></button>
 </div>
+{% if request.COOKIES.label_is == 'discrete' %}
+	<h1>Classification</h1>
+	{% else %}
+	<h1>Regression</h1>
+{% endif %}
 <h1>Select The Numerical Columns</h1>
 <div class = 'grid-container'>
 	

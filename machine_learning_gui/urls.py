@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from . import views
-from . import build_neural_network
+from . import build_neural_network,build_and_train_neural_network
 
 
 from . import settings

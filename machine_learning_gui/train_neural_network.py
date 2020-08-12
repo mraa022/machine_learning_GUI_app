@@ -84,7 +84,6 @@ def create_model(layers):
 train_dataset_path = get_file_path(file_type = 'dataframe')
 df = pd.read_csv(get_file_path('dataframe'))
 label_column_name = return_cookies_file()['label_column_name']
-f = []
 label_type = return_cookies_file()['model_type']
 X = df.drop(label_column_name,axis=1).values
 Y = df[label_column_name].values
@@ -95,7 +94,6 @@ if label_type == 'discrete':
     encoded_Y = encoder.transform(Y)
     Y = np_utils.to_categorical(encoded_Y)
 
-dataset = tf.data.Dataset.from_tensor_slices((X, Y))
 x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.2)
 
 
@@ -123,7 +121,6 @@ def update_graph(inp):
             mode= 'lines+markers'
             )
 
-	# print(min(y),max(y))
 	return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(x),max(x)]),
                                                 yaxis=dict(range=[min(y),max(y)]),template='plotly_dark')}
 

@@ -10,7 +10,7 @@ fig = go.Figure()
 fig.update_xaxes(range=[0, 15])
 fig.update_yaxes(range=[0, 15])
 fig.update_layout(width=800, height=800,xaxis_showgrid=False, yaxis_showgrid=False,template='plotly_dark')
-app = DjangoDash('hello_world')
+app = DjangoDash('buildNeuralNetwork')
 config = dict({'scrollZoom': True,'showAxisDragHandles':True})
 app.layout = html.Div([
     html.H1("Build Neural Network"),

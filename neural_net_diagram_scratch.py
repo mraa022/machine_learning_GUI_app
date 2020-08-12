@@ -3,20 +3,17 @@ from django_plotly_dash import DjangoDash
 import dash_core_components as dcc
 import os
 import pandas as pd
-# import plotly
 import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.utils import np_utils
-# import numpy as np
 import dash_html_components as html
 from dash.dependencies import Input, Output,State
 import plotly.graph_objects as go
 from collections import deque
-import cProfile, pstats, io
-
+import time
 old_model = deque(maxlen=1)
 new_model_layers = None
 new_model_loss,new_model_optimizer = None,None
@@ -28,7 +25,7 @@ neural_network_graph_fig.update_layout(xaxis_showgrid=False, yaxis_showgrid=Fals
 error_rate_graph_fig.update_layout(template='plotly_dark')
 error_rate = deque()
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets) 
+app = DjangoDash('buildAndTrainModel', external_stylesheets=external_stylesheets) 
 config = dict({'scrollZoom': True,'showAxisDragHandles':True})
 first_time = 0
 app.layout = html.Div([
@@ -96,7 +93,7 @@ app.layout = html.Div([
 def add_new_text_input(n_clicks,old_output):
     
 
-    return old_output+[dcc.Input(type="number", placeholder="number of neurons")]
+    return old_output+[dcc.Input(type="number", value=1)]
 
 
 
@@ -131,7 +128,6 @@ def draw_layer(layer,center_layer_vertically,x_of_layer,can_connect_to_previous_
                 x1=x_of_layer+1,  # 1 is radius of the neuron
                 y1=center_layer_vertically+2, # 2 is diameter of the neuron
                 line_color="LightSeaGreen",
-
             ))
 
         current_layer.append([x_of_layer,center_layer_vertically+1] ) ## get corners of neuron 'x' = left corner. 'y' = bottom corner
@@ -181,7 +177,7 @@ def get_result(n_clicks,children):
 def get_file_path(file_type):
     base_path = os.path.dirname(os.getcwd())
 
-    return os.path.join(base_path,'media/datasets/formated_dataset.csv') if file_type == 'dataframe' else os.path.join(base_path,'media/datasets/contain_some_cookies_data')
+    return os.path.join(base_path,'machine_learning_gui/media/datasets/formated_dataset.csv') if file_type == 'dataframe' else os.path.join(base_path,'machine_learning_gui/media/datasets/contain_some_cookies_data')
 
 def return_cookies_file():
     with open(get_file_path(file_type='cookies_file'),'r') as f:
@@ -217,12 +213,13 @@ def already_updated_params(old_params,new_params):
 
     return True if old_params == new_params else False
 
-
-
 def update_graph(inp):
     with open('error_rate','r') as f:
       
-        error_rate = eval(f.read())  ### sometimes this function runs while the training function is running. this causes an EOF error
+        try:
+            error_rate = eval(f.read())  ### sometimes this function runs while the training function is running. this causes an EOF error
+        except SyntaxError:
+            pass 
 
       
         
@@ -249,8 +246,6 @@ def update_graph(inp):
 class myCallback(tf.keras.callbacks.Callback):
     
     def on_epoch_end(self, epoch, logs):
-        if epoch%10 == 0:
-            print([x.units for x in self.model.layers])
         if new_model_loss and new_model_optimizer and not already_updated_params(old_params=[self.model.optimizer,self.model.loss],new_params=[new_model_optimizer,new_model_loss]):
             self.model.optimizer = new_model_optimizer
             self.model.loss = new_model_loss
@@ -259,7 +254,7 @@ class myCallback(tf.keras.callbacks.Callback):
         error_rate.append(logs['loss'])
         with open('error_rate','w') as f:
             f.write(str(error_rate))
-
+        time.sleep(1)
 
 @app.callback(
     Output(component_id='placeholder',component_property='children'),
@@ -268,7 +263,7 @@ class myCallback(tf.keras.callbacks.Callback):
     Input('c','n_clicks')],
     [State('input_boxes','children')])
 
-def train_neural_network(optimizer,learning_rate,c,layers=[1]):
+def train_neural_network(optimizer,learning_rate,c,layers):
             global first_time
             global new_model_layers
             global new_model_loss,new_model_optimizer
@@ -305,7 +300,8 @@ def train_neural_network(optimizer,learning_rate,c,layers=[1]):
             else:
                 
                 get_old_model = old_model[0]
-                if [x.units for x in get_old_model.layers][:-1] != [x for x in layers][:-1]:
+                if [x.units for x in get_old_model.layers][:-1] != [x for x in layers]:
+                    print('KKKKKKKKJKKkKKKkkKKKK')
                     new_model = create_model(layers)
                     get_old_model.stop_training = True
                     new_model.compile(optimizer=model_optimizer, loss=loss, metrics=["acc"])
@@ -322,7 +318,7 @@ app.callback(Output('live-graph', 'figure'),[Input(component_id='graph-update', 
 
 
 
-def run_app():
-    app.run_server(debug=False)
+# def run_app():
+#     app.run_server(debug=False)
 
-run_app()
+# run_app()

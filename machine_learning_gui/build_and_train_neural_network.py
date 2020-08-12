@@ -13,7 +13,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output,State
 import plotly.graph_objects as go
 from collections import deque
-
+import time
 old_model = deque(maxlen=1)
 new_model_layers = None
 new_model_loss,new_model_optimizer = None,None
@@ -93,7 +93,7 @@ app.layout = html.Div([
 def add_new_text_input(n_clicks,old_output):
     
 
-    return old_output+[dcc.Input(type="number", placeholder="number of neurons")]
+    return old_output+[dcc.Input(type="number", value=1)]
 
 
 
@@ -213,12 +213,13 @@ def already_updated_params(old_params,new_params):
 
     return True if old_params == new_params else False
 
-
-
 def update_graph(inp):
     with open('error_rate','r') as f:
       
-        error_rate = eval(f.read())  ### sometimes this function runs while the training function is running. this causes an EOF error
+        try:
+            error_rate = eval(f.read())  ### sometimes this function runs while the training function is running. this causes an EOF error
+        except SyntaxError:
+            pass 
 
       
         
@@ -253,7 +254,7 @@ class myCallback(tf.keras.callbacks.Callback):
         error_rate.append(logs['loss'])
         with open('error_rate','w') as f:
             f.write(str(error_rate))
-
+        time.sleep(1)
 
 @app.callback(
     Output(component_id='placeholder',component_property='children'),
@@ -262,7 +263,7 @@ class myCallback(tf.keras.callbacks.Callback):
     Input('c','n_clicks')],
     [State('input_boxes','children')])
 
-def train_neural_network(optimizer,learning_rate,c,layers=[1]):
+def train_neural_network(optimizer,learning_rate,c,layers):
             global first_time
             global new_model_layers
             global new_model_loss,new_model_optimizer
@@ -299,7 +300,8 @@ def train_neural_network(optimizer,learning_rate,c,layers=[1]):
             else:
                 
                 get_old_model = old_model[0]
-                if [x.units for x in get_old_model.layers][:-1] != [x for x in layers][:-1]:
+                if [x.units for x in get_old_model.layers][:-1] != [x for x in layers]:
+                    print('KKKKKKKKJKKkKKKkkKKKK')
                     new_model = create_model(layers)
                     get_old_model.stop_training = True
                     new_model.compile(optimizer=model_optimizer, loss=loss, metrics=["acc"])

@@ -1,1 +1,1 @@
-{'label_column_name': 'Survived', 'model_type': 'discrete'}
+{'label_column_name': 'PassengerId', 'model_type': 'continuous'}

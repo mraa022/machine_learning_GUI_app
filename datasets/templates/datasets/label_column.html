@@ -41,7 +41,7 @@
 			console.log('clicked');
 			var column_name = $('.higlight_selected').attr('id')
 			Cookies.set('label_column',column_name,{path:'/'});
-
+			
 			$('.ajax_part_of_page').html('<div align="center"><img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif"></div>')
 			$.get('{% url "datasets:numerical_columns" %}',function(response){
 				$('.ajax_part_of_page').html(response);

@@ -48,7 +48,7 @@ def get_dataframe(request):
 
 		if dataset_saved_in_session(request):
 
-			dataset_location = unquote(request.session['dataset_location'])
+			dataset_location = unquote(request.session['dataset_location'])# its encoded in percents
 			dataframe  = get_dataframe_given_url_or_file(dataset_location)
 		else:  
 
@@ -253,7 +253,35 @@ class DataSetLabelColumn(generic.TemplateView):
 		context['dataframe'] = get_dataframe(self.request)[1]
 
 		return context
-class NeuralNetworkDiagram(generic.TemplateView):
+
+class CurrentDataSet(generic.TemplateView):
+
+	template_name = 'datasets/current_dataset.html'
+
+	def get_context_data(self, **kwargs):
+
+		context = super().get_context_data(**kwargs)
+		
+		context['dataframe'] = get_dataframe(self.request)[1].head(10)
+
+		return context
+
+class ShowSelectedColumns(generic.TemplateView):
+	template_name = 'datasets/show_selected_columns.html'
+
+	def get_context_data(self, **kwargs):
+
+		context = super().get_context_data(**kwargs)
+		numerical_columns = unquote(self.request.COOKIES['numerical_columns'])
+		categorical_columns = unquote(self.request.COOKIES['categorical_columns'])
+		context['dataframe_columns'] = get_dataframe(self.request)[0] 
+		context['dataframe'] = get_dataframe(self.request)[1].head(10)
+		context['numerical_columns'] = numerical_columns  # used to higlight them in the grid
+		context['categorical_columns'] = categorical_columns
+
+
+		return context
+class NeuralNetworkDiagram(generic.TemplateView):  
 
 	template_name = 'datasets/neural_network_graph.html'
 	def get_context_data(self, **kwargs):
@@ -268,7 +296,7 @@ class NeuralNetworkDiagram(generic.TemplateView):
 		dataframe.to_csv(os.path.join(media_path,'formated_dataset.csv'))
 
 
-		## i could not figure out how to use requests outside of the views 
+		## i could not figure out how to use requests outside of the views, so i just used files
 		with open(os.path.join(media_path,'contain_some_cookies_data'),'w') as f:
 			label_column_name = unquote(self.request.COOKIES['label_column'])
 			model_type = self.request.COOKIES['label_is']

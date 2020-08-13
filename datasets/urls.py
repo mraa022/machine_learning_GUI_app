@@ -17,7 +17,9 @@ urlpatterns = [
 	path('regression_or_classification/',views.ClassificationOrRegression.as_view(),name='classification_or_regression'),
 	path('neural_network_graph/',views.NeuralNetworkDiagram.as_view(),name='neural_network_graph'),
 	path('numberical_columns/',views.DataSetNumericalColumns.as_view(),name='numerical_columns'),
-	path('label_column/',views.DataSetLabelColumn.as_view(),name='label_column')
+	path('label_column/',views.DataSetLabelColumn.as_view(),name='label_column'),
+	path('selected_dataset/',views.CurrentDataSet.as_view(),name='selected_dataset'),
+	path('show_selected_columns/',views.ShowSelectedColumns.as_view(),name='show_selected_columns')
 
 
 	

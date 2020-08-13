@@ -39,6 +39,11 @@ $(function() {
 				success: function(response){
 					if (form_valid(response)){
 							clear_cookies();
+							
+							$('.not-modal-jumbotron').html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">');
+							$.get('/datasets/selected_dataset/',function(response){
+							$('.not-modal-jumbotron').html(response);
+							});
 							$.get("/datasets/regression_or_classification/",function(response){ 
 								$("#modal .close").click()
     							$('.ajax_part_of_page').html(response); 

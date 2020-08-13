@@ -28,6 +28,30 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = DjangoDash('buildAndTrainModel', external_stylesheets=external_stylesheets) 
 config = dict({'scrollZoom': True,'showAxisDragHandles':True})
 first_time = 0
+
+
+error_rate_graph_fig["layout"]["updatemenus"] = [
+    {
+        "buttons": [
+            
+            {
+                "args": [[None], {"frame": {"duration": 0, "redraw": False},
+                                  "mode": "immediate",
+                                  "transition": {"duration": 0}}],
+                "label": "Pause",
+                "method": "animate"
+            }
+        ],
+        "direction": "left",
+        "pad": {"r": 10, "t": 87},
+        "showactive": False,
+        "type": "buttons",
+        "x": 0.1,
+        "xanchor": "right",
+        "y": 0,
+        "yanchor": "top"
+    }
+]
 app.layout = html.Div([
     html.H1("Build And Train Your Neural Network"),
     html.Div(id='placeholder',style={'display':'none'},children=[]),

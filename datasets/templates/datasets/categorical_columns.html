@@ -44,7 +44,6 @@
 		$('.grid-item').not('.numerical_columns').not('.label_column').click(function(){
 			
 			$(this).toggleClass("higlight_selected");
-			console.log($('.not-modal-jumbotron'))
 			if( $('.higlight_selected').length > 0){
 
 				$('.jumbotron').css('display','block');
@@ -67,7 +66,6 @@
 			Cookies.set('categorical_columns',categorical_column_names,{path:'/'})
 			$('.not-modal-jumbotron').html('<div align="center"><img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif"></div>')
 			$.get('{% url "datasets:show_selected_columns" %}',function(response){
-				console.log(response);
 				$('.not-modal-jumbotron').html(response);
 			});
 			$.get('{% url "datasets:neural_network_graph" %}',function(response){

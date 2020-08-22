@@ -1,20 +1,17 @@
 from django import  forms
 import os
 from django.db.models.fields.files import FieldFile
-from bootstrap_modal_forms.forms import BSModalModelForm
 from pandas import read_html
-from django.core.files.storage import default_storage
 import pandas as pd
 from .models import DataSets
 from machine_learning_gui import settings
-import os
 import requests
 
 class Base():
 
 	def raise_error(self):
 
-		pass
+		raise NotImplementedError('IT must be inherited')
 
 class NotCsvFile(Base):
 
@@ -81,7 +78,7 @@ class DataSetsForm(forms.ModelForm):
 
 		 return DataSets.objects.filter(user__username__iexact=self.username).count() == 10 and not self.update_view_running # datasets can still be saved in update view
 
-	def saved_updated_data(self,file,url):
+	def save_updated_data(self,file,url):
 
 		current_dataset = DataSets.objects.get(pk=self.pk)  
 		current_dataset.file = file
@@ -91,7 +88,7 @@ class DataSetsForm(forms.ModelForm):
 	def file_exists(self,file):
 
 		'''
-		when updating a dataset that had a file, if the previous file is not updated, the input 'file' will return 'datasets/file-name', but if its updated it 
+		when updating a dataset that had a file, if the previous file is not updated, the file-field input will return 'datasets/file-name', but if its updated it 
 		will return 'file-name'. so there is no need to check if the file is a new one or a saved one.
 
 		'''
@@ -105,7 +102,7 @@ class DataSetsForm(forms.ModelForm):
 
 	def url_exists(self,url):
 
-		return  not self.saved_to_session_instead and url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists() # used when the previous dataset had a url and when editing the person didn't change the url.
+		return  not self.saved_to_session_instead and url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists() 
 		
 	def no_tables_found(self,url):
 
@@ -120,13 +117,13 @@ class DataSetsForm(forms.ModelForm):
 	def clear_file_checkbox(self,cleaned_data): 
 
 		'''
-			implements django's clear file checkbox functionality. this functionality is implemented because when posting 
+			implements django's clear file checkbox functionality. this functionality is implemented because when posting,
 			ajax is used, and also form.PreventDefault() is used.
 		'''
 		
 		if self.update_view_running:  
 
-			is_checkbox_checked = eval(self.previous_file_cleared.capitalize())# since its gotten from a javascript POST the first letter of the bool will not be capitalized and its also of type <str>
+			is_checkbox_checked = eval(self.previous_file_cleared.capitalize())# since its gotten from a javascript POST the first letter of the bool will not be capitalized and its also of type <str>. converts 'false/true' to False/True
 			current_file = cleaned_data.get('file')
 			if is_checkbox_checked and  isinstance(current_file, FieldFile):  # if the current file is the  one saved in the model and the clear checkbox is clicked. clear it
 				cleaned_data['file'] = None		
@@ -154,7 +151,6 @@ class DataSetsForm(forms.ModelForm):
 		}
 
 		for obj,error in possible_errors.items():
-
 			if error:
 				
 				object = eval(obj)
@@ -163,5 +159,5 @@ class DataSetsForm(forms.ModelForm):
 
 		
 		if self.update_view_running:
-			self.saved_updated_data(file,url)  # i did the saving here because if i did it in the update view it would override the functionality of the clear checkbox (save both file and url)
+			self.save_updated_data(file,url)  # i did the saving here because if i did it in the update view it would override the functionality of the clear checkbox
 

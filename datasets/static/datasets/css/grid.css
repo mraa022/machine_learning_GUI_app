@@ -10,7 +10,6 @@ grid-template-columns: repeat(5,25%);
 overflow: scroll;
 grid-row-gap: 2%;
 grid-column-gap: 2%;
-scrollbar-color: red yellow;
 }
 .grid-item{
 /*padding-top: 25px;*/

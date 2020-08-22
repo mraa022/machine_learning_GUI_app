@@ -29,9 +29,9 @@ def filtered_data_frame(request,dataframe):
 	selected_columns  = unquote(request.COOKIES['categorical_columns']).split(',') + unquote(request.COOKIES['numerical_columns']).split(',') + [unquote(request.COOKIES['label_column'])]
 	dataframe = dataframe[selected_columns]
 	return dataframe
+
 def get_dataframe_given_url_or_file(dataframe_location):
 
-	
 	if dataset_location_is_url(dataframe_location):
 
 			dataframe = remove_column(pd.read_html(requests.get(dataframe_location).text)[0]) 
@@ -39,10 +39,6 @@ def get_dataframe_given_url_or_file(dataframe_location):
 			dataframe = pd.read_csv(dataframe_location)
 
 	return dataframe
-def save_final_dataset(dataframe,label_column,categorical_columns):
-	pass
-
-
 
 def get_dataframe(request):
 
@@ -80,8 +76,6 @@ class ClassificationOrRegression(generic.TemplateView):
 
 
 class DataSetsList(LoginRequiredMixin,generic.ListView):
-
-
 
 	model = models.DataSets
 	context_object_name = 'datasets'
@@ -126,7 +120,6 @@ class CreateDatasetView(LoginRequiredMixin,generic.CreateView):
 		self.object = form.save(commit=False)
 		self.object.user = self.request.user
 		self.object.file = self.request.FILES.get('file')
-		
 		self.object.save()
 		return redirect('datasets:detail', pk=self.object.pk)					
 	def get_form_kwargs(self): ## used to pass in the 'username' argument to the forms.py file
@@ -175,9 +168,6 @@ class UpdateDatasetView(LoginRequiredMixin,generic.UpdateView):
 	def form_valid(self, form):
 		
 		return redirect('home')
-
-	
-
 
 
 class ChooseNewDataset(generic.CreateView):
@@ -293,15 +283,9 @@ class NeuralNetworkDiagram(generic.TemplateView):
 		categorical_columns = unquote(self.request.COOKIES['categorical_columns']).split(',')
 		dataframe = dataframe.dropna()
 		dataframe = pd.get_dummies(data = dataframe, columns =categorical_columns,drop_first=True)
-		dataframe.to_csv(os.path.join(media_path,'formated_dataset.csv'))
+		dataframe.to_csv(os.path.join(media_path,self.request.COOKIES['sessionid']+'formated_dataset.csv'))
 
-
-		## i could not figure out how to use requests outside of the views, so i just used files
-		with open(os.path.join(media_path,'contain_some_cookies_data'),'w') as f:
-			label_column_name = unquote(self.request.COOKIES['label_column'])
-			model_type = self.request.COOKIES['label_is']
-			data = {'label_column_name':label_column_name,'model_type':model_type}
-			f.write(str(data))
+		
 
 		return context
 

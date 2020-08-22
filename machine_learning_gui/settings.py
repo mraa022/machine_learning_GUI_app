@@ -46,9 +46,7 @@ INSTALLED_APPS = [
     'bootstrap_modal_forms',
     'widget_tweaks',
     'django_cleanup.apps.CleanupConfig',
-    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     'channels',
-    'channels_redis'
 
 ]
 
@@ -134,14 +132,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [static_dir]
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379),],
-        },
-    },
-}
+
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 ASGI_APPLICATION = 'machine_learning_gui.routing.application'

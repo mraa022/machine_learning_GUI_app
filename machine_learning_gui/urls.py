@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from . import views
-from . import build_neural_network,build_and_train_neural_network
 
 
 from . import settings
@@ -28,8 +27,6 @@ urlpatterns = [
     path('thanks/',views.ThankYou.as_view(),name='thanks'),
     path('accounts/',include('accounts.urls')),
     path('datasets/',include('datasets.urls')),
-    path('django_plotly_dash/', include('django_plotly_dash.urls'))
-
 ]
 from . import settings
 from django.contrib.staticfiles.urls import static

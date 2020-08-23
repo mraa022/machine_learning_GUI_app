@@ -1,11 +1,9 @@
 {% load static %}
 {# <link rel="stylesheet"  href="{% static 'css/master.css'%}"> #}
 {% block content %}
-
 	
 	<style type="text/css">
 		html, body {
-
 			height: 100%;
 			margin: 0px;
 		}
@@ -15,30 +13,44 @@
 		.container {
 			height: 100%;
 		}
-
+	
+	input{
+		border-radius:1rem;
+		text-align:center;
+	}
 	</style>
-	
-	
-  
-  <select class="browser-default custom-select custom-select-lg mb-3 optimizer-options">
-    <option value='Adam' class="dropdown-item">Adam</option>
-    <option value = 'Rmsprop' class="dropdown-item">Rmsprop</option>
-    <option value = 'Adagrad' class="dropdown-item">Adagrad</option>
-    <option value = 'SGD' class="dropdown-item">SGD</option>
-    <option value = 'Adadelta' class="dropdown-item">Adadelta</option>
-    <option value = 'Adamax' class="dropdown-item">Adamax</option>
-    <option value = 'Nadam' class="dropdown-item">Nadam</option>
-    <option value = 'Ftrl' class="dropdown-item">Ftrl</option>
-
-  </select >
-  <select class="browser-default custom-select custom-select-lg mb-3 loss-options">
-
-
-  </select>
-  <div class='layers'>
+	<select class="browser-default custom-select custom-select-lg mb-3 optimizer-options">
+		<option value='Adam' class="dropdown-item">Adam</option>
+		<option value = 'Rmsprop' class="dropdown-item">Rmsprop</option>
+		<option value = 'Adagrad' class="dropdown-item">Adagrad</option>
+		<option value = 'SGD' class="dropdown-item">SGD</option>
+		<option value = 'Adadelta' class="dropdown-item">Adadelta</option>
+		<option value = 'Adamx' class="dropdown-item">Adamx</option>
+		<option value = 'Nadam' class="dropdown-item">Nadam</option>
+		<option value = 'Ftrl' class="dropdown-item">Ftrl</option>
+	</select >
+	<div class='optimizer-params' align='center' style=''>
+		
+		<input type="number" id='learning_rate' placeholder='learning rate'>
+		<input id='beta_1' type="number" placeholder='beta 1'>
+		<input id='beta_2' type="number" placeholder='beta 2'><br>
+		<input id='momentum' type="number" placeholder='momentum'>
+		<input id='initial_accumulator_value' type="number" placeholder='initial accumulator value'>
+		<input id='l1_regularization_strength' type="number" placeholder='l1 regularization strength'><br>
+		<input id='l2_regularization_strength' type="number" placeholder='l2 regularization strength'>
+		<input id='l2_shrinkage_regularization_strength' type="number" placeholder='l2 shrinkage regularization strength'>
+		<input id='rho' type="number" placeholder= 'rho'>
+		<input id='learning_rate_power' type="number" placeholder="learning_rate_power">
+	</div>
+	<select class="browser-default custom-select custom-select-lg mb-3 loss-options">
+	</select>
+	<div class='activation_function_options'>
 		
 	</div>
-	<input class="btn btn-primary" id="chat-message-submit" type="button" value="Train Neural Network">
+	<div class='layers'>
+		
+	</div>
+	<input class="btn btn-primary" id="train_neural_network" type="button" value="Train Neural Network">
 	<button id='add-layer' class="btn btn-primary">Add Layer</button><br>
 	<button id='build-neural-network' class="btn btn-primary">Build Neural Network Graph</button>
 	<div class='error_rate' style="width:50%; height:50%;overflow;scroll">
@@ -48,178 +60,7 @@
 	<div class='container' style='overflow:scroll;width:50%;'>
 		<canvas width='800px' height="800px" id='neural_network_graph' style='border:1px solid white;margin-left50%'></canvas>
 	</div>
-	
-
-	<script type="text/javascript">
-		if(Cookies.get('label_is') == 'discrete'){
-			let discrete_loss_options = ['CategoricalCrossentropy','Poisson','KLDivergence']
-			for(let option = 0; option< discrete_loss_options.length;option++){
-				$('.loss-options').append($('<option></option>').attr('value',discrete_loss_options[option]).text(discrete_loss_options[option]));
-			}
-
-		}
-
-		else{
-
-			let continuous_loss_options = ['MeanSquaredError','MeanAbsoluteError','MeanAbsolutePercentageError','MeanSquaredLogarithmicError','CosineSimilarity','Huber','LogCosh']
-			for(let option = 0; option< continuous_loss_options.length;option++){
-				$('.loss-options').append($('<option></option>').attr('value',continuous_loss_options[option]).text(continuous_loss_options[option]));
-			}
-
-		}
-
-		var error_rate_canvas = document.getElementById('error_rate').getContext('2d');
-		var neural_network_graph = document.getElementById('neural_network_graph').getContext('2d');
-		var neural_network_canvas = document.getElementById('neural_network_graph');
-
-		let radius = 20;
-		var layer_x = radius + 5
-		var neuron_y = neural_network_canvas.height - (radius)
-
-		var s = 0
-		var e = 1
-
-		function draw() {
-
-		    neural_network_graph.beginPath();
-		    neural_network_graph.arc(layer_x, neuron_y, radius, s, e);
-		    neural_network_graph.stroke();
-		    neural_network_graph.closePath();
-
-		}
-
-		var layer_number = 0
-		var neuron_number = 0
-		var layer_neurons_list
-		var id = null;
-
-		function animate_neuron_drawing(layer_neurons) {
-		    if (typeof(layer_neurons) == 'object') {
-		        layer_neurons_list = layer_neurons;
-		    }
-
-
-
-		    if (neuron_number == layer_neurons_list[layer_number]) {
-
-		        if (layer_number + 1 != layer_neurons_list.length) {
-		            layer_x += (radius * 4);
-		            neuron_number = 0
-		            layer_number += 1;
-		            neuron_y = (neural_network_canvas.height - (radius)) - ((Math.max(...layer_neurons_list) - layer_neurons_list[layer_number]) * radius)
-
-
-		        } else {
-		            layer_number = 0;
-		            neuron_number = 0;
-		            s = 0;
-		            e = 1;
-		            layer_x = radius + 5;
-		            return;
-		            // cancelAnimationFrame(id);
-
-		        }
-
-		    }
-		    draw();
-
-		    s += 1
-		    e += 1
-		    if (e > Math.PI * 2) {
-		        s = 0;
-		        e = 1;
-		        neuron_number += 1;
-		        neuron_y -= (radius * 2);
-		    }
-		    id = requestAnimationFrame(animate_neuron_drawing);
-		}
-
-
-		$('#build-neural-network').on('click', function() {
-		    // neural_network_graph.clearRect(0, 0, neural_network_canvas.width, neural_network_canvas.height);
-		    $("*").animate({
-				scrollTop: window.innerHeight
-			}, 200);
-		    var layers_list = $('.layers input');
-		    var layer_neurons = []
-		    for (let i = 0; i < layers_list.length; i++) {
-
-		        if (layers_list[i].value.length > 0 && layers_list[i].value > 0) {
-		            layer_neurons.push(layers_list[i].value)
-		        }
-
-		    }
-		    if (layer_neurons.length != 0) {
-		        neural_network_canvas.height = Math.max(...layer_neurons) * (radius * 2);
-		        neural_network_canvas.width = (layer_neurons.length) * ((radius * 2) * 3);
-		        neuron_y = (neural_network_canvas.height - (radius)) - ((Math.max(...layer_neurons) - layer_neurons[0]) * radius);
-		        // cancelAnimationFrame(id);
-		        animate_neuron_drawing(layer_neurons);
-
-
-		    }
-
-
-		});
-		$('#add-layer').click(function() {
-		    let layers_div = $('.layers');
-		    let layers = $('.layers input');
-		    layers_div.append('<input type="number" placeholder="Number of Neurons"></input>');
-		})
-		var datasets = {
-		    labels: [],
-		    datasets: [{
-		        label: "Training Loss",
-		        data: [],
-		        fill: false,
-		        borderColor: "#bae755"
-		    }]
-		}
-		var lineChart = new Chart(error_rate_canvas, {
-		    type: 'line',
-		    data: datasets
-		});
-		
-		let chatSocket = new WebSocket(
-		    
-		    'ws://' 
-		    +
-		     window.location.host
-		     +
-		     '/ws/error_graph/' 
-		  
-		);
-
-		document.querySelector('#chat-message-submit').onclick = function(e) {
-		  
-		    chatSocket.close();
-		    chatSocket = new WebSocket(
-		        'ws://' +
-		        window.location.host
-		       	+
-		        '/ws/error_graph/' 
-		     	
-		    );
-		    chatSocket.onopen = function() {
-		        chatSocket.send(JSON.stringify({
-		            'message': 'message',
-		        }));
-		    }
-
-		    chatSocket.onmessage = function(e) {
-		        const data = JSON.parse(e.data);
-
-		        lineChart.data.datasets.forEach((dataset) => {
-		            // console.log('dataset');
-		            lineChart.data.labels.push(dataset.data.length + 1);
-		            dataset.data.push(data.message);
-		            
-		        });
-		        lineChart.update();
-		    };
-
-		}; 
-	
-
-	</script>
+	<script type="text/javascript" src='{% static "datasets/js/handle_losses_and_optimizer_options.js" %}'></script>
+	<script type="text/javascript" src='{% static "datasets/js/draw_neural_network.js" %}'></script>
+	<script type="text/javascript" src='{% static "datasets/js/error_rate_graph.js" %}'></script>
 {% endblock  %}

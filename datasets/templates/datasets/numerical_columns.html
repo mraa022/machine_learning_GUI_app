@@ -1,5 +1,5 @@
 {% load filter %}
-<div class='jumbotron' style='display:none' align='center'>
+<div class='jumbotron' style='' align='center'>
 	<button id='can_continue' type="button" class="submit-btn btn btn-primary"><h1 style='color:yellow'>Continue</h1></button>
 </div>
 {% if request.COOKIES.label_is == 'discrete' %}
@@ -36,17 +36,10 @@
 	$('.grid-item').not('.label_column').click(function(){
 		
 
-		console.log($(this).attr('id'));
 		if($(this).find('div').length==1){
 
 			$(this).toggleClass("higlight_selected");
-			if( $('.higlight_selected').length > 0){
-
-				$('.jumbotron').css('display','block');
-			}
-			else{
-				$('.jumbotron').css('display','none');
-			}
+			
 		}
 		else{
 			alert('this column contains strings');

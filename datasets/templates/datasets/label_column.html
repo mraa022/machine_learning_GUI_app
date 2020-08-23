@@ -13,16 +13,37 @@
 	
 	{% for column in dataframe_columns %}
 		<div class='grid-item' align='center' id='{{column}}'>
+			{% if request.COOKIES.label_is == 'continuous' and dataframe|is_numerical:column %}
+
+				<div>
+
+					<p>Contains Only Numbers</p>
+
+				</div>
+				
+			{% endif %}
 			<h3>{{column}}</h3>
 			<h4>{{dataframe|get_data_in_column:column|safe}} </h4>
+			
 		</div>
 		
 		
 	{% endfor %}
+
 </div>
 <script type="text/javascript">
 	var first_time_clicked = true;
+
 	$('.grid-item').not('button').click(function(){
+		if($(this).find('div').length==1 && Cookies.get('label_is') == 'continuous'){
+
+			$('.grid-item').removeClass('higlight_selected');
+			$(this).addClass("higlight_selected");;
+			
+		}
+		else if($(this).find('div').length!=1 && Cookies.get('label_is') == 'continuous'){
+			alert('this column contains strings');
+		};
 		if (first_time_clicked ){
 			$("*").animate({
 			scrollTop: 0

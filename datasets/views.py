@@ -27,6 +27,7 @@ def dataset_location_is_url(dataset_location):
 
 def filtered_data_frame(request,dataframe):
 	selected_columns  = unquote(request.COOKIES['categorical_columns']).split(',') + unquote(request.COOKIES['numerical_columns']).split(',') + [unquote(request.COOKIES['label_column'])]
+	selected_columns = list(filter(None,selected_columns))  # if there are no categorical or numerical remove the epmpty spaces
 	dataframe = dataframe[selected_columns]
 	return dataframe
 
@@ -83,8 +84,6 @@ class DataSetsList(LoginRequiredMixin,generic.ListView):
 
 	def get_queryset(self):
 		return self.model.objects.filter(user__username = self.request.user.username)
-
-
 
 class DatasetDetailView(LoginRequiredMixin,generic.DetailView):
 
@@ -204,8 +203,6 @@ class ChooseNewDataset(generic.CreateView):
 			
 			return kwargs 
 
-
-
 class DataSetCategoricalColumns(generic.TemplateView):
 
 	template_name = 'datasets/categorical_columns.html'
@@ -281,8 +278,9 @@ class NeuralNetworkDiagram(generic.TemplateView):
 		dataframe  = get_dataframe_given_url_or_file(unquote(self.request.COOKIES['dataset_location'])) if not dataset_saved_in_session(self.request) else get_dataframe_given_url_or_file(unquote(self.request.session['dataset_location']))
 		dataframe = filtered_data_frame(self.request,dataframe)  # only return the selected columns
 		categorical_columns = unquote(self.request.COOKIES['categorical_columns']).split(',')
+		categorical_columns = list(filter(None,categorical_columns))  # return an empty list if there are no categorical columns
 		dataframe = dataframe.dropna()
-		dataframe = pd.get_dummies(data = dataframe, columns =categorical_columns,drop_first=True)
+		dataframe = pd.get_dummies(data = dataframe, columns =categorical_columns,drop_first=True) if categorical_columns else dataframe
 		dataframe.to_csv(os.path.join(media_path,self.request.COOKIES['sessionid']+'formated_dataset.csv'))
 
 		

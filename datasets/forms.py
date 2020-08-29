@@ -22,7 +22,7 @@ class NotCsvFile(Base):
 class AllFieldsFilled(Base):
 
 	def raise_error(self):
-		raise forms.ValidationError(u"Only one of the fields needs to be filled")
+		raise forms.ValidationError("Only one of the fields needs to be filled")
 
 class AllFieldsEmpty(Base):
 
@@ -85,24 +85,24 @@ class DataSetsForm(forms.ModelForm):
 		current_dataset.link = url
 		current_dataset.save()
 
-	def file_exists(self,file):
+	def file_exists(self,file): # returns if the chosen file is already taken
 
 		'''
 		when updating a dataset that had a file, if the previous file is not updated, the file-field input will return 'datasets/file-name', but if its updated it 
 		will return 'file-name'. so there is no need to check if the file is a new one or a saved one.
 
 		'''
-		if not self.saved_to_session_instead:
+		if not self.saved_to_session_instead: # if the person chose an existing dataset instead of a new one (if you chose a new dataset, the file/link does not have to be unique)
+			base_dir = settings.media_dir
 			saved_file_name = ''.join(map(lambda x: '' if x in ['(',')'] else x,str(file))).replace(' ','_') # removes () and replaces spaces with _, this is how django saves files
 			file_path  = os.path.join('datasets',self.username+saved_file_name)
-			base_dir = settings.media_dir
 			full_path = os.path.join(base_dir,str(file_path))
 			return  os.path.isfile(full_path) 
 
 
 	def url_exists(self,url):
 
-		return  not self.saved_to_session_instead and url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists() 
+		return  not self.saved_to_session_instead and url and DataSets.objects.filter(user__username__iexact=self.username,link=url).exclude(pk=self.pk).exists() ## the 'exclude' is there if the user edits a dataset but does not make any changes, and saves it
 		
 	def no_tables_found(self,url):
 
@@ -121,7 +121,7 @@ class DataSetsForm(forms.ModelForm):
 			ajax is used, and also form.PreventDefault() is used.
 		'''
 		
-		if self.update_view_running:  
+		if self.update_view_running:  # the checkbox is only in the update view
 
 			is_checkbox_checked = eval(self.previous_file_cleared.capitalize())# since its gotten from a javascript POST the first letter of the bool will not be capitalized and its also of type <str>. converts 'false/true' to False/True
 			current_file = cleaned_data.get('file')

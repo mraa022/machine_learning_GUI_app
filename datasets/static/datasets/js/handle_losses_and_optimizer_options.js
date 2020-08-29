@@ -4,7 +4,7 @@ function show_optimizer_params(){
 	let all_optimzer_params = $('.optimizer-params');
 	let chosen_optimizer = $('.optimizer-options').val();
 	let every_optimzer_params = {
-		Adam:['learning_rate','beta_1','bta_2'],
+		Adam:['learning_rate','beta_1','beta_2'],
 		Rmsprop:['learning_rate','rho','momentum'],
 		Adagrad:['learning_rate','initial_accumulator_value'],
 		Adadelta:['learning_rate','rho'],
@@ -30,7 +30,7 @@ $('.optimizer-options').change(function (){
 	show_optimizer_params();
 });
 if(Cookies.get('label_is') == 'discrete'){
-	let discrete_loss_options = ['CategoricalCrossentropy','Poisson','KLDivergence']
+	let discrete_loss_options = ['CategoricalCrossentropy','Poisson','KLDivergence','BinaryCrossentropy']
 	for(let option = 0; option< discrete_loss_options.length;option++){
 		
 		$('.loss-options').append($('<option></option>').attr('value',discrete_loss_options[option]).text(discrete_loss_options[option]));

@@ -1,12 +1,17 @@
 {% extends "datasets/base_dataset.html" %}
 {% load static %}
 {% block content %}
+	<style type="text/css">
+		body,html{
+			height: 100%;
+		}
+	</style>
 	<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
-	<div class='jumbotron not-modal-jumbotron' align=center style='overflow:scroll;overflowY:scroll;overflow-y:scroll'>
+	<div class='jumbotron not-modal-jumbotron' align=center style='overflow:scroll;height:50%'>
 		<img src="https://res.cloudinary.com/dgofwp0my/image/upload/q_100/v1505907556/dra_172_artifical_intelligence_change_energy_jynxp2.gif" style='object-fit:cover;'>
 		<button id='can_continue' type="button" class="submit-btn btn btn-primary" style='display:none;'><h1 style='color:yellow'>Continue</h1></button>
 	</div><br><br>
-	<div class='ajax_part_of_page' style='text-align:center;'>
+	<div class='ajax_part_of_page' style='text-align:center;height:50%;overflow:scroll'>
 		{% if user.is_authenticated and user.datasets.count > 0 %}
 			<h1>Choose an existing DataSet or a new one</h1>
 			<div class="grid-container" align=center>
@@ -36,9 +41,7 @@
 			$('#can_continue').css('display','block');
 			$('.grid-item').removeClass('higlight_selected');
 			$(this).addClass("higlight_selected");
-			$("*").animate({
-			scrollTop: 0
-			}, 200);
+			
 		});
 		$('#can_continue').click(function(){
 				$('#can_continue').css('display','none');

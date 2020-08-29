@@ -18,6 +18,8 @@
 		border-radius:1rem;
 		text-align:center;
 	}
+
+
 	</style>
 	<select class="browser-default custom-select custom-select-lg mb-3 optimizer-options">
 		<option value='Adam' class="dropdown-item">Adam</option>
@@ -34,16 +36,24 @@
 		<input type="number" id='learning_rate' placeholder='learning rate'>
 		<input id='beta_1' type="number" placeholder='beta 1'>
 		<input id='beta_2' type="number" placeholder='beta 2'><br>
+		<input id='rho' type="number" placeholder= 'rho'>
 		<input id='momentum' type="number" placeholder='momentum'>
 		<input id='initial_accumulator_value' type="number" placeholder='initial accumulator value'>
 		<input id='l1_regularization_strength' type="number" placeholder='l1 regularization strength'><br>
 		<input id='l2_regularization_strength' type="number" placeholder='l2 regularization strength'>
 		<input id='l2_shrinkage_regularization_strength' type="number" placeholder='l2 shrinkage regularization strength'>
-		<input id='rho' type="number" placeholder= 'rho'>
 		<input id='learning_rate_power' type="number" placeholder="learning_rate_power">
 	</div>
+	<div class = 'batch-size-and-test-size'>
+		<h5 id = 'batch-size-val'>batch size: 32</h5>
+		<input type="range" min='1' max='500' name="" value='32' id='batch-size'>
+		<h5 id='test_percent_val'>percent of test data: 30%</h5>
+		<input type="range" min='1' max='99' name="" value='30' id='test-percent'>
+	</div>
 	<select class="browser-default custom-select custom-select-lg mb-3 loss-options">
+		
 	</select>
+
 	<div class='activation_function_options'>
 		
 	</div>
@@ -55,7 +65,7 @@
 	<button id='build-neural-network' class="btn btn-primary">Build Neural Network Graph</button>
 	<div class='error_rate' style="width:50%; height:50%;overflow;scroll">
 		<canvas id="error_rate" style='border:1px solid white; margin-left:50%'></canvas>
-	</div>
+	</div><br><br><br><br><br>
 	
 	<div class='container' style='overflow:scroll;width:50%;'>
 		<canvas width='800px' height="800px" id='neural_network_graph' style='border:1px solid white;margin-left50%'></canvas>
@@ -63,4 +73,19 @@
 	<script type="text/javascript" src='{% static "datasets/js/handle_losses_and_optimizer_options.js" %}'></script>
 	<script type="text/javascript" src='{% static "datasets/js/draw_neural_network.js" %}'></script>
 	<script type="text/javascript" src='{% static "datasets/js/error_rate_graph.js" %}'></script>
+
+	<script type="text/javascript">
+
+	let batch_size_val = $('#batch-size-val');
+	let test_percent_val = $('#test_percent_val')
+	$('#batch-size').on('input',function(){
+		batch_size_val.text('batch size:' + $(this).val())
+	});
+	$('#test-percent').on('input',function(){
+		test_percent_val.text('percent of test data:' + $(this).val() +'%')
+	});
+
+
+
+	</script>
 {% endblock  %}

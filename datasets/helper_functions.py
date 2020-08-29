@@ -8,7 +8,8 @@ from tensorflow.keras.losses import (
         LogCosh,
         CategoricalCrossentropy,
         Poisson,
-        KLDivergence
+        KLDivergence,
+        BinaryCrossentropy
     )
 from tensorflow.keras.optimizers import (
         Adam,
@@ -22,16 +23,20 @@ from tensorflow.keras.optimizers import (
     )
 from tensorflow.keras import Sequential
 from keras.layers import Dense
-def optimizer_options(learning_rate,beta_1=0.9,
+def optimizer_options(
+                      learning_rate=0.001,
+                      beta_1=0.9,
                       beta_2=0.999,
                       rho=0.9,
                       momentum=0,
                       initial_accumulator_value=0.1,
                       l1_regularization_strength=0.0,
                       l2_regularization_strength=0.0,
-                      l2_shrinkage_regularization_strength=0.0):
+                      l2_shrinkage_regularization_strength=0.0,
+                      learning_rate_power=-0.5
+                      ):
     optimizers = {
-            'adam':Adam(
+            'Adam':Adam(
                 learning_rate=learning_rate, beta_1=beta_1, beta_2=beta_2, epsilon=1e-07, amsgrad=False,
                 name='Adam'
                 ),
@@ -62,7 +67,7 @@ def optimizer_options(learning_rate,beta_1=0.9,
                 learning_rate=learning_rate, beta_1=beta_1, beta_2=beta_2, epsilon=1e-07
                 ),
 
-            'Ftlr':Ftrl(
+            'Ftrl':Ftrl(
                 learning_rate=learning_rate,
                 learning_rate_power=learning_rate_power,
                 initial_accumulator_value=initial_accumulator_value,
@@ -81,18 +86,20 @@ def loss_options():
             'MeanSquaredLogarithmicError':MeanSquaredLogarithmicError(reduction="auto"),
             'CosineSimilarity':CosineSimilarity(axis=-1, reduction="auto"),
             'Huber':Huber(delta=1.0, reduction="auto"),
-            'LogCosh':LogCosh(reduction="auto", name="log_cosh")
+            'LogCosh':LogCosh(reduction="auto", name="log_cosh"),
             'CategoricalCrossentropy':CategoricalCrossentropy(from_logits=False,label_smoothing=0,reduction="auto"),
             'Poisson':Poisson(reduction="auto", name="poisson"),
-            'KLDivergence':KLDivergence(reduction="auto", name="kl_divergence")
+            'KLDivergence':KLDivergence(reduction="auto", name="kl_divergence"),
+            'BinaryCrossentropy':BinaryCrossentropy(label_smoothing=0, reduction="auto", name="binary_crossentropy")
         }
         return losses
-def create_model(layers,number_of_inputs,activation,label_type,number_of_classes):
+def create_model(layers,number_of_inputs,activations,label_type,number_of_classes):
     layers = [1] if not layers else layers  # one layer with one neuron is the default if the user did not provide any layers
+    activations = ['relu'] if not activations else activations
     model = Sequential()
-    model.add(Dense(layers[0], input_shape=(number_of_inputs,),activation=activation ))
+    model.add(Dense(layers[0], input_shape=(number_of_inputs,),activation=activations[0] ))
     if len(layers)>1:
-        [model.add(Dense(x,activation=activation)) for x in layers[1:]]
+        [model.add(Dense(units,activation=activation)) for units,activation in zip(layers[1:],activations[1:])]
     output = model.add(Dense(number_of_classes,activation='softmax')) if label_type == 'discrete' else model.add(Dense(1))
     return model
 

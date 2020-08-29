@@ -80,7 +80,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'machine_learning_gui.wsgi.application'
-
+ASGI_APPLICATION = 'machine_learning_gui.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -135,7 +135,6 @@ STATICFILES_DIRS = [static_dir]
 
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-ASGI_APPLICATION = 'machine_learning_gui.routing.application'
 LOGIN_REDIRECT_URL = 'welcome'
 LOGOUT_REDIRECT_URL = 'thanks'
 MEDIA_ROOT = media_dir

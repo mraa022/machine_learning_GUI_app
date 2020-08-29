@@ -19,7 +19,7 @@ urlpatterns = [
 	path('numberical_columns/',views.DataSetNumericalColumns.as_view(),name='numerical_columns'),
 	path('label_column/',views.DataSetLabelColumn.as_view(),name='label_column'),
 	path('selected_dataset/',views.CurrentDataSet.as_view(),name='selected_dataset'),
-	path('show_selected_columns/',views.ShowSelectedColumns.as_view(),name='show_selected_columns')
+	path('show_selected_columns/',views.ShowSelectedColumns.as_view(),name='show_selected_columns'),
 
 
 	

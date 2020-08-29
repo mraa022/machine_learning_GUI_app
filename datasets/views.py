@@ -12,6 +12,7 @@ from django.views import  generic
 import os
 from django.core.validators import URLValidator
 
+
 def dataset_saved_in_session(request):
 
 	return request.COOKIES['dataset_location'] == '' and request.COOKIES['primary_key'] == ''
@@ -286,6 +287,7 @@ class NeuralNetworkDiagram(generic.TemplateView):
 		
 
 		return context
+
 
 class Main(generic.TemplateView):
 

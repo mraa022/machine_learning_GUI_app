@@ -52,7 +52,7 @@ def remove_column(dataframe):
         return dataframe
 
 def train_model(model,x_train,y_train,x_test,y_test,batch_size,self): ## the reason this is here, is so it can be run in the background using threads
-    model.fit(x_train,y_train,epochs=100,callbacks=[myCallback(self,x_test,y_test)],verbose=0,batch_size=batch_size)
+    model.fit(x_train,y_train,epochs=1000000000,callbacks=[myCallback(self,x_test,y_test)],verbose=0,batch_size=batch_size)
 
 
 def terminate_training_model():
@@ -87,11 +87,7 @@ class myCallback(Callback):
     def on_train_end(self,logs=None):
         in_training[0] = False
         print(quit_training)
-        # quit_training[0]= False # needed incase the user waited till the epochs ended, and refreshed. if this was no here, when the user came back, the network would stop training, 
-        # one epoch, since quit_training[0] == True. from the las
-
-
-
+       
 def get_dataframe(data_frame_location):
 
     return remove_column(read_csv(data_frame_location))

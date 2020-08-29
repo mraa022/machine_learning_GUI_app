@@ -61,7 +61,7 @@
 			$.get('{% url "datasets:show_selected_columns" %}',function(response){
 				$('.not-modal-jumbotron').html(response);
 			});
-			$.get('{% url "datasets:neural_network_graph" %}',function(response){
+			$.get('{% url "datasets:neural_network_graph_and_keras_model" %}',function(response){
 				$('.ajax_part_of_page').html(response);
 		});
 			

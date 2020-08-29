@@ -269,9 +269,9 @@ class ShowSelectedColumns(generic.TemplateView):
 
 
 		return context
-class NeuralNetworkDiagram(generic.TemplateView):  
+class NeuralNetworkDiagramAndKerasModel(generic.TemplateView):  
 
-	template_name = 'datasets/neural_network_graph.html'
+	template_name = 'datasets/model.html'
 	def get_context_data(self, **kwargs):
 
 		context = super().get_context_data(**kwargs)

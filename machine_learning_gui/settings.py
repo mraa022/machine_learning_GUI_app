@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     'bootstrap4',
     'accounts',
     'datasets',
-    'bootstrap_modal_forms',
-    'widget_tweaks',
     'django_cleanup.apps.CleanupConfig',
     'channels',
 

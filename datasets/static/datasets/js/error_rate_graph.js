@@ -98,7 +98,7 @@ var lineChart = new Chart(error_rate_canvas, {
 
 var number_of_times_connected = 0
 var errorRateSocket = new WebSocket(
-        'ws://' +
+        'wss://' +
         window.location.host
        	+
         '/ws/error_graph/' 

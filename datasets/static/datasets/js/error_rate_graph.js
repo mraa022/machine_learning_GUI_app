@@ -98,7 +98,7 @@ var lineChart = new Chart(error_rate_canvas, {
 
 var number_of_times_connected = 0
 var errorRateSocket = new WebSocket(
-        'wss://' +
+        'ws://' +
         window.location.host
        	+
         '/ws/error_graph/' 
@@ -140,22 +140,21 @@ $('#train_neural_network').on('click',function(e){
     lineChart.update()
 
 
-        errorRateSocket.onopen = function (){
+    
+    errorRateSocket.send(JSON.stringify({
+        'layers': get_layers(),
+        'layer_activations':get_layer_activations(),
+        'optimizer_params':get_optimizer_params(),
+        'label_type':Cookies.get('label_is'),
+        'label_column':Cookies.get('label_column'),
+        'optimizer':get_chosen_optimizer(),
+        'loss':get_loss(),
+        'batch_size':$('#batch-size').val(),
+        'test_size':$('#test-percent').val()
 
-            errorRateSocket.send(JSON.stringify({
-            'layers': get_layers(),
-            'layer_activations':get_layer_activations(),
-            'optimizer_params':get_optimizer_params(),
-            'label_type':Cookies.get('label_is'),
-            'label_column':Cookies.get('label_column'),
-            'optimizer':get_chosen_optimizer(),
-            'loss':get_loss(),
-            'batch_size':$('#batch-size').val(),
-            'test_size':$('#test-percent').val()
+        }));
 
-    }));
-
-        }
+    
    
         
         first_time = false;

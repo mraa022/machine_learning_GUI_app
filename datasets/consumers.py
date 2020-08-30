@@ -101,6 +101,7 @@ class ErrorGraphConsumer(WebsocketConsumer):
         media_path = os.path.join(settings.MEDIA_ROOT,'datasets/')
         dataframe_file_path = os.path.join(media_path,dataframe_file)
         self.dataframe = get_dataframe(data_frame_location = dataframe_file_path)
+        print('hello connected ooh yeah')
         self.accept()
 
     def disconnect(self, close_code):

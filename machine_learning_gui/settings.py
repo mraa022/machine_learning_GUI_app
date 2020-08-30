@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_cleanup.apps.CleanupConfig',
     'channels',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 
 ]
 
@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'machine_learning_gui.urls'

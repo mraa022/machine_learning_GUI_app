@@ -56,6 +56,7 @@ google-auth==1.20.1
 google-auth-oauthlib==0.4.1
 google-pasta==0.2.0
 grpcio==1.31.0
+gunicorn==20.0.4
 h5py==2.10.0
 hiredis==1.1.0
 html5lib==1.1
@@ -138,5 +139,6 @@ wcwidth==0.2.5
 webencodings==0.5.1
 websocket-client==0.57.0
 Werkzeug==1.0.1
+whitenoise==5.2.0
 wrapt==1.12.1
 zope.interface==5.1.0

@@ -140,9 +140,9 @@ $('#train_neural_network').on('click',function(e){
     lineChart.update()
 
 
+        errorRateSocket.onopen = function (){
 
-   
-        errorRateSocket.send(JSON.stringify({
+            errorRateSocket.send(JSON.stringify({
             'layers': get_layers(),
             'layer_activations':get_layer_activations(),
             'optimizer_params':get_optimizer_params(),
@@ -154,6 +154,10 @@ $('#train_neural_network').on('click',function(e){
             'test_size':$('#test-percent').val()
 
     }));
+
+        }
+   
+        
         first_time = false;
     
 });

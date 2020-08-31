@@ -98,7 +98,10 @@ var lineChart = new Chart(error_rate_canvas, {
 
 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 var errorRateSocket = new WebSocket(
-        ws_scheme +
+        ws_scheme 
+        +
+        '://' 
+        +
         window.location.host
        	+
         '/ws/error_graph/' 

@@ -1,1 +1,1 @@
-web: daphne daphne machine_learning_gui.asgi:application
+web: daphne machine_learning_gui.asgi:application

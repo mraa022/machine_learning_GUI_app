@@ -36,13 +36,11 @@ from keras.layers import Dense
 from tensorflow.keras.callbacks import  Callback
 first_time  = True
 import sys
-previous_fit_thread = [None]
 quit_training = [False]
 in_training = [False]
 def remove_column(dataframe):
 
     '''
-
     removes the index column
 
     '''
@@ -69,24 +67,32 @@ class myCallback(Callback):
         self.y_test = y_test
         
     def on_epoch_end(self, epoch, logs):
-        print(epoch)
+        
         if epoch == 0:
             in_training[0] = True
+
         if quit_training[0]:
-            print('QUITED')
             self.model.stop_training = True  # stop training the current model
             quit_training[0] = False ## set this to false so the next model can train.
 
         
         test_loss,test_accuracy = self.model.evaluate(self.x_test,self.y_test,verbose=0)
         training_loss = logs['loss']
-        self.consumer_instance.send(text_data=json.dumps({
-                'training_loss': training_loss,
-                'test_loss': test_loss
-            }))
+        if str(training_loss) != 'nan' and str(test_loss) !='nan':
+            self.consumer_instance.send(text_data=json.dumps({
+                    'training_loss': training_loss,
+                    'test_loss': test_loss,
+                    'numbers_got_too_big': 'No'
+                }))
+        else:
+            print('numbers_got_too_big')
+            self.consumer_instance.send(text_data=json.dumps({
+                    'numbers_got_too_big': 'Yes',
+                }))
+            self.model.stop_training = True
+
     def on_train_end(self,logs=None):
         in_training[0] = False
-        print(quit_training)
        
 def get_dataframe(data_frame_location):
 
@@ -101,20 +107,16 @@ class ErrorGraphConsumer(WebsocketConsumer):
         media_path = os.path.join(settings.MEDIA_ROOT,'datasets/')
         dataframe_file_path = os.path.join(media_path,dataframe_file)
         self.dataframe = get_dataframe(data_frame_location = dataframe_file_path)
-        print('hello connected ooh yeah')
         self.accept()
 
     def disconnect(self, close_code):
-        print('DISCONNECTED')
         if in_training[0]:
             terminate_training_model()
 
     def receive(self, text_data):
         global first_time
-        print('first_time',first_time)
-        print(quit_training)
+        
         if not first_time and another_model_running():
-            print('NOT THE FIRST TIME')
             terminate_training_model()
 
         text_data_json = json.loads(text_data)
@@ -138,10 +140,8 @@ class ErrorGraphConsumer(WebsocketConsumer):
         model.compile(optimizer=optimizer, loss=loss, metrics=["acc"])
 
         thread = threading.Thread(target=train_model, args=(model,x_train,y_train,x_test,y_test,batch_size,self)) 
-        previous_fit_thread[0] = thread                       
         thread.start() 
         first_time = False
-# model.fit(x_train,y_train,epochs=100,callbacks=[myCallback(self,x_test,y_test)],verbose=0,batch_size=batch_size)
         
         
 

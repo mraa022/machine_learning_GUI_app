@@ -9,11 +9,17 @@ function get_loss(){
 
 
 function update_graph(data){
-    let dataset = lineChart.data.datasets[0]
-    lineChart.data.labels.push(dataset.data.length + 1);
-    lineChart.data.datasets[0].data.push(data.training_loss); 
-    lineChart.data.datasets[1].data.push(data.test_loss);
-    lineChart.update();
+    if (data.numbers_got_too_big=='No') {
+        let dataset = lineChart.data.datasets[0]
+        lineChart.data.labels.push(dataset.data.length + 1);
+        lineChart.data.datasets[0].data.push(data.training_loss); 
+        lineChart.data.datasets[1].data.push(data.test_loss);
+        lineChart.update();
+
+    }
+    else{
+        alert('the numbers got too big, so the model stoped training.')
+    }
 
 
 }
@@ -130,13 +136,6 @@ errorRateSocket.onmessage = function(e) {
 
 let first_time = true
 $('#train_neural_network').on('click',function(e){
-
-    // if (!first_time) {
-
-    //     $.post(Cookies.get('tell_keras_to_stop_url'+'True/'), function( data ) {
-    //         console.log('S');
-    //     });
-    // }
 
     $('#train_neural_network').prop('disabled', true);
     setTimeout(function (){

@@ -61,6 +61,7 @@
 			$.get('{% url "datasets:show_selected_columns" %}',function(response){
 				$('.not-modal-jumbotron').html(response);
 			});
+			$('.ajax_part_of_page').html('<div align="center"><img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif"></div>')
 			$.get('{% url "datasets:neural_network_graph_and_keras_model" %}',function(response){
 				$('.ajax_part_of_page').html(response);
 		});

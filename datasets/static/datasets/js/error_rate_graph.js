@@ -71,6 +71,7 @@ function get_optimizer_params(){
 
 }
 var error_rate_canvas = document.getElementById('error_rate');
+
 var datasets = {
 		    labels: [],
 		    datasets: [{
@@ -97,6 +98,7 @@ var lineChart = new Chart(error_rate_canvas, {
 		});
 
 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+var websocket_is_open = false
 var errorRateSocket = new WebSocket(
         ws_scheme 
         +
@@ -108,6 +110,10 @@ var errorRateSocket = new WebSocket(
      	
     )
 
+errorRateSocket.onopen = function (event){
+    websocket_is_open = true;
+}
+
 errorRateSocket.onmessage = function(e) {
 
 
@@ -117,6 +123,7 @@ errorRateSocket.onmessage = function(e) {
         
 
     }
+
 
 
 
@@ -143,22 +150,21 @@ $('#train_neural_network').on('click',function(e){
     lineChart.update()
 
 
-        errorRateSocket.onopen = function (event){
+    if (websocket_is_open){
+        errorRateSocket.send(JSON.stringify({
+            'layers': get_layers(),
+            'layer_activations':get_layer_activations(),
+            'optimizer_params':get_optimizer_params(),
+            'label_type':Cookies.get('label_is'),
+            'label_column':Cookies.get('label_column'),
+            'optimizer':get_chosen_optimizer(),
+            'loss':get_loss(),
+            'batch_size':$('#batch-size').val(),
+            'test_size':$('#test-percent').val()
 
-            errorRateSocket.send(JSON.stringify({
-                'layers': get_layers(),
-                'layer_activations':get_layer_activations(),
-                'optimizer_params':get_optimizer_params(),
-                'label_type':Cookies.get('label_is'),
-                'label_column':Cookies.get('label_column'),
-                'optimizer':get_chosen_optimizer(),
-                'loss':get_loss(),
-                'batch_size':$('#batch-size').val(),
-                'test_size':$('#test-percent').val()
+            }));
 
-                }));
-
-        }
+    }
    
         
         first_time = false;

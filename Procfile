@@ -1,1 +1,3 @@
-web: daphne -b 0.0.0.0 -p 8001 machine_learning_gui.asgi:application
+web: daphne machine_learning_gui.asgi:application --port $PORT --bind 0.0.0.0
+
+

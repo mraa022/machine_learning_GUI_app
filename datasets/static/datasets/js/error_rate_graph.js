@@ -18,7 +18,7 @@ function update_graph(data){
 
     }
     else{
-        alert('the numbers got too big, so the model stoped training.')
+        alert('the loss got too big, so the model stoped training.')
     }
 
 
@@ -28,7 +28,7 @@ function get_layers(){
 	let layers_list = $('.layers input');
     for (let i = 0; i < layers_list.length; i++) {
 
-        if (layers_list[i].value.length > 0 && layers_list[i].value > 0) { // if layer is not empty
+        if (layers_list[i].value.length > 0 && layers_list[i].value > 0) { // if layer is > 0 
             layer_neurons.push(layers_list[i].value)
         }
 
@@ -43,8 +43,8 @@ function get_layer_activations(){
 	let layer_activations_list = $('.activation_function_options select')
     for (let i = 0; i < layers_list.length; i++) {
 
-        if (layers_list[i].value.length > 0 && layers_list[i].value > 0) { // if layer is not empty
-            layer_activations.push(layer_activations_list[i].value)
+        if (layers_list[i].value.length > 0 && layers_list[i].value > 0) { // if layer > 0
+            layer_activations.push(layer_activations_list[i].value) // get that layer's activation func
         }
 
     }
@@ -56,7 +56,7 @@ function get_optimizer_params(){
 
     let optimizer_params = $('.optimizer-params input').filter(function(){
         return $(this).css('display')!='none'
-    });
+    }); // get the visible parameters. 'handle_losses_and_optimizer_options.js' takes care of making some parameters visible based on the optimizer
 
     let optimizer_params_and_values = {}
     optimizer_params.each(function (){
@@ -70,10 +70,15 @@ function get_optimizer_params(){
 
     return optimizer_params_and_values
 
-    
 
+}
 
+function cant_send_to_websocket_for_5_seconds(){
 
+    $('#train_neural_network').prop('disabled', true);
+    setTimeout(function (){
+        $('#train_neural_network').prop('disabled', false);
+    },5000);
 
 }
 var error_rate_canvas = document.getElementById('error_rate');
@@ -130,22 +135,15 @@ errorRateSocket.onmessage = function(e) {
 
     }
 
-
-
-
-
 let first_time = true
 $('#train_neural_network').on('click',function(e){
 
-    $('#train_neural_network').prop('disabled', true);
-    setTimeout(function (){
-        $('#train_neural_network').prop('disabled', false);
-    },5000);
+    
 
-
-    lineChart.data.datasets[0].data = []; // training loss
-    lineChart.data.datasets[1].data = []; // test loss
-    lineChart.data.labels = [];
+    cant_send_to_websocket_for_5_seconds()
+    lineChart.data.datasets[0].data = []; // clear training loss
+    lineChart.data.datasets[1].data = []; // clear test loss
+    lineChart.data.labels = []; // clear x-axis
     lineChart.update()
 
 

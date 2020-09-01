@@ -1,4 +1,22 @@
 
+function show_optimizers_for_discrete_label(){
+
+	let discrete_loss_options = ['CategoricalCrossentropy','Poisson','KLDivergence','BinaryCrossentropy']
+	for(let option = 0; option< discrete_loss_options.length;option++){
+		
+		$('.loss-options').append($('<option></option>').attr('value',discrete_loss_options[option]).text(discrete_loss_options[option]));
+		
+	}
+
+
+}
+
+function show_optimizers_for_continuous_label(){
+	let continuous_loss_options = ['MeanSquaredError','MeanAbsoluteError','MeanAbsolutePercentageError','MeanSquaredLogarithmicError','CosineSimilarity','Huber','LogCosh']
+	for(let option = 0; option< continuous_loss_options.length;option++){
+		$('.loss-options').append($('<option></option>').attr('value',continuous_loss_options[option]).text(continuous_loss_options[option]));
+	}
+}
 function show_optimizer_params(){
 
 	let all_optimzer_params = $('.optimizer-params');
@@ -25,26 +43,21 @@ function show_optimizer_params(){
 
 
 }
-show_optimizer_params();
+
+
+show_optimizer_params(); // when the page is loaded
 $('.optimizer-options').change(function (){
 	show_optimizer_params();
 });
+
 if(Cookies.get('label_is') == 'discrete'){
-	let discrete_loss_options = ['CategoricalCrossentropy','Poisson','KLDivergence','BinaryCrossentropy']
-	for(let option = 0; option< discrete_loss_options.length;option++){
-		
-		$('.loss-options').append($('<option></option>').attr('value',discrete_loss_options[option]).text(discrete_loss_options[option]));
-		
-	}
+	show_optimizers_for_discrete_label();
 
 }
 
 else{
 
-	let continuous_loss_options = ['MeanSquaredError','MeanAbsoluteError','MeanAbsolutePercentageError','MeanSquaredLogarithmicError','CosineSimilarity','Huber','LogCosh']
-	for(let option = 0; option< continuous_loss_options.length;option++){
-		$('.loss-options').append($('<option></option>').attr('value',continuous_loss_options[option]).text(continuous_loss_options[option]));
-	}
+	show_optimizers_for_continuous_label();
 
 }
 

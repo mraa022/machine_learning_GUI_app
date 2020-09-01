@@ -53,13 +53,13 @@
 				Cookies.set('dataset_location', current_dataset_location, {path: '/' });
 				$('.jumbotron').html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">');
 				$.get('{% url "datasets:selected_dataset" %}',function(response){
-				$('.jumbotron').html(response);
+					$('.jumbotron').html(response);
 				});
 				$('#can_continue').remove();
 				$(ajax_part_of_page).html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">')
 				$.get('{% url "datasets:classification_or_regression" %}',function(response){
 				
-				$(ajax_part_of_page).html(response);
+					$(ajax_part_of_page).html(response);
 				
 				});
 		});

@@ -64,7 +64,7 @@ function animate_neuron_drawing(layer_neurons) {
             layer_x +=  layers_horizontal_gap;
             neuron_number = 0
             layer_number += 1;
-            layer_vertical_position =get_vertical_position_of_layer(layer_neurons_list[layer_number])  // get vertical position of next layer
+            layer_vertical_position = get_vertical_position_of_layer(layer_neurons_list[layer_number])  // get vertical position of next layer
 
         } 
     else if(layer_ended(neuron_number, layer_neurons_list[layer_number]) && !at_least_1_layer_remaining(layer_number, layer_neurons_list.length)) {

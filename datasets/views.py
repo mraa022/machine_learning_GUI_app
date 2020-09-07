@@ -93,10 +93,14 @@ class DatasetDetailView(LoginRequiredMixin,generic.DetailView):
 	model = models.DataSets
 
 	login_url = 'datasets:login_first'
+
 	def get_context_data(self, **kwargs):
+		dataframe,num_rows,num_nans = self.get_object()
 		return {
-			"DataFrame": self.get_object(),
+			"DataFrame": dataframe,
 			'dataset':  get_object_or_404(self.model, pk=self.kwargs.get('pk')),
+			'num_rows':num_rows,
+			'num_nans':num_nans
 
 		}
 
@@ -105,10 +109,12 @@ class DatasetDetailView(LoginRequiredMixin,generic.DetailView):
 			data = get_object_or_404(self.model, pk=self.kwargs.get('pk'))
 
 			if data.link:
-				return remove_column(pd.read_html(requests.get(data.link).text)[0]).head()
+				dataframe = remove_column(pd.read_html(requests.get(data.link).text)[0])
 
 			elif data.file:
-				return pd.read_csv(data.file.path).head()
+				dataframe= pd.read_csv(data.file.path)
+
+			return dataframe.head(),dataframe.shape[0],len(dataframe)-len(dataframe.dropna())
 
 		
 class CreateDatasetView(LoginRequiredMixin,generic.CreateView):
@@ -274,6 +280,7 @@ class NeuralNetworkDiagramAndKerasModel(generic.TemplateView):
 	template_name = 'datasets/model.html'
 	def get_context_data(self, **kwargs):
 
+		# all this method is needed for is access to the sessoin and cookies
 		context = super().get_context_data(**kwargs)
 		media_path = os.path.join(settings.MEDIA_ROOT,'datasets/')
 		dataframe  = get_dataframe_given_url_or_file(unquote(self.request.COOKIES['dataset_location'])) if not dataset_saved_in_session(self.request) else get_dataframe_given_url_or_file(unquote(self.request.session['dataset_location']))

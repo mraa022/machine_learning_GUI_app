@@ -7,7 +7,6 @@ function get_loss(){
     return $('.loss-options').val()
 }
 
-
 function update_graph(data){
     if (data.numbers_got_too_big=='No') {
         let dataset = lineChart.data.datasets[0]
@@ -163,7 +162,6 @@ $('#train_neural_network').on('click',function(e){
 
     }
    
-        
         first_time = false;
     
 });

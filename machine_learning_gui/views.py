@@ -14,3 +14,6 @@ class Welcome(TemplateView):
 class HomePage(TemplateView):
 	template_name = 'home.html'
 	
+
+class CommingSoon(TemplateView):
+	template_name = 'in_progress.html'

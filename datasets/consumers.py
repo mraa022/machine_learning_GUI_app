@@ -129,7 +129,7 @@ class ErrorGraphConsumer(WebsocketConsumer):
         chosen_loss = text_data_json['loss']
         batch_size = int(text_data_json['batch_size'])
         test_size = float(text_data_json['test_size'])/100
-        optimizer_params = dict([(key,value) for key,value in optimizer_params.items() if value != None]) # the values are strings. if an input is not provided, the value is None
+        optimizer_params = dict([(key,value) for key,value in optimizer_params.items() if value != None]) #if an input is not provided, the value is None
         x = self.dataframe.drop(label_column,axis=1).values
         y = get_dummies(self.dataframe[label_column],drop_first=True).values if label_type == 'discrete' else self.dataframe[label_column].values
         x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=test_size)
@@ -143,11 +143,7 @@ class ErrorGraphConsumer(WebsocketConsumer):
         thread.start() 
         first_time = False
         
-        
-
-
     
-            
 print('running')
 
 

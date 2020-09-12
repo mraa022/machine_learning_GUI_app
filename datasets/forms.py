@@ -54,6 +54,12 @@ class NoTablesFound(Base):
 
 		raise forms.ValidationError('The website you provided does not have any tables')
 
+
+class InvalidCsvFile(Base):
+	def raise_error(self):
+
+		raise forms.ValidationError('The file you provided is invalid')
+
 def raise_error_message(obj):
 
 	obj.raise_error()
@@ -130,11 +136,18 @@ class DataSetsForm(forms.ModelForm):
 
 		return cleaned_data
 
+
 	def file_is_csv(self,file):
+		return str(file).endswith('.csv')
+	def csv_file_valid(self,file):
 		
-		if file:
-			return  file.name.endswith('.csv')
-		return True
+		
+		try:
+			pd.read_csv(file)
+			return True
+		except:
+			return False
+		
 
 	def clean(self):
 
@@ -147,7 +160,8 @@ class DataSetsForm(forms.ModelForm):
 							'FileNotUnique()': self.file_exists(file),
 							'UrlNotUnique()':  self.url_exists(url),
 							'NoTablesFound()': url and self.no_tables_found(url),
-							'NotCsvFile()':   not self.file_is_csv(file)
+							'NotCsvFile()':   file and not self.file_is_csv(file),
+							"InvalidCsvFile()": file and not self.csv_file_valid(file)
 		}
 
 		for obj,error in possible_errors.items():

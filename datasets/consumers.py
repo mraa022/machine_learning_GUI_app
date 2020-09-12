@@ -1,6 +1,5 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
-import random
 import os
 import threading
 from pandas import read_csv,get_dummies
@@ -34,8 +33,8 @@ import requests
 from tensorflow.keras import Sequential
 from keras.layers import Dense
 from tensorflow.keras.callbacks import  Callback
+
 first_time  = True
-import sys
 quit_training = [False]
 in_training = [False]
 def remove_column(dataframe):

@@ -20,13 +20,11 @@ from . import views
 
 
 urlpatterns = [
-    path('',views.CommingSoon.as_view())
-    # path('admin/', admin.site.urls),
-    # path('',views.HomePage.as_view(),name='home'),
-    # path('welcome/', views.Welcome.as_view(),name='welcome'),
-    # path('thanks/',views.ThankYou.as_view(),name='thanks'),
-    # path('accounts/',include('accounts.urls')),
-    # path('datasets/',include('datasets.urls')),
+    path('',views.HomePage.as_view(),name='home'),
+    path('welcome/', views.Welcome.as_view(),name='welcome'),
+    path('thanks/',views.ThankYou.as_view(),name='thanks'),
+    path('accounts/',include('accounts.urls')),
+    path('datasets/',include('datasets.urls')),
 ]
 
 

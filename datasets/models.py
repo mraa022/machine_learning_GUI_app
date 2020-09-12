@@ -5,6 +5,9 @@ import os
 
 # Create your models here.
 
+
+def remove_username_from_filename(filename,username):
+	return filename[len(username):]
 def path_and_rename(instance, filename):
     upload_to = "datasets"
     Format =  instance.user.username + str(filename)
@@ -30,8 +33,9 @@ class DataSets(models.Model):
 		return  self.user.username+ ' ' + str(self.pk)
 
 	def title(self):
-		
-		return "<strong> <i> File Name: </i></strong> " + str(os.path.basename(self.file.name)).lstrip(self.user.username) if  self.file else " <strong> <i>URL: </i></strong> " + str(self.link)
+		file_name = str(os.path.basename(self.file.name))
+		# print(self.user.username)
+		return "<strong> <i> File Name: </i></strong> " + remove_username_from_filename(file_name,self.user.username) if self.file else " <strong> <i>URL: </i></strong> " + str(self.link)
 
 
 

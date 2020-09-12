@@ -1,28 +1,3 @@
-from tensorflow.keras.losses import (
-        MeanSquaredError,
-        MeanAbsoluteError,
-        MeanAbsolutePercentageError,
-        MeanSquaredLogarithmicError,
-        CosineSimilarity,
-        Huber,
-        LogCosh,
-        CategoricalCrossentropy,
-        Poisson,
-        KLDivergence,
-        BinaryCrossentropy
-    )
-from tensorflow.keras.optimizers import (
-        Adam,
-        SGD,
-        Adamax,
-        RMSprop,
-        Adagrad,
-        Adadelta,
-        Nadam,
-        Ftrl
-    )
-from tensorflow.keras import Sequential
-from keras.layers import Dense
 def optimizer_options(
                       learning_rate=0.001,
                       beta_1=0.9,

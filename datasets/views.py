@@ -13,6 +13,9 @@ import os
 from django.core.validators import URLValidator
 
 
+
+
+
 def dataset_saved_in_session(request):
 
 	return request.COOKIES['dataset_location'] == '' and request.COOKIES['primary_key'] == ''
@@ -68,7 +71,15 @@ def remove_column(dataframe):
 		return dataframe.drop('Unnamed: 0',axis=1)
 	except:
 		return dataframe
-	 
+	
+def return_customized_dataframe(dataframe,categorical_columns):
+	'''
+		drop rows that have missing cells, and onehot encode the categorical columns
+	'''
+	categorical_columns = list(filter(None,categorical_columns))  # return an empty list if there are no categorical columns. i.e  [''] = [] or ['','some categorical column'] = ['some categorical column']
+	dataframe = dataframe.dropna()
+	dataframe = pd.get_dummies(data = dataframe, columns =categorical_columns,drop_first=True) if categorical_columns else dataframe
+	return dataframe
 class Not_logged_in(generic.TemplateView):
 
 	template_name = 'datasets/not_logged_in.html'
@@ -280,18 +291,14 @@ class NeuralNetworkDiagramAndKerasModel(generic.TemplateView):
 	template_name = 'datasets/model.html'
 	def get_context_data(self, **kwargs):
 
-		# all this method is needed for is access to the sessoin and cookies
+		# all this method is needed for is access to the session and cookies (nothing is added to the context dict)
 		context = super().get_context_data(**kwargs)
 		media_path = os.path.join(settings.MEDIA_ROOT,'datasets/')
 		dataframe  = get_dataframe_given_url_or_file(unquote(self.request.COOKIES['dataset_location'])) if not dataset_saved_in_session(self.request) else get_dataframe_given_url_or_file(unquote(self.request.session['dataset_location']))
 		dataframe = filtered_data_frame(self.request,dataframe)  # only return the selected columns
 		categorical_columns = unquote(self.request.COOKIES['categorical_columns']).split(',')
-		categorical_columns = list(filter(None,categorical_columns))  # return an empty list if there are no categorical columns
-		dataframe = dataframe.dropna()
-		dataframe = pd.get_dummies(data = dataframe, columns =categorical_columns,drop_first=True) if categorical_columns else dataframe
+		dataframe = return_customized_dataframe(dataframe,categorical_columns) # remove nans and onehot encode categorical columns
 		dataframe.to_csv(os.path.join(media_path,self.request.COOKIES['sessionid']+'formated_dataset.csv'))
-
-		
 
 		return context
 

@@ -1,5 +1,5 @@
 import pytest
-from datasets.views import dataset_saved_in_session,dataset_location_is_url,get_dataframe_given_url_or_file,remove_column,filtered_data_frame
+from datasets.views import dataset_saved_in_session,dataset_location_is_url,get_dataframe_given_url_or_file,remove_column,filtered_data_frame,return_customized_dataframe
 from django.core.validators import URLValidator
 from urllib.parse import unquote
 from pandas import read_html,read_csv
@@ -39,7 +39,7 @@ class TestDatasetLocationIsUrl():
 class TestDataframeFromUrlOrFile():
 
 	'''
-		gets the dataframe give the url or the path to a .csv file
+		gets the dataframe given the url or the path to a .csv file
 	'''
 	def setup(self):
 		self.fake_url_dataframe = 'https://github.com/plotly/datasets/blob/master/2014_us_cities.csv'
@@ -55,21 +55,17 @@ class TestDataframeFromUrlOrFile():
 		test_dataframe = read_csv(self.fake_file_dataframe)
 		assert test_dataframe.equals(get_dataframe_given_url_or_file(dataframe_location = self.fake_file_dataframe)) 
 
-
-
-def filtered_data_frame(request,dataframe):
-	selected_columns  = unquote(request.COOKIES['categorical_columns']).split(',') + unquote(request.COOKIES['numerical_columns']).split(',') + [unquote(request.COOKIES['label_column'])]
-	selected_columns = list(filter(None,selected_columns))  # if there are no categorical or numerical remove the epmpty spaces
-	dataframe = dataframe[selected_columns]
-	return dataframe
 class TestFilteredDataframe():
+	'''
+		test anything that has something to do with the user customizing the dataset (selecting which columns are categorical,etc)
+	'''
 	def setup(self):
 		self.fake_request_object = fake_request()
 
 
 	def test_filtered_dataframe_that_has_all_column_types(self):
 		'''
-			test if the correct filtered sdataframe is made if the user selects both numerical and categorical columns 
+			test if the correct filtered dataframe is made if the user selects both numerical and categorical columns 
 		'''	
 		self.fake_request_object.COOKIES['categorical_columns'] = 'sovereign_external_debt_default,independence'
 		self.fake_request_object.COOKIES['numerical_columns'] = 'inflation_annual_cpi'
@@ -101,6 +97,34 @@ class TestFilteredDataframe():
 		self.fake_request_object.COOKIES['label_column'] = 'currency_crises'
 		test_dataframe = read_csv('breast_cancer.csv')
 		assert test_dataframe[['currency_crises']].equals(filtered_data_frame(request = self.fake_request_object, dataframe = test_dataframe))
+
+
+	def test_categorical_columns_one_hot_encoded_given_1_categorical_column(self):
+
+		dataframe = read_csv('breast_cancer.csv').dropna()
+		categorical_columns = 'sovereign_external_debt_default'.split(',') # seperated by commas
+		true_dataframe = pandas.get_dummies(data=dataframe,columns=categorical_columns,drop_first=True) 
+		test_dataframe = return_customized_dataframe(dataframe,categorical_columns)
+		assert test_dataframe.equals(test_dataframe)
+
+
+	def test_categorical_columns_one_hot_encoded_given_more_than_1_categorical_column(self):
+
+		dataframe = read_csv('breast_cancer.csv').dropna()
+		categorical_columns = 'sovereign_external_debt_default,independence'.split(',') # seperated by commas
+		true_dataframe = pandas.get_dummies(data=dataframe,columns=categorical_columns,drop_first=True) 
+		test_dataframe = return_customized_dataframe(dataframe,categorical_columns)
+		assert test_dataframe.equals(test_dataframe)
+
+	def test_categorical_columns_one_hot_encoded_given_0_categorical_column(self):
+
+		dataframe = read_csv('breast_cancer.csv').dropna()
+		categorical_columns = ''.split(',') # seperated by commas
+		true_dataframe = dataframe
+		test_dataframe = return_customized_dataframe(dataframe,categorical_columns)
+		assert test_dataframe.equals(test_dataframe)
+
+
 
 	
 

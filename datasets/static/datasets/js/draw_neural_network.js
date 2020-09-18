@@ -2,8 +2,8 @@ var neural_network_context = document.getElementById('neural_network_graph').get
 var neural_network_canvas = document.getElementById('neural_network_graph');
 
 var activation_function_options = "<select style='width:12%;' class='browser-default custom-select custom-select-lg mb-3 optimizer-options'> <option value='relu' class='dropdown-item'>relu</option> <option value = 'sigmoid' class='dropdown-item'>sigmoid</option> <option value = 'softmax' class='dropdown-item'>softmax</option> <option value = 'softplus' class='dropdown-item'>softplus</option> <option value = 'softsign' class='dropdown-item'>softsign</option> <option value = 'tanh' class='dropdown-item'>tanh</option> <option value = 'selu' class='dropdown-item'>selu</option> <option value = 'elu' class='dropdown-item'>elu</option> <option value = 'exponential' class='dropdown-item'>exponential</option> </select >"
-var layers_horizontal_gap = (radius*8)
 var radius = 20;
+var layers_horizontal_gap = (radius*8)
 var right_shift_first_layer_by = radius  
 var diameter = radius*2;
 function draw_neuron() {
@@ -36,6 +36,9 @@ function reset_everything(){
 }
 
 
+function finished_drawing_neuron(end_angle){
+    return end_angle >= (Math.PI*2.25)
+}
 function get_vertical_position_of_layer(layer_neurons){
 	return (neural_network_canvas.height - (radius)) - ((Math.max(...layer_neurons_list) - layer_neurons) * radius);
 }
@@ -60,14 +63,16 @@ var end_angle = 1
 var neuron_drawing_animation_id = null;
 function animate_neuron_drawing(layer_neurons) {
     if (layer_ended(neuron_number, layer_neurons_list[layer_number]) && at_least_1_layer_remaining(layer_number, layer_neurons_list.length) ) {
-        
+            console.log(layer_x)
             layer_x +=  layers_horizontal_gap;
             neuron_number = 0
             layer_number += 1;
-            layer_vertical_position = get_vertical_position_of_layer(layer_neurons_list[layer_number])  // get vertical position of next layer
 
+            layer_vertical_position = get_vertical_position_of_layer(layer_neurons_list[layer_number])  // get vertical position of next layer
+            console.log(layer_x)
         } 
     else if(layer_ended(neuron_number, layer_neurons_list[layer_number]) && !at_least_1_layer_remaining(layer_number, layer_neurons_list.length)) {
+
         reset_everything();
         cancelAnimationFrame(neuron_drawing_animation_id);
         return;

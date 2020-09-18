@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from . import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -25,7 +26,7 @@ urlpatterns = [
     path('thanks/',views.ThankYou.as_view(),name='thanks'),
     path('accounts/',include('accounts.urls')),
     path('datasets/',include('datasets.urls')),
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 

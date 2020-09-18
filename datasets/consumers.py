@@ -48,8 +48,8 @@ def remove_column(dataframe):
     except:
         return dataframe
 
-def train_model(model,x_train,y_train,x_test,y_test,batch_size,self): ## the reason this is here, is so it can be run in the background using threads
-    model.fit(x_train,y_train,epochs=1000000000,callbacks=[myCallback(self,x_test,y_test)],verbose=0,batch_size=batch_size)
+def train_model(model,x_train,y_train,x_test,y_test,batch_size,self,save_model_file_path,save_model): ## the reason this is here, is so it can be run in the background using threads
+    model.fit(x_train,y_train,epochs=1000000000,callbacks=[myCallback(self,x_test,y_test,save_model_file_path,save_model)],verbose=0,batch_size=batch_size)
 
 
 def terminate_training_model():
@@ -58,15 +58,19 @@ def terminate_training_model():
         
 class myCallback(Callback):
 
-    def __init__(self,consumer_instance,x_test,y_test):
+    def __init__(self,consumer_instance,x_test,y_test,save_model_file_path,save_model):
 
 
         self.consumer_instance = consumer_instance
         self.x_test = x_test
         self.y_test = y_test
+        self.save_model_file_path = save_model_file_path
+        self.save_model = save_model
         
     def on_epoch_end(self, epoch, logs):
         
+        if self.save_model:
+            self.model.save(self.save_model_file_path)
         if epoch == 0:
             in_training[0] = True
 
@@ -97,14 +101,15 @@ def get_dataframe(data_frame_location):
 
     return remove_column(read_csv(data_frame_location))
 
-
 def another_model_running():
     return in_training[0] == True
 class ErrorGraphConsumer(WebsocketConsumer):
     def connect(self):
-        dataframe_file = self.scope['cookies']['sessionid']+'formated_dataset.csv'
         media_path = os.path.join(settings.MEDIA_ROOT,'datasets/')
+        self.file_to_save_model_to = self.scope['cookies']['sessionid']+'model'
+        dataframe_file = self.scope['cookies']['sessionid']+'formated_dataset.csv'
         dataframe_file_path = os.path.join(media_path,dataframe_file)
+        self.save_model_file_path = os.path.join(media_path,self.file_to_save_model_to)
         self.dataframe = get_dataframe(data_frame_location = dataframe_file_path)
         self.accept()
 
@@ -113,6 +118,7 @@ class ErrorGraphConsumer(WebsocketConsumer):
             terminate_training_model()
 
     def receive(self, text_data):
+
         global first_time
         
         if not first_time and another_model_running():
@@ -126,23 +132,35 @@ class ErrorGraphConsumer(WebsocketConsumer):
         label_column = text_data_json['label_column']
         chosen_optimizer = text_data_json['optimizer']
         chosen_loss = text_data_json['loss']
+        save_model = text_data_json['save_model']
         batch_size = int(text_data_json['batch_size'])
         test_size = float(text_data_json['test_size'])/100
         optimizer_params = dict([(key,value) for key,value in optimizer_params.items() if value != None]) #if an input is not provided, the value is None
+        
         x = self.dataframe.drop(label_column,axis=1).values
         y = get_dummies(self.dataframe[label_column],drop_first=True).values if label_type == 'discrete' else self.dataframe[label_column].values
         x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=test_size)
         number_of_classes = len(y[0]) if label_type == 'discrete' else 1
         model = create_model(layers,number_of_classes = number_of_classes,activations=layer_activations,label_type=label_type,number_of_inputs = x_train.shape[1])
-        optimizer = optimizer_options(**optimizer_params)[chosen_optimizer]
-        loss = loss_options()[chosen_loss]
-        model.compile(optimizer=optimizer, loss=loss, metrics=["acc"])
-
-        thread = threading.Thread(target=train_model, args=(model,x_train,y_train,x_test,y_test,batch_size,self)) 
-        thread.start() 
-        first_time = False
+        self.send(text_data=json.dumps({
+                    'model_config': str(model.get_config()),
+                }))
+        try:
+            optimizer = optimizer_options(**optimizer_params)[chosen_optimizer]
+        except Exception as e:
+            self.send(text_data=json.dumps({
+                    'invalid_input': str(e),
+                }))
+        else:
+            loss = loss_options()[chosen_loss]
+            model.compile(optimizer=optimizer, loss=loss, metrics=["acc"])
+            print('layers',layers)
+            print('activations',layer_activations)
+            thread = threading.Thread(target=train_model, args=(model,x_train,y_train,x_test,y_test,batch_size,self,self.save_model_file_path,save_model)) 
+            thread.start() 
+            first_time = False
         
-    
+        
 print('running')
 
 

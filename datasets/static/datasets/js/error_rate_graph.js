@@ -16,7 +16,7 @@ function update_graph(data){
         lineChart.update();
 
     }
-    else{
+    else if (data.numbers_got_too_big == 'Yes'){
         alert('the loss got too big, so the model stoped training.')
     }
 
@@ -126,9 +126,21 @@ errorRateSocket.onopen = function (event){
 
 errorRateSocket.onmessage = function(e) {
 
-
+        
         const data = JSON.parse(e.data);
-        update_graph(data);
+        let first_time = data.model_config // update the div that shows the model parameters, in the first response
+
+        if (first_time){
+            console.log('RECEIVED')
+            $('.model_config').text(data.model_config)
+        }
+        if(data.invalid_input){
+            alert(data.invalid_input);
+        }
+        else{
+            update_graph(data);
+        }
+        
 
         
 
@@ -138,7 +150,7 @@ let first_time = true
 $('#train_neural_network').on('click',function(e){
 
     
-
+    $("*").animate({ scrollTop: $(document).height() }, 1000);
     cant_send_to_websocket_for_5_seconds()
     lineChart.data.datasets[0].data = []; // clear training loss
     lineChart.data.datasets[1].data = []; // clear test loss
@@ -156,7 +168,8 @@ $('#train_neural_network').on('click',function(e){
             'optimizer':get_chosen_optimizer(),
             'loss':get_loss(),
             'batch_size':$('#batch-size').val(),
-            'test_size':$('#test-percent').val()
+            'test_size':$('#test-percent').val(),
+            'save_model':$('#save_model').is(':checked')
 
             }));
 

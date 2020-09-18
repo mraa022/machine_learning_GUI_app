@@ -11,7 +11,7 @@
 			background-color:gray;
 		}
 		.container {
-			height: 100%;
+			height: 50%;
 		}
 	
 	input{
@@ -42,7 +42,7 @@
 		<input id='l1_regularization_strength' type="number" placeholder='l1 regularization strength'><br>
 		<input id='l2_regularization_strength' type="number" placeholder='l2 regularization strength'>
 		<input id='l2_shrinkage_regularization_strength' type="number" placeholder='l2 shrinkage regularization strength'>
-		<input id='learning_rate_power' type="number" placeholder="learning_rate_power">
+		<input id='learning_rate_power' type="number" placeholder="learning_rate_power" max='0'>
 	</div>
 	<div class = 'batch-size-and-test-size'>
 		<h5 id = 'batch-size-val'>batch size: 32</h5>
@@ -50,6 +50,8 @@
 		<h5 id='test_percent_val'>percent of test data: 30%</h5>
 		<input type="range" min='1' max='99' name="" value='30' id='test-percent'>
 	</div>
+	<input type="checkbox" id="save_model" name="save_model">
+	<label for='save_model'><h5>Save model at the end of every epoch.</h5></label><br>
 	<select class="browser-default custom-select custom-select-lg mb-3 loss-options">
 		
 	</select>
@@ -60,16 +62,20 @@
 	<div class='layers'>
 		
 	</div>
-	<input class="btn btn-primary" id="train_neural_network" type="button" value="Train Neural Network">
+	<button class="btn btn-primary" id="train_neural_network" type="submit">Train Neural Network</button>
 	<button id='add-layer' class="btn btn-primary">Add Layer</button><br>
 	<button id='build-neural-network' class="btn btn-primary">Build Neural Network Graph</button>
-	<div class='error_rate' style="width:50%; height:50%;overflow;scroll;">
-		<canvas id="error_rate" style='border:1px solid white; margin-left:50%'></canvas>
-	</div>
 	
+	<div class='model_config' style='position:relative;margin_top:30%;'>
+		<h1>MODEL CONFIG</h1>
+	</div>
 	<div class='container' style='overflow:scroll;width:50%;'>
 		<canvas width='800px' height="800px" id='neural_network_graph' style='border:1px solid white;margin-left50%'></canvas>
 	</div>
+	<div class='error_rate' style="width:50%; height:50%;overflow;scroll;">
+		<canvas id="error_rate" style='border:1px solid white; margin-left:50%'></canvas>
+	</div>
+
 	<script type="text/javascript" src='{% static "datasets/js/handle_losses_and_optimizer_options.js" %}'></script>
 	<script type="text/javascript" src='{% static "datasets/js/draw_neural_network.js" %}'></script>
 	<script type="text/javascript" src='{% static "datasets/js/error_rate_graph.js" %}'></script>

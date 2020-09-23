@@ -1,13 +1,3 @@
-# def create_model(layers,number_of_inputs,activations,label_type,number_of_classes):
-#     layers = [1] if not layers else layers  # one layer with one neuron is the default if the user did not provide any layers
-#     activations = ['relu'] if not activations else activations
-#     model = Sequential()
-#     model.add(Dense(layers[0], input_shape=(number_of_inputs,),activation=activations[0] ))
-#     if len(layers)>1:
-#         [model.add(Dense(units,activation=activation)) for units,activation in zip(layers[1:],activations[1:])]
-#     output = model.add(Dense(number_of_classes,activation='softmax')) if label_type == 'discrete' else model.add(Dense(1))
-#     return model
-
 
 from tensorflow.keras import Sequential
 from keras.layers import Dense
@@ -31,11 +21,10 @@ class TestClassificationFunction():
 		number_of_inputs = 4
 		label_type = 'discrete'
 		number_of_classes = 2
-		model = Sequential()
-		model.add(Dense(1,input_shape=(number_of_inputs,),activation='relu'))
-		model.add(Dense(number_of_classes,activation='softmax'))
-
-		assert create_model(layers=[],number_of_inputs=number_of_inputs,activations=[],number_of_classes=number_of_classes,label_type=label_type)
+		model = Sequential(name="my_sequential")
+		model.add(Dense(1,input_shape=(number_of_inputs,),activation='relu',name='input_layer'))
+		model.add(Dense(number_of_classes,activation='softmax',name='output_layer'))
+		assert create_model(layers=[],number_of_inputs=number_of_inputs,activations=[],number_of_classes=number_of_classes,label_type=label_type).get_config() == model.get_config()
 
 	def test_inputted_classification_model(self):
 
@@ -44,13 +33,11 @@ class TestClassificationFunction():
 		number_of_inputs = 4
 		label_type = 'discrete'
 		number_of_classes = 22
-		model = Sequential()
-		model.add(Dense(layers[0],input_shape=(number_of_inputs,),activation=activations[0]))
-		model.add(Dense(layers[1],input_shape=(number_of_inputs,),activation=activations[1]))
-		model.add(Dense(number_of_classes,activation='softmax'))
-		assert create_model(layers=layers,number_of_inputs=number_of_inputs,activations=activations,number_of_classes=number_of_classes,label_type=label_type)
-
-
+		model = Sequential(name="my_sequential")
+		model.add(Dense(layers[0],input_shape=(number_of_inputs,),activation=activations[0],name='input_layer'))
+		model.add(Dense(layers[1],input_shape=(number_of_inputs,),activation=activations[1],name='hidden_layer'))
+		model.add(Dense(number_of_classes,activation='softmax',name='output_layer'))
+		assert create_model(layers=layers,number_of_inputs=number_of_inputs,activations=activations,number_of_classes=number_of_classes,label_type=label_type).get_config().pop('name') == model.get_config().pop('name')
 
 
 
@@ -63,11 +50,10 @@ class TestRegressionModel():
 		number_of_inputs = 4
 		number_of_classes = 1
 		label_type = 'continuous'
-		model = Sequential()
-		model.add(Dense(1,input_shape=(number_of_inputs,),activation='relu'))
-		model.add(Dense(number_of_classes))
-
-		assert create_model(layers=[],number_of_inputs=number_of_inputs,activations=[],number_of_classes=number_of_classes,label_type=label_type)
+		model = Sequential(name="my_sequential")
+		model.add(Dense(1,input_shape=(number_of_inputs,),activation='relu',name='input_layer'))
+		model.add(Dense(number_of_classes,name='output_layer'))
+		assert create_model(layers=[],number_of_inputs=number_of_inputs,activations=[],number_of_classes=number_of_classes,label_type=label_type).get_config().pop('name') == model.get_config().pop('name')
 
 	def test_inputted_regression_model(self):
 		number_of_classes = 1
@@ -75,11 +61,11 @@ class TestRegressionModel():
 		activations=['relu','sigmoid']
 		number_of_inputs = 4
 		label_type = 'continuous'
-		model = Sequential()
-		model.add(Dense(layers[0],input_shape=(number_of_inputs,),activation=activations[0]))
-		model.add(Dense(layers[1],input_shape=(number_of_inputs,),activation=activations[1]))
+		model = Sequential(name="my_sequential")
+		model.add(Dense(layers[0],input_shape=(number_of_inputs,),activation=activations[0],name='input_layer'))
+		model.add(Dense(layers[1],input_shape=(number_of_inputs,),activation=activations[1],name='hidden_layer'))
 		model.add(Dense(number_of_classes))
-		assert create_model(layers=layers,number_of_inputs=number_of_inputs,activations=activations,number_of_classes=number_of_classes,label_type=label_type)
+		assert create_model(layers=layers,number_of_inputs=number_of_inputs,activations=activations,number_of_classes=number_of_classes,label_type=label_type).get_config().pop('name') == model.get_config().pop('name')
 
 
 

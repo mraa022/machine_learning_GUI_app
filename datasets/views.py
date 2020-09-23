@@ -11,8 +11,8 @@ from . import models
 from django.views import  generic
 import os
 from django.core.validators import URLValidator
-
-
+from django.shortcuts import render
+import shutil
 
 
 
@@ -188,7 +188,9 @@ class UpdateDatasetView(LoginRequiredMixin,generic.UpdateView):
 
 
 class ChooseNewDataset(generic.CreateView):
-
+	'''
+		if the user wants to select a new dataset instead of choosing one from their account
+	'''
 	form_class = DataSetsForm
 	template_name = 'datasets/choose_new_dataset.html'
 
@@ -223,6 +225,9 @@ class ChooseNewDataset(generic.CreateView):
 
 class DataSetCategoricalColumns(generic.TemplateView):
 
+	'''
+		choose/select the categorical columns of the dataset
+	'''
 	template_name = 'datasets/categorical_columns.html'
 
 	
@@ -238,7 +243,9 @@ class DataSetCategoricalColumns(generic.TemplateView):
 		return context
 
 class DataSetNumericalColumns(generic.TemplateView):
-
+	'''
+		select numerical columns of the dataset
+	'''
 	template_name = 'datasets/numerical_columns.html'
 
 	def get_context_data(self, **kwargs):
@@ -250,6 +257,9 @@ class DataSetNumericalColumns(generic.TemplateView):
 		return context
 
 class DataSetLabelColumn(generic.TemplateView):
+	'''
+		select the label column of the dataset
+	'''
 	template_name = 'datasets/label_column.html'
 	def get_context_data(self, **kwargs):
 
@@ -261,6 +271,9 @@ class DataSetLabelColumn(generic.TemplateView):
 
 class CurrentDataSet(generic.TemplateView):
 
+	'''
+		show first couple of rows of selected dataset
+	'''
 	template_name = 'datasets/current_dataset.html'
 
 	def get_context_data(self, **kwargs):
@@ -272,8 +285,12 @@ class CurrentDataSet(generic.TemplateView):
 		return context
 
 class ShowSelectedColumns(generic.TemplateView):
-	template_name = 'datasets/show_selected_columns.html'
 
+	'''
+		in the training page, show the column types (what numerical columns were selected,what categorical columns were selected,
+		what is the label column, and what columns were not selected)
+	'''
+	template_name = 'datasets/show_selected_columns.html'
 	def get_context_data(self, **kwargs):
 
 		context = super().get_context_data(**kwargs)
@@ -288,6 +305,9 @@ class ShowSelectedColumns(generic.TemplateView):
 		return context
 class NeuralNetworkDiagramAndKerasModel(generic.TemplateView):  
 
+	'''
+		this is the page where the neural network is built and trained
+	'''
 	template_name = 'datasets/model.html'
 	def get_context_data(self, **kwargs):
 
@@ -315,7 +335,10 @@ class Main(generic.TemplateView):
 		return context
 
 
-	
+
+
+
+
 
 
 

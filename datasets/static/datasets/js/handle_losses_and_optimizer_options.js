@@ -12,7 +12,7 @@ function show_optimizers_for_discrete_label(){
 }
 
 function show_optimizers_for_continuous_label(){
-	let continuous_loss_options = ['MeanSquaredError','MeanAbsoluteError','MeanAbsolutePercentageError','MeanSquaredLogarithmicError','CosineSimilarity','Huber','LogCosh']
+	let continuous_loss_options = ['MeanSquaredError','MeanAbsoluteError','MeanAbsolutePercentageError','MeanSquaredLogarithmicError','Huber','LogCosh']
 	for(let option = 0; option< continuous_loss_options.length;option++){
 		$('.loss-options').append($('<option></option>').attr('value',continuous_loss_options[option]).text(continuous_loss_options[option]));
 	}

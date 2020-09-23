@@ -27,7 +27,7 @@
 		<option value = 'Adagrad' class="dropdown-item">Adagrad</option>
 		<option value = 'SGD' class="dropdown-item">SGD</option>
 		<option value = 'Adadelta' class="dropdown-item">Adadelta</option>
-		<option value = 'Adamx' class="dropdown-item">Adamx</option>
+		<option value = 'Adamax' class="dropdown-item">Adamx</option>
 		<option value = 'Nadam' class="dropdown-item">Nadam</option>
 		<option value = 'Ftrl' class="dropdown-item">Ftrl</option>
 	</select >
@@ -50,10 +50,7 @@
 		<h5 id='test_percent_val'>percent of test data: 30%</h5>
 		<input type="range" min='1' max='99' name="" value='30' id='test-percent'>
 	</div>
-	<input type="checkbox" id="save_model" name="save_model">
-	<label for='save_model'><h5>Save model at the end of every epoch.</h5></label><br>
 	<select class="browser-default custom-select custom-select-lg mb-3 loss-options">
-		
 	</select>
 
 	<div class='activation_function_options'>

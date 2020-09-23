@@ -11,7 +11,6 @@ from tensorflow.keras.losses import (
         MeanAbsoluteError,
         MeanAbsolutePercentageError,
         MeanSquaredLogarithmicError,
-        CosineSimilarity,
         Huber,
         LogCosh,
         CategoricalCrossentropy,
@@ -28,8 +27,6 @@ from tensorflow.keras.optimizers import (
         Nadam,
         Ftrl
     )
-from urllib.parse import unquote
-import requests
 from tensorflow.keras import Sequential
 from keras.layers import Dense
 from tensorflow.keras.callbacks import  Callback
@@ -48,8 +45,8 @@ def remove_column(dataframe):
     except:
         return dataframe
 
-def train_model(model,x_train,y_train,x_test,y_test,batch_size,self,save_model_file_path,save_model): ## the reason this is here, is so it can be run in the background using threads
-    model.fit(x_train,y_train,epochs=1000000000,callbacks=[myCallback(self,x_test,y_test,save_model_file_path,save_model)],verbose=0,batch_size=batch_size)
+def train_model(model,x_train,y_train,x_test,y_test,batch_size,self,save_model_file_path): ## the reason this is here, is so it can be run in the background using threads
+    model.fit(x_train,y_train,epochs=1000000000,callbacks=[myCallback(self,x_test,y_test,save_model_file_path)],verbose=0,batch_size=batch_size)
 
 
 def terminate_training_model():
@@ -58,27 +55,23 @@ def terminate_training_model():
         
 class myCallback(Callback):
 
-    def __init__(self,consumer_instance,x_test,y_test,save_model_file_path,save_model):
+    def __init__(self,consumer_instance,x_test,y_test,save_model_file_path):
 
 
         self.consumer_instance = consumer_instance
         self.x_test = x_test
         self.y_test = y_test
         self.save_model_file_path = save_model_file_path
-        self.save_model = save_model
-        
-    def on_epoch_end(self, epoch, logs):
-        
-        if self.save_model:
-            self.model.save(self.save_model_file_path)
-        if epoch == 0:
-            in_training[0] = True
 
+   
+    def on_epoch_end(self, epoch, logs):
+        if epoch==0:
+            in_training[0] = True
+        print(epoch)
         if quit_training[0]:
             self.model.stop_training = True  # stop training the current model
             quit_training[0] = False ## set this to false so the next model can train.
 
-        
         test_loss,test_accuracy = self.model.evaluate(self.x_test,self.y_test,verbose=0)
         training_loss = logs['loss']
         if str(training_loss) != 'nan' and str(test_loss) !='nan':
@@ -132,19 +125,14 @@ class ErrorGraphConsumer(WebsocketConsumer):
         label_column = text_data_json['label_column']
         chosen_optimizer = text_data_json['optimizer']
         chosen_loss = text_data_json['loss']
-        save_model = text_data_json['save_model']
         batch_size = int(text_data_json['batch_size'])
         test_size = float(text_data_json['test_size'])/100
-        optimizer_params = dict([(key,value) for key,value in optimizer_params.items() if value != None]) #if an input is not provided, the value is None
-        
+        optimizer_params = dict([(key,value) for key,value in optimizer_params.items() if value != None]) #if an input is not provided, the value is None   
         x = self.dataframe.drop(label_column,axis=1).values
         y = get_dummies(self.dataframe[label_column],drop_first=True).values if label_type == 'discrete' else self.dataframe[label_column].values
         x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=test_size)
         number_of_classes = len(y[0]) if label_type == 'discrete' else 1
         model = create_model(layers,number_of_classes = number_of_classes,activations=layer_activations,label_type=label_type,number_of_inputs = x_train.shape[1])
-        self.send(text_data=json.dumps({
-                    'model_config': str(model.get_config()),
-                }))
         try:
             optimizer = optimizer_options(**optimizer_params)[chosen_optimizer]
         except Exception as e:
@@ -154,9 +142,8 @@ class ErrorGraphConsumer(WebsocketConsumer):
         else:
             loss = loss_options()[chosen_loss]
             model.compile(optimizer=optimizer, loss=loss, metrics=["acc"])
-            print('layers',layers)
-            print('activations',layer_activations)
-            thread = threading.Thread(target=train_model, args=(model,x_train,y_train,x_test,y_test,batch_size,self,self.save_model_file_path,save_model)) 
+           
+            thread = threading.Thread(target=train_model, args=(model,x_train,y_train,x_test,y_test,batch_size,self,self.save_model_file_path)) 
             thread.start() 
             first_time = False
         

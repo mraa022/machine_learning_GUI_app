@@ -126,24 +126,13 @@ errorRateSocket.onopen = function (event){
 
 errorRateSocket.onmessage = function(e) {
 
-        
         const data = JSON.parse(e.data);
-        let first_time = data.model_config // update the div that shows the model parameters, in the first response
-
-        if (first_time){
-            console.log('RECEIVED')
-            $('.model_config').text(data.model_config)
-        }
         if(data.invalid_input){
             alert(data.invalid_input);
         }
         else{
             update_graph(data);
         }
-        
-
-        
-
     }
 
 let first_time = true
@@ -170,7 +159,6 @@ $('#train_neural_network').on('click',function(e){
             'batch_size':$('#batch-size').val(),
             'test_size':$('#test-percent').val(),
             'save_model':$('#save_model').is(':checked')
-
             }));
 
     }

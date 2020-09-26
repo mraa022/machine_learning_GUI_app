@@ -96,9 +96,9 @@ def create_model(layers,number_of_inputs,activations,label_type,number_of_classe
     layers = [1] if not layers else layers  # one layer with one neuron is the default if the user did not provide any layers
     activations = ['relu'] if not activations else activations
     model = Sequential(name="my_sequential")
-    model.add(Dense(layers[0], input_shape=(number_of_inputs,),activation=activations[0],name='input_layer' ))
+    model.add(Dense(layers[0], input_shape=(number_of_inputs,),activation=activations[0]))
     if len(layers)>1:
-        [model.add(Dense(units,activation=activation,name='hidden_layer')) for units,activation in zip(layers[1:],activations[1:])]
+        [model.add(Dense(units,activation=activation)) for units,activation in zip(layers[1:],activations[1:])]
     output = model.add(Dense(number_of_classes,activation='softmax',name='output_layer')) if label_type == 'discrete' else model.add(Dense(1))
     return model
 

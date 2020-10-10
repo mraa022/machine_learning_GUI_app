@@ -1,17 +1,22 @@
 {% load filter %}
-<div class = 'grid-container'>
+<div class="modal-header">
 	
-	{% for column in dataframe_columns %}
-		{% if column in numerical_columns %}
-			<div class='grid-item numerical_columns' align='center' style='background-color:green'>
-				
-				<h4><em>Numerical Column</em></h4>
-				<hr>
-				<h3>{{column}}</h3>
-				
-				<h4>{{dataframe|get_data_in_column:column|safe}} </h4>
-			</div>
-			{% elif  request.COOKIES.label_column  == column %}
+</div>
+<div class="modal-body" style='background-color:#4d0000;'>
+	
+	<div class = 'grid-container' align='center'>
+		
+		{% for column in dataframe_columns %}
+			{% if column in numerical_columns %}
+				<div class='grid-item numerical_columns' align='center' style='background-color:green'>
+					
+					<h4><em>Numerical Column</em></h4>
+					<hr>
+					<h3>{{column}}</h3>
+					
+					<h4>{{dataframe|get_data_in_column:column|safe}} </h4>
+				</div>
+				{% elif  request.COOKIES.label_column  == column %}
 				<div class='grid-item label_column' style='background-color:yellow' align='center'>
 					<h4> <em>Label Column</em></h4>
 					<hr>
@@ -20,7 +25,7 @@
 					
 				</div>
 				
-			{% elif column in categorical_columns %}
+				{% elif column in categorical_columns %}
 				<div id='{{column}}' class='grid-item' align='center' style='background-color:purple'>
 					<h4> <em>Categorical Column</em></h4>
 					<hr>
@@ -38,3 +43,5 @@
 			
 		{% endfor %}
 	</div>
+	
+</div>

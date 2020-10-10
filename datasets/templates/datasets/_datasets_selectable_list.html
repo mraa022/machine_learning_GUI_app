@@ -2,7 +2,7 @@
 
 <div class="grid-item">
 	<p>{{dataset.title|safe}}</p><br>
-	
+	<p id='num_of_rows' style='display:none'>{{dataset.values.shape.0}}</p>
 	<a class='view' id='{{dataset.pk}}' title='View' data-toggle='modal' data-target='#dataframe'><i class="fas fa-eye fa-4x"></i></a>
 	{% if dataset.file %}
 		<p id='dataset_location' style='display:none'>{{dataset.file.path}}</p>

@@ -1,7 +1,7 @@
 
 function show_loading_screen(){
 
-	$('#dataframe .modal-content').html('<img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif">')
+	$('#dataframe .modal-content').html('<div style="background-color:black;" align="center"><i class="fas fa-spinner fa-10x fa-spin"></i></div>')
 
 }
 

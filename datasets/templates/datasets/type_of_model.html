@@ -1,0 +1,33 @@
+{% extends "datasets/base_dataset.html" %}
+{% load static %}
+
+{% block css_style %}
+	<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
+	<style type="text/css">
+		
+		body{
+			text-align: center
+		}
+
+		h1{
+			position:relative;
+			top:35%;
+		}
+		.grid-item{
+			position:relative;
+			left:50%;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	<div class='grid-container'  style='margin-left:35%'>
+		<a  href = "{% url 'datasets:neural_network_graph_and_keras_model' %}" class='grid-item'><h1>Neural Network</h1></a>
+	</div>
+	
+{% endblock content %}
+
+{% block scripts %}
+	
+{% endblock scripts %}

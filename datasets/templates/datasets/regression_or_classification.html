@@ -1,4 +1,41 @@
-<div class='grid-container'  style='margin-left:35%'>
-	<button id='classification' class='grid-item'>Classification</button>
-	<button id='regression' class='grid-item'>Regression</button>	
-</div>
+{% extends "datasets/base_dataset.html" %}
+{% load static %}
+{% block css_style %}
+	<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
+	<style type="text/css">
+		button{
+			background-color: #4d0000
+		}
+	</style>
+{% endblock css_style %}
+{% block content %}
+	<div class='grid-container'  style='margin-left:35%'>
+		<button id='classification' class='grid-item'><h1>Classification</h1></button>
+		<button id='regression' class='grid-item'><h1>Regression</h1></button>
+	</div>
+{% endblock content %}
+
+{% block scripts %}
+	
+	<script type="text/javascript">
+
+		$('#classification').on('click',function(){
+
+			Cookies.set('label_is','discrete',{path:'/'}) 
+			window.location = '{% url "datasets:label_column" %}'
+				
+
+		});
+
+
+		$('#regression').on('click',function(){
+
+			Cookies.set('label_is','continuous',{path:'/'}) 
+			window.location = '{% url "datasets:label_column" %}'
+				
+		});
+
+	</script>
+
+
+{% endblock scripts %}

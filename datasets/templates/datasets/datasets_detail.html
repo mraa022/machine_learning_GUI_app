@@ -11,12 +11,12 @@
 		<div class="modal-body">
 			
 
-			<div class='jumbotron' style='overflow-x:scroll; overflow-y:scroll;' align='center'>
+			<div class='jumbotron' style='overflow-x:scroll; overflow-y:scroll;background-color:#4d0000;color:white' align='center'>
 
 
 				<h3>Rows: {{num_rows}}</h3>
 				<h3>Columns: {{DataFrame.values.shape.1}}</h3>
-				<h3>number of nans: {{num_nans}}</h3>
+				<h3># of rows to be removed before training: {{num_nans}}</h3>
 				{{DataFrame.to_html | safe}}
 				
 			</div>

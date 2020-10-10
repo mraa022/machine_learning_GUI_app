@@ -20,9 +20,12 @@ from tensorflow.keras.optimizers import (
         Nadam,
         Ftrl
     )
+import json
+model_training=False
+stop_training  = False
+from tensorflow.data import Dataset
 from tensorflow.keras import Sequential
 from keras.layers import Dense
-
 def optimizer_options(
                       learning_rate=0.001,
                       beta_1=0.9,
@@ -98,9 +101,17 @@ def create_model(layers,number_of_inputs,activations,label_type,number_of_classe
     model = Sequential(name="my_sequential")
     model.add(Dense(layers[0], input_shape=(number_of_inputs,),activation=activations[0]))
     if len(layers)>1:
-        [model.add(Dense(units,activation=activation)) for units,activation in zip(layers[1:],activations[1:])]
-    output = model.add(Dense(number_of_classes,activation='softmax',name='output_layer')) if label_type == 'discrete' else model.add(Dense(1))
+        for units,activation in zip(layers[1:],activations[1:]):
+            model.add(Dense(units,activation=activation))
+        
+    if label_type == 'discrete':
+        activtion = 'sigmoid' if number_of_classes == 1 else 'softmax'
+        model.add(Dense(units=number_of_classes,activation=activtion))
+    else:
+        model.add(Dense(1))
     return model
+
+
 
 
 

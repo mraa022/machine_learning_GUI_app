@@ -1,7 +1,20 @@
+{% extends "datasets/base_dataset.html" %}
 {% load filter %}
-<div class='jumbotron' style='display:none' align='center'>
-	<button id='can_continue' type="button" class="submit-btn btn btn-primary"><h1 style='color:yellow'>Continue</h1></button>
-</div>
+{% load static %}
+
+{% block css_style %}
+	<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">
+	<style type="text/css">
+		
+		body{
+			text-align:center;
+		}
+	</style>
+{% endblock css_style %}
+
+{% block content %}
+	<p id = 'num_of_rows' style='display:none'>{{num_of_rows}}</p>
+	<button id='can_continue' type="button" class="btn btn-primary" style='position:fixed;margin-left:44%;display:none'><h1 style='color:yellow'>Continue</h1></button><br><br><br>
 {% if request.COOKIES.label_is == 'discrete' %}
 	<h1>Classification</h1>
 	{% else %}
@@ -28,16 +41,23 @@
 	{% endfor %}
 
 </div>
-<script type="text/javascript">
+{% endblock content %}
 
-	$('.grid-item').not('button').click(function(){
+{% block scripts %}
+	<script type="text/javascript">
+
+
+	$('.grid-item').click(function(){
+		// if the column selected is numerical and regression is being done, or if classification is being done (only numerical columns can be labels for regression)
 		if($(this).find('div').length==1 && Cookies.get('label_is') == 'continuous' || Cookies.get('label_is') != 'continuous' ){
 
-			$('.grid-item').removeClass('higlight_selected');
-			$(this).addClass("higlight_selected");
-			$('.jumbotron').css('display','block');
+			$('.grid-item').removeClass('higlight_selected'); // unselect the previous label column															
+			$(this).addClass("higlight_selected");  // select the curent label column
+			$('#can_continue').css('display','block'); // remove the continue button
 			
 		}
+
+		// if its regression and the user selected a column that is not numerical, alert them
 		else if($(this).find('div').length!=1 && Cookies.get('label_is') == 'continuous'){
 			alert('this column contains strings');
 		};
@@ -46,16 +66,15 @@
 	});
 
 	
-	$('.submit-btn').click(function(){
-			console.log('clicked');
+	$('#can_continue').click(function(){
+
 			var column_name = $('.higlight_selected').attr('id')
+			Cookies.set('num_of_rows',$('#num_of_rows').text(),{path:'/'}) 
 			Cookies.set('label_column',column_name,{path:'/'});
-			
 			$('.ajax_part_of_page').html('<div align="center"><img src="https://theplaycave.com.au/wp-content/uploads/2016/10/loading.gif"></div>')
-			$.get('{% url "datasets:numerical_columns" %}',function(response){
-				$('.ajax_part_of_page').html(response);
-		});
+			window.location = '{% url "datasets:numerical_columns" %}'
 
 		});
 	
 </script>
+{% endblock scripts %}

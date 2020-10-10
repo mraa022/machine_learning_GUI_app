@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">		
+
+		<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/grid.css' %}">	
+		<link rel="stylesheet" type="text/css" href="{% static 'datasets/css/shift_colors_scroll_down_icon.css' %}">
 		<div class="grid-container">
 		  {% for dataset in datasets  %}
 
@@ -25,13 +27,16 @@
 		 	{% if  not datasets.count == 10 %}
 
 
-		 	<a style='' id='create' class='grid-item' title='add a new dataset' class='nav-link' href="{% url 'datasets:create' %}" data-toggle="modal" data-target="#modal"><i class="fas fa-plus-circle fa-5x"></i></a>
+		 	<a id='create' class='grid-item' title='add a new dataset' class='nav-link' href="{% url 'datasets:create' %}" data-toggle="modal" data-target="#modal"><i style='position:relative;top:38%' class="fas fa-plus-circle fa-5x"></i></a>
 
 		 		{% endif %}
 		  
-		</div>			
+		</div>
+		<i class="fas fa-arrow-circle-right fa-4x scroll_button"></i>
+
+
 			
 
-
+<script type="text/javascript" src='{% static "datasets/js/scroll_right.js" %}'></script>
 <script type="text/javascript" src='{% static "datasets/js/populate_popup_detail_view.js" %}'></script>
 {% endblock content %} 

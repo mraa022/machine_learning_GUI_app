@@ -12,7 +12,6 @@ from django.views import  generic
 import os
 from django.core.validators import URLValidator
 from django.shortcuts import render
-import shutil
 
 
 
@@ -253,6 +252,7 @@ class DataSetNumericalColumns(generic.TemplateView):
 		context = super().get_context_data(**kwargs) 
 		context['dataframe_columns'] = get_dataframe(self.request)[0]  # it get_dataframe() returns the dataframe columns and the dataframe
 		context['dataframe'] = get_dataframe(self.request)[1]
+		context['label_column'] = unquote(self.request.COOKIES['label_column'])
 
 		return context
 
@@ -266,22 +266,7 @@ class DataSetLabelColumn(generic.TemplateView):
 		context = super().get_context_data(**kwargs)
 		context['dataframe_columns'] = get_dataframe(self.request)[0]
 		context['dataframe'] = get_dataframe(self.request)[1]
-
-		return context
-
-class CurrentDataSet(generic.TemplateView):
-
-	'''
-		show first couple of rows of selected dataset
-	'''
-	template_name = 'datasets/current_dataset.html'
-
-	def get_context_data(self, **kwargs):
-
-		context = super().get_context_data(**kwargs)
-		
-		context['dataframe'] = get_dataframe(self.request)[1].head(10)
-
+		context['num_of_rows'] = len(context['dataframe'].dropna()) # used later to set the max batch size
 		return context
 
 class ShowSelectedColumns(generic.TemplateView):
@@ -308,7 +293,7 @@ class NeuralNetworkDiagramAndKerasModel(generic.TemplateView):
 	'''
 		this is the page where the neural network is built and trained
 	'''
-	template_name = 'datasets/model.html'
+	template_name = 'datasets/neural_network.html'
 	def get_context_data(self, **kwargs):
 
 		# all this method is needed for is access to the session and cookies (nothing is added to the context dict)
@@ -322,23 +307,10 @@ class NeuralNetworkDiagramAndKerasModel(generic.TemplateView):
 
 		return context
 
+class SelectDataSet(generic.TemplateView):
+	template_name = 'datasets/select_dataset_for_training.html'
 
-class Main(generic.TemplateView):
-
-	template_name = 'datasets/Main.html'
-	
-	def get_context_data(self, **kwargs):
-
-		context = super().get_context_data(**kwargs)
-		context['id'] = self.kwargs.get('pk')
-
-		return context
-
-
-
-
-
-
-
-
+class SelectModelType(generic.TemplateView):
+	# this is the page the user selects the model type (linear regression,logistic regression,svm,ann,etc)
+	template_name = 'datasets/type_of_model.html'
 

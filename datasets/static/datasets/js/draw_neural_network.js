@@ -108,7 +108,7 @@ $('#build-neural-network').on('click', function(e) {
             layer_neurons.push(layers_list[i].value)
         }   
     }
-
+    console.log('layer_neurons.length')
     if (layer_neurons.length != 0) {
 
         neural_network_canvas.height = Math.max(...layer_neurons) * diameter;
@@ -130,6 +130,10 @@ $('#build-neural-network').on('click', function(e) {
         animate_neuron_drawing(layer_neurons);
         first_time_animated = false;
 
+    }
+
+    else{
+        alert('the layers you added either have invalid input, are empty, or you didnt even add layers')
     }
 
 });

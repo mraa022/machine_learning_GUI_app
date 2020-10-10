@@ -14,9 +14,12 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
       <script src="https://kit.fontawesome.com/dac342a98d.js" crossorigin="anonymous"></script>
+      {% block css_style %}
+        
+      {% endblock css_style %}
     </head>
     <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="{% url 'home' %}">Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -83,8 +86,17 @@
         </div>
       </div>
 
+      <div class="modal fade" tabindex="-1" role="dialog" id="show-selected-columns">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content"></div>
+        </div>
+      </div>
+
       {% block content %}
         
+        
+      {% endblock  %}
+      {% block scripts %}
         
       {% endblock  %}
     </body>

@@ -1,0 +1,23 @@
+.scroll_button{
+	position:absolute;
+	animation: shift_colors 1s infinite ease-in-out;
+	right: 1%;
+	top:49%;
+	border-radius:50%;
+}
+
+@keyframes shift_colors {
+  0% {
+    background-color: yellow
+  }
+  50%{
+  	background-color: purple
+  }
+  90%{
+  	background-color: grey;
+  }
+  100% {
+    background-color: white
+  }
+
+}

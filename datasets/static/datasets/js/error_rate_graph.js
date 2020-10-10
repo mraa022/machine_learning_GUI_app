@@ -8,6 +8,17 @@ function get_loss(){
 }
 
 function update_graph(data){
+
+    
+    if(data.clear_graph){
+        console.log('CLEAR THE GRAPH')
+        lineChart.data.datasets[0].data = []; // clear training loss
+        lineChart.data.datasets[1].data = []; // clear test loss
+        lineChart.data.labels = []; // clear x-axis
+        lineChart.update()
+    }
+
+    
     if (data.numbers_got_too_big=='No') {
         let dataset = lineChart.data.datasets[0]
         lineChart.data.labels.push(dataset.data.length + 1);
@@ -19,6 +30,7 @@ function update_graph(data){
     else if (data.numbers_got_too_big == 'Yes'){
         alert('the loss got too big, so the model stoped training.')
     }
+
 
 
 }
@@ -72,14 +84,7 @@ function get_optimizer_params(){
 
 }
 
-function cant_send_to_websocket_for_5_seconds(){
 
-    $('#train_neural_network').prop('disabled', true);
-    setTimeout(function (){
-        $('#train_neural_network').prop('disabled', false);
-    },5000);
-
-}
 var error_rate_canvas = document.getElementById('error_rate');
 
 var datasets = {
@@ -130,6 +135,10 @@ errorRateSocket.onmessage = function(e) {
         if(data.invalid_input){
             alert(data.invalid_input);
         }
+
+        if(data.can_train_new_model){ // send a message from consumer at the beginning of training  so another model can be trainined (train model button is unabled)
+            $('#train_neural_network').prop('disabled', false)
+        }
         else{
             update_graph(data);
         }
@@ -137,15 +146,12 @@ errorRateSocket.onmessage = function(e) {
 
 let first_time = true
 $('#train_neural_network').on('click',function(e){
-
     
-    $("*").animate({ scrollTop: $(document).height() }, 1000);
-    cant_send_to_websocket_for_5_seconds()
-    lineChart.data.datasets[0].data = []; // clear training loss
-    lineChart.data.datasets[1].data = []; // clear test loss
-    lineChart.data.labels = []; // clear x-axis
-    lineChart.update()
-
+    
+    $("*").animate({ scrollTop: $(document).height() }, 1000); // scroll to the bottom of the page where the error graph is
+    $('#train_neural_network').prop('disabled', true);
+    
+    
 
     if (websocket_is_open){
         errorRateSocket.send(JSON.stringify({
@@ -158,7 +164,6 @@ $('#train_neural_network').on('click',function(e){
             'loss':get_loss(),
             'batch_size':$('#batch-size').val(),
             'test_size':$('#test-percent').val(),
-            'save_model':$('#save_model').is(':checked')
             }));
 
     }

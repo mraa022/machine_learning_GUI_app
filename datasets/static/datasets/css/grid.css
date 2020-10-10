@@ -1,27 +1,27 @@
 body{
-background-color: black;
+	background-color: black;
 
 }
 .grid-container {
-margin-top: 5%;
-text-align: center;
-display: grid;
-grid-template-columns: repeat(5,25%);
-overflow: scroll;
-grid-row-gap: 2%;
-grid-column-gap: 2%;
+	margin-top: 5%;
+	text-align: center;
+	display: grid;
+	grid-template-columns: repeat(5,25%);
+	overflow: scroll;
+	grid-row-gap: 2%;
+	grid-column-gap: 2%;
 }
 .grid-item{
-/*padding-top: 25px;*/
-transition-property: box-shadow, background-color;
-transition-duration: .5s;
-transition-timing-function: ease-in-out;
-height: calc(50vh);
-border: 1px solid white;
-overflow:scroll;
+	/*padding-top: 25px;*/
+	transition-property: box-shadow, background-color;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out;
+	height: calc(50vh);
+	border: 1px solid white;
+	overflow:scroll;
 }
 .grid-item:hover{
-box-shadow: 0 0 500px 30px white;
+	box-shadow: 0 0 500px 30px white;
 }
 h1{
 
@@ -33,15 +33,18 @@ p{
 	color:yellow;
 }
 
-i:hover{
 
-	cursor: pointer;
-	border:2px solid white;
-
-}
 
 .higlight_selected{
 
 
 	background-color: gray;
 }
+
+i:hover{
+	cursor:pointer;
+	color:grey;
+}
+
+
+

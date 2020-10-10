@@ -17,7 +17,6 @@ This web app is similar to [tensorflow's neural network playground](https://play
 
 # Limitations!!
   - the sessionid is used to give the model the user customized dataset. so, opening multiple tabs will break the program. 
-  - if the user sends many requests in quick succession to the websocket (handles the live graph), it would break, so a cool down period of 5 seconds is used.
   - if the value of a cell is empty, the whole row is removed.
   - if a url is used, and the page contains more than 1 table. the first one will be selected
   - if a url is used. the table must be in a 'table' tag (canvas tags won't work)

@@ -133,8 +133,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [static_dir]
 
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
 LOGIN_REDIRECT_URL = 'welcome'
 LOGOUT_REDIRECT_URL = 'thanks'
 MEDIA_ROOT = media_dir

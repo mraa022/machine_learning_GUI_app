@@ -33,7 +33,9 @@ This web app is similar to [tensorflow's neural network playground](https://play
  - tensorflow/keras: for the neural network
  - SQLite: the database
 
-
+# upcoming updates
+ - Amazon S3 buckets will be used to store media/static files instead of heroku (this should decrease the boot time).
+ - The website will be made faster by using chaching and rewriting parts of the code so it's more efficient. 
 # running it locally:
 
  - the requirements.txt contains all of the libraries used in the project

@@ -1,5 +1,7 @@
 # Neural Network Playground
-This web app is similar to [tensorflow's neural network playground](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.46003&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false), but it gives the user more options. like, being able to set the activation function of each layer,being able to add as many layers as they want, and being able to save upto 10 files (csv or url) to their account for easy access when training their model. The link: https://neural--network--playground.herokuapp.com/ 
+This web app is similar to [tensorflow's neural network playground](https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.46003&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false), but it gives the user more options. like, being able to set the activation function of each layer,being able to add as many layers as they want, and being able to save upto 10 files (csv or url) to their account for easy access when training their model. The link: https://neural--network--playground.herokuapp.com/. Log in with the following user to get access 10 pre-uploaded datasets. 
+username:a
+password:1
 
   
 # Features:
